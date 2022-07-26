@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  background-color: cornflowerblue;
+}
+.container .logo {
+  color: black;
+  margin: 0 0 0 1.25rem;
+  transition: color 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.container .logo:hover {
+  cursor: pointer;
+  color: blanchedalmond;
+}
