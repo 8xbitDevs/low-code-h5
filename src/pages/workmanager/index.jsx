@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import Nav from '../../components/nav'
-
-function WorkManager() {
-
+import React from 'react'
+import NavigationBar from '../../components/NavigationBar/NavigationBar'
+const index = () => {
   return (
-    <div className='wrapper'>
-      <Nav></Nav>
+    <div>
+      <NavigationBar></NavigationBar>
+      <div>index</div>
     </div>
+
   )
 }
 
-export default WorkManager
+export default index
