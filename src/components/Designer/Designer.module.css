@@ -1,0 +1,6 @@
+.Container {
+  width: 320px;
+  height: 568px;
+  background-color: white;
+  background-image: url('/assets/grid.png');
+}

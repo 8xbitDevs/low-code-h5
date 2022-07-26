@@ -1,5 +1,7 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useRef, useState } from 'react'
+import AttributesPanel from '../../components/AttributesPanel/AttributesPanel';
 import ComponentItem from '../../components/ComponentItem/ComponentItem';
+import Designer from '../../components/Designer/Designer';
 import styles from './Editor.module.css'
 
 const components = [
@@ -12,20 +14,19 @@ const components = [
 
 const Editor = () => {
   const componentSide = useRef(null);
-  const handleCollapse = useCallback(() => {
-    let opened = true;
-    return function () {
-      if (opened) {
-        componentSide.current.style.width = '0';
-        componentSide.current.style.padding = '0';
-        opened = false;
-      } else {
-        componentSide.current.style.width = '245px';
-        componentSide.current.style.padding = '1rem';
-        opened = true;
-      }
+  const [opened, setOpened] = useState(true);
+
+  const handleCollapse = () => {
+    if (opened) {
+      componentSide.current.style.width = '0';
+      componentSide.current.style.padding = '0';
+      setOpened(false);
+    } else {
+      componentSide.current.style.width = '245px';
+      componentSide.current.style.padding = '1rem';
+      setOpened(true);
     }
-  }, [componentSide]);
+  }
 
   return (
     <div className={styles.Container}>
@@ -37,11 +38,12 @@ const Editor = () => {
             )
           }
         </aside>
-        <button className={styles.Collapse} onClick={handleCollapse()}></button>
+        <button className={styles.Collapse} onClick={handleCollapse}></button>
       </div>
-      <aside>
-
-      </aside>
+      <section className={styles.WorkArea}>
+        <Designer />
+      </section>
+      <AttributesPanel />
     </div>
   );
 };

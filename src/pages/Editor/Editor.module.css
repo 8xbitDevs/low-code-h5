@@ -1,9 +1,12 @@
 .Container {
   display: flex;
+  height: calc(100vh - 48px);
+  background-color: #f0f2f5;
 }
 .AsideContainer {
   width: 245px;
-  height: calc(100vh - 48px);
+  height: 100%;
+  background-color: white;
   border-right: 1px solid #e5e5e5;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -21,6 +24,7 @@
   height: 64px;
   width: 13px;
   right: -12px;
+  padding: 0;
   top: calc(50% - 32px);
   border-width: 1px 1px 1px 0;
   border-color: #e5e5e5;
@@ -35,4 +39,11 @@
 .Collapse:hover {
   cursor: pointer;
   background-color: #e5e5e5;
+}
+.WorkArea {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
