@@ -1,0 +1,18 @@
+.container{
+    width: 100vw;
+    height: 4rem;
+    position: relative;
+    top: 0;
+    background-color: #001529;
+    display: flex;
+    align-items: center;
+
+    .logo{
+        width: auto;
+        height: 16px;
+        line-height: 16px;
+        font-size:large; 
+        padding: 5px 25px;
+        color: #1890FF;
+    }
+}
