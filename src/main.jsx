@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import Editor from './pages/editor/Editor'
+import Editor from './pages/Editor/Editor'
 import WorkManager from './pages/workmanager/index.jsx'
 import App from './App'
 import './index.scss'

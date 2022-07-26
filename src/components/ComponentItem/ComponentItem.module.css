@@ -1,0 +1,15 @@
+.Container {
+  background-color: #f5f8fb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+}
+.Container > img {
+  width: 32px;
+  height: 32px;
+}
+.Container > .Name {
+  display: block;
+  font-size: small;
+}
