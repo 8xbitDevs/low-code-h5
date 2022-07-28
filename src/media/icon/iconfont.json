@@ -1,0 +1,30 @@
+{
+  "id": "3554310",
+  "name": "8xbitsDevs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1727380",
+      "name": "34模板、框架-线性",
+      "font_class": "mobankuangjia-xianxing",
+      "unicode": "e8a5",
+      "unicode_decimal": 59557
+    },
+    {
+      "icon_id": "2076312",
+      "name": " 我的",
+      "font_class": "wode",
+      "unicode": "e8a0",
+      "unicode_decimal": 59552
+    },
+    {
+      "icon_id": "3868281",
+      "name": "数据看板",
+      "font_class": "shujukanban",
+      "unicode": "eb66",
+      "unicode_decimal": 60262
+    }
+  ]
+}

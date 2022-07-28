@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./NavigationBar.module.scss";
-import Bar from "./bar";
+import Bar from "./Bar/Bar";
 
 const NavigationBar = () => {
   const [barlist, setBarList] = useState([
@@ -14,6 +14,8 @@ const NavigationBar = () => {
       active: false,
     },
   ]);
+
+  // bar点击状态改变（单选）
   const changeStateBar = (clickIndex) => {
     const newBarlist = barlist.map((item, index) => {
       if (clickIndex === index) {

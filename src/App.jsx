@@ -3,7 +3,7 @@ import './App.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import Editor from './pages/editor/Editor'
-import WorkManager from './pages/workmanager/index.jsx'
+import WorkManager from './pages/workmanager/WorkManager.jsx'
 
 function App() {
 
