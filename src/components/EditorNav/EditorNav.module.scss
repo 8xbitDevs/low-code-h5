@@ -1,0 +1,31 @@
+.container {
+  width: 100vw;
+  height: 4rem;
+  background-color: #001529;
+  display: flex;
+  align-items: center;
+
+ .logo {
+    width: auto;
+    height: 16px;
+    line-height: 16px;
+    font-size: large;
+    padding: 5px 25px;
+    color: #1890FF;
+  }
+
+  .logo:hover {
+    cursor: pointer;
+    color: blanchedalmond;
+  }
+
+  .barLayout{
+    width: auto;
+    height: 4rem;
+    right: 25px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

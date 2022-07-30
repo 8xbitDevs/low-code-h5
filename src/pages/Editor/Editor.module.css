@@ -1,6 +1,6 @@
 .Container {
   display: flex;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 4rem);
   background-color: #f0f2f5;
 }
 .AsideContainer {
