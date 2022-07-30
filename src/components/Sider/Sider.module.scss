@@ -26,16 +26,13 @@
     height: 3rem;
     line-height: 3rem;
     text-align: center;
-
+    color: #595959;
     user-select: none;
     transition: all 1.24s;
     cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-      span{
-    // left: 1rem;
-  }
   }
   .text:hover {
     background-color: rgba(0, 0, 0, 0.1);

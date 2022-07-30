@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1546581",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "1727469",
+      "name": "232编辑、输入-线性",
+      "font_class": "bianjishuru-xianxing",
+      "unicode": "e8cc",
+      "unicode_decimal": 59596
+    },
+    {
+      "icon_id": "11613944",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "19657888",
+      "name": "预览",
+      "font_class": "preview",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
       "icon_id": "1727380",
       "name": "34模板、框架-线性",
       "font_class": "mobankuangjia-xianxing",

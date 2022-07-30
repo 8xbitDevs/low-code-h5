@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import style from "./Sider.module.scss";
 import "../../media/icon/iconfont.css";
 
@@ -31,7 +32,7 @@ function SideBar() {
 
   return (
     <div className={style.container}>
-      <div className={style.text}>
+      <Link to={'/'} className={style.text}>
         <span className="iconfont icon-wode"></span>
         我的作品
         <div
@@ -42,7 +43,7 @@ function SideBar() {
           }
           style={{ visibility: "hidden" }}
         ></div>
-      </div>
+      </Link>
       <div className={style.text} onClick={() => OpenSec(0)}>
         <span className="iconfont icon-shujukanban"></span>
         数据中心
@@ -74,7 +75,7 @@ function SideBar() {
       <div
         className={!secdis[1].oc ? style.sec : `${style.sec} ${style.sec_open}`}
       >
-        <div className={style.text}>模板列表</div>
+        <Link to={'/template'} className={style.text}>模板列表</Link>
       </div>
     </div>
   );
