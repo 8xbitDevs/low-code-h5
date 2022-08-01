@@ -6,6 +6,8 @@ import Editor from "./pages/editor/Editor";
 import WorkManager from "./pages/workmanager/WorkManager.jsx";
 import MyWork from "./pages/MyWork/MyWork";
 import TemplateCentre from "./pages/TemplateCentre/TemplateCentre";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route index element={<MyWork />}></Route>
           <Route path="/template" element={<TemplateCentre />}></Route>
         </Route>
+        <Route path="/login" element={<Login domain="localhost:8080" />} />
+        <Route path="/register" element={<Register domain="localhost:8080" />} />
         <Route path="/editor" element={<Editor />} />
       </Routes>
     </BrowserRouter>
