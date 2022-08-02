@@ -12,7 +12,6 @@ const WorkManager = () => {
       <div className={style.down}>
         <Sider></Sider>
         <div className={style.wpcontainer}>
-          {/* <MyWork></MyWork> */}
           <Outlet></Outlet>
         </div>
       </div>

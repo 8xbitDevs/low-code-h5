@@ -12,6 +12,7 @@ const NavigationBar = () => {
     {
       content: "Github",
       active: false,
+      src: "https://github.com/8xbitDevs/low-code-h5",
     },
   ]);
 
@@ -45,7 +46,10 @@ const NavigationBar = () => {
               key={index}
               content={item.content}
               active={item.active}
-              click={() => changeStateBar(index)}
+              src = {item.src}
+              click={() => {
+                changeStateBar(index);
+              }}
             ></Bar>
           );
         })}

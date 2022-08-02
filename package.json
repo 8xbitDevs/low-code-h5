@@ -10,6 +10,7 @@
   "dependencies": {
     "pubsub-js": "^1.9.4",
     "react": "^18.0.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.0.0",
     "react-router-dom": "6"
   },
