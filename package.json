@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "pubsub-js": "^1.9.4",
     "react": "^18.0.0",
     "react-color": "^2.19.3",
