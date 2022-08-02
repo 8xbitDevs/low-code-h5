@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^4.22.3",
     "axios": "^0.27.2",
     "pubsub-js": "^1.9.4",
     "react": "^18.0.0",

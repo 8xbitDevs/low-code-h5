@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EditorNav from "../../components/EditorNav/EditorNav";
 import axios from "axios"
 import "./index.scss"
+import useDialog from "../../components/Dialog";
 
 export function getToken() {
     const localStorage = window.localStorage;
@@ -21,10 +22,13 @@ function Login(props) {
         text: "",
         error: false
     });
+
     const [password, setPassword] = useState({
         text: "",
         error: false
     });
+
+    const [Dialog, openDialog] = useDialog();
 
     useEffect(() => {
         if (getToken() != null) {
@@ -97,16 +101,20 @@ function Login(props) {
         if (resData.state == 0) {
             // TODO
             // 弹窗提示
-            localStorage.removeItem("token");
+            openDialog(resData.msg, () => {
+                localStorage.removeItem("token");
+            });
         }
         if (resData.state == 1) {
             // TODO
             // 弹窗提示
-            localStorage.setItem("token", JSON.stringify({
-                value: resData.token,
-                expiredTime: Date.now() + 1000 * 60 * 60 * 24 * 3
-            }));
-            window.location.href = "/";
+            openDialog("登录成功，点击确定跳转回首页", () => {
+                localStorage.setItem("token", JSON.stringify({
+                    value: resData.token,
+                    expiredTime: Date.now() + 1000 * 60 * 60 * 24 * 3
+                }));
+                window.location.href = "/";
+            });
         }
     }
 
@@ -143,6 +151,7 @@ function Login(props) {
                     ></input>
                 </div>
                 <button id="submitBtn" onClick={handleSubmitClick}>登录</button>
+                <Dialog />
             </div>
         </div>
     );

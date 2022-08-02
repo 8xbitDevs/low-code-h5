@@ -4,6 +4,7 @@ import WorkManager from "../workmanager/WorkManager";
 import {getToken} from "../Login"
 import axios from "axios"
 import "./index.scss"
+import useDialog from "../../components/Dialog";
 
 function Register(props) {
 
@@ -11,14 +12,18 @@ function Register(props) {
         text: "",
         error: false
     });
+
     const [rePassword, setRePassword] = useState({
         text: "",
         error: false
     });
+
     const [password, setPassword] = useState({
         text: "",
         error: false
     });
+
+    const [Dialog, openDialog] = useDialog();
 
     useEffect(() => {
         if (getToken() != null) {
@@ -114,16 +119,21 @@ function Register(props) {
         if (resData.state == 0) {
             // TODO
             // 弹窗提示
-            localStorage.removeItem("token");
+            openDialog(resData.msg, () => {
+                localStorage.removeItem("token");
+            });
         }
         if (resData.state == 1) {
             // TODO
             // 弹窗提示
-            localStorage.setItem("token", JSON.stringify({
-                value: resData.token,
-                expiredTime: Date.now() + 1000 * 60 * 60 * 24 * 3
-            }));
-            window.location.href = "/";
+            openDialog("注册成功，点击确定跳转回首页", () => {
+                console.log("回调");
+                localStorage.setItem("token", JSON.stringify({
+                    value: resData.token,
+                    expiredTime: Date.now() + 1000 * 60 * 60 * 24 * 3
+                }));
+                window.location.href = "/";
+            });
         }
     }
 
@@ -172,6 +182,7 @@ function Register(props) {
                     ></input>
                 </div>
                 <button id="submitBtn" onClick={handleSubmitClick}>注册</button>
+                <Dialog />
             </div>
         </div>
     );
