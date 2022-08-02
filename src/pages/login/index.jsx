@@ -3,7 +3,7 @@ import EditorNav from "../../components/EditorNav/EditorNav";
 import axios from "axios"
 import "./index.scss"
 
-function getToken() {
+export function getToken() {
     const localStorage = window.localStorage;
     const token = JSON.parse(localStorage.getItem("token"));
     if (token == null) return null;
