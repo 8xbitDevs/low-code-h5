@@ -5,13 +5,13 @@
   display: flex;
   align-items: center;
 
- .logo {
+  .logo {
     width: auto;
     height: 16px;
     line-height: 16px;
     font-size: large;
     padding: 5px 25px;
-    color: #1890FF;
+    color: #1890ff;
   }
 
   .logo:hover {
@@ -19,7 +19,7 @@
     color: blanchedalmond;
   }
 
-  .barLayout{
+  .barLayout {
     width: auto;
     height: 4rem;
     right: 25px;
@@ -27,9 +27,17 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
 
-  button{
-    
+  .button {
+    width: auto;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border-radius: 0.5rem;
+    list-style: none;
+    background-color: #1890ff;
+    color: white;
+    cursor: pointer;
   }
 }

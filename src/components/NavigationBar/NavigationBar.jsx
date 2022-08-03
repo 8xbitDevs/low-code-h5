@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./NavigationBar.module.scss";
 import Bar from "./Bar/Bar";
+import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
+
   const [barlist, setBarList] = useState([
     {
       content: "Gitee",
@@ -34,6 +37,13 @@ const NavigationBar = () => {
     setBarList(newBarlist);
   };
 
+  function logout() {
+    const localStorage = window.localStorage;
+    const token = JSON.parse(localStorage.getItem("token"));
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
   return (
     <header className={style.container}>
       <Link to="/">
@@ -46,13 +56,16 @@ const NavigationBar = () => {
               key={index}
               content={item.content}
               active={item.active}
-              src = {item.src}
+              src={item.src}
               click={() => {
                 changeStateBar(index);
               }}
             ></Bar>
           );
         })}
+        <button className={style.button} onClick={logout}>
+          退出登录
+        </button>
       </div>
     </header>
   );

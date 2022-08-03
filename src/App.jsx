@@ -17,8 +17,8 @@ function App() {
           <Route index element={<MyWork />}></Route>
           <Route path="/template" element={<TemplateCentre />}></Route>
         </Route>
-        <Route path="/login" element={<Login domain="localhost:8080" />} />
-        <Route path="/register" element={<Register domain="localhost:8080" />} />
+        <Route path="/login" element={<Login domain="lowcode.wyy.ink" />} />
+        <Route path="/register" element={<Register domain="lowcode.wyy.ink" />} />
         <Route path="/editor" element={<Editor />} />
       </Routes>
     </BrowserRouter>

@@ -49,9 +49,10 @@ const EditorNav = () => {
             ></Bar>
           );
         })}
-        <button>预览</button>
-        <button>保存</button>
-        <button>发布</button>
+        <button className={style.button}>退出登录</button>
+        <button className={style.button}>预览</button>
+        <button className={style.button}>保存</button>
+        <button className={style.button}>发布</button>
       </div>
     </header>
   );
