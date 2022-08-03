@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import style from "./Sider.module.scss";
-import "../../media/icon/iconfont.css";
+import React, { useRef } from 'react'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import style from './Sider.module.scss'
+import '../../media/icon/iconfont.css'
 
 function Sider() {
   const [secdis, setsecdis] = useState([
@@ -12,7 +12,7 @@ function Sider() {
     {
       oc: false,
     },
-  ]);
+  ])
 
   // 列表展开函数，参数：目标二级菜单在左右二级菜单中的顺序，从0开始
   const OpenSec = (secindex) => {
@@ -20,15 +20,15 @@ function Sider() {
       if (secindex === index) {
         return {
           oc: !secdis[index].oc,
-        };
+        }
       } else {
         return {
           ...item,
-        };
+        }
       }
-    });
-    setsecdis(newsecdis);
-  };
+    })
+    setsecdis(newsecdis)
+  }
 
   return (
     <div className={style.container}>
@@ -41,8 +41,7 @@ function Sider() {
               ? style.handler
               : `${style.handler} ${style.handler_open}`
           }
-          style={{ visibility: "hidden" }}
-        ></div>
+          style={{ visibility: 'hidden' }}></div>
       </Link>
       <div className={style.text} onClick={() => OpenSec(0)}>
         <span className="iconfont icon-shujukanban"></span>
@@ -52,14 +51,15 @@ function Sider() {
             !secdis[0].oc
               ? style.handler
               : `${style.handler} ${style.handler_open}`
-          }
-        ></div>
+          }></div>
       </div>
       <div
-        className={!secdis[0].oc ? style.sec : `${style.sec} ${style.sec_open}`}
-      >
-        <div className={style.text}>基础数据</div>
-        <div className={style.text}>基础数据2</div>
+        className={
+          !secdis[0].oc ? style.sec : `${style.sec} ${style.sec_open}`
+        }>
+        <Link to={'/essentialdata1'} className={style.text}>
+          基础数据
+        </Link>
       </div>
       <div className={style.text} onClick={() => OpenSec(1)}>
         <span className="iconfont icon-mobankuangjia-xianxing"></span>
@@ -69,16 +69,18 @@ function Sider() {
             !secdis[1].oc
               ? style.handler
               : `${style.handler} ${style.handler_open}`
-          }
-        ></div>
+          }></div>
       </div>
       <div
-        className={!secdis[1].oc ? style.sec : `${style.sec} ${style.sec_open}`}
-      >
-        <Link to={'/template'} className={style.text}>模板列表</Link>
+        className={
+          !secdis[1].oc ? style.sec : `${style.sec} ${style.sec_open}`
+        }>
+        <Link to={'/template'} className={style.text}>
+          模板列表
+        </Link>
       </div>
     </div>
-  );
+  )
 }
 
-export default Sider;
+export default Sider

@@ -8,7 +8,9 @@ import MyWork from "./pages/MyWork/MyWork";
 import TemplateCentre from "./pages/TemplateCentre/TemplateCentre";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import EssentialData from './pages/EssentialData/EssentialData'
 import { AuthRoute } from "./components/AuthRoute";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
       <Routes>
           <Route path="/" element={<AuthRoute><WorkManager /></AuthRoute>}>
             <Route index element={<MyWork />}></Route>
+            <Route path="/essentialdata1" element={<EssentialData />}></Route>
             <Route path="/template" element={<TemplateCentre />}></Route>
           </Route>
           <Route path="/editor" element={<AuthRoute><Editor /></AuthRoute>} />
@@ -26,7 +29,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
