@@ -2,6 +2,7 @@ import React from 'react'
 import './App.scss'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar/NavigationBar'
+import EssentialData from './pages/EssentialData/EssentialData'
 import Editor from './pages/editor/Editor'
 import WorkManager from './pages/workmanager/WorkManager.jsx'
 import MyWork from './pages/MyWork/MyWork'
@@ -14,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<WorkManager />}>
-          {/* <Route path="/essentialdata1" element={<EssentialData />}></Route> */}
+          <Route path="/essentialdata1" element={<EssentialData />}></Route>
           <Route index element={<MyWork />}></Route>
           <Route path="/template" element={<TemplateCentre />}></Route>
         </Route>

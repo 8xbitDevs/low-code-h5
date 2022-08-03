@@ -57,9 +57,9 @@ function Sider() {
         className={
           !secdis[0].oc ? style.sec : `${style.sec} ${style.sec_open}`
         }>
-        {/* <Link to={'/essentialdata1'} className={style.text}>
+        <Link to={'/essentialdata1'} className={style.text}>
           基础数据
-        </Link> */}
+        </Link>
       </div>
       <div className={style.text} onClick={() => OpenSec(1)}>
         <span className="iconfont icon-mobankuangjia-xianxing"></span>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import './index.scss'
 import useDialog from '../../components/Dialog'
+
 export function getToken() {
   const localStorage = window.localStorage
   const token = JSON.parse(localStorage.getItem('token'))
