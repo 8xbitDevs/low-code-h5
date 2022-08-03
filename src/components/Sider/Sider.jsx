@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import style from './Sider.module.scss'
 import '../../media/icon/iconfont.css'
 
-function SideBar() {
+function Sider() {
   const [secdis, setsecdis] = useState([
     {
       oc: false,
@@ -83,4 +83,8 @@ function SideBar() {
   )
 }
 
+<<<<<<< HEAD
 export default SideBar
+=======
+export default Sider;
+>>>>>>> 9a92dc1c44a6a51bc2d2ab0afb10cd12d844190c

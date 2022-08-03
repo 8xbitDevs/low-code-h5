@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: auto;
+  height: auto;
+  max-height: 25rem;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  padding-bottom: 1.5rem;
+  border: 0.1rem solid #dadada;
+  border-radius: 0.5rem;
+  position: relative;
+  user-select: none;
+  .title {
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-bottom: 0.1rem solid #dadada;
+  }
+  .form1 {
+    width: 100%;
+    height: 2rem;
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    input {
+      outline: none;
+      width: 3rem;
+      margin: 0 0.5rem;
+      color: #595959;
+    }
+  }
+  p {
+    font-size: 14px;
+    color: #595959;
+  }
+
+  .boxcontainer {
+    width: 100%;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-flow: wrap;
+    color: #595959;
+    select {
+      width: 3rem;
+      color: #595959;
+      outline: none;
+    }
+    label {
+      cursor: pointer;
+    }
+    .numberinput {
+      cursor: pointer;
+      outline: none;
+      width: 3rem;
+      color: #595959;
+    }
+    .up {
+      text-align: center;
+      flex-basis: 100%;
+    }
+    .left {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      flex-flow: wrap;
+      flex-basis: 22%;
+    }
+    .right {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      flex-flow: wrap;
+      flex-basis: 22%;
+    }
+    .down {
+      text-align: center;
+      flex-basis: 100%;
+    }
+    .box {
+      height: calc(100% - 2rem);
+      margin: auto;
+      padding: 0 0.6rem 1rem 0.6rem;
+      text-align: center;
+      background-color: #52527e;
+      border: 0.1rem dashed white;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+
+.container2 {
+  width: auto;
+  height: auto;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  padding-bottom: 1.5rem;
+  border: 0.1rem solid #dadada;
+  border-radius: 0.5rem;
+  position: relative;
+  user-select: none;
+  .title {
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-bottom: 0.1rem solid #dadada;
+  }
+  .form2 {
+    height: calc(100vh - 32rem);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: auto;
+    p {
+      font-size: 14px;
+      margin: 1rem 0;
+      color: #595959;
+    }
+
+    .form1 {
+      width: 100%;
+      height: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      .numberinput {
+        margin-left: 1rem;
+        cursor: pointer;
+        outline: none;
+        width: 3rem;
+        color: #595959;
+      }
+    }
+  }
+}
