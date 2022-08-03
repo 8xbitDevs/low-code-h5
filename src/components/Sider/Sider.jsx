@@ -57,9 +57,9 @@ function Sider() {
         className={
           !secdis[0].oc ? style.sec : `${style.sec} ${style.sec_open}`
         }>
-        <Link to={'/essentialdata1'} className={style.text}>
+        {/* <Link to={'/essentialdata1'} className={style.text}>
           基础数据
-        </Link>
+        </Link> */}
       </div>
       <div className={style.text} onClick={() => OpenSec(1)}>
         <span className="iconfont icon-mobankuangjia-xianxing"></span>
@@ -83,8 +83,4 @@ function Sider() {
   )
 }
 
-<<<<<<< HEAD
-export default SideBar
-=======
-export default Sider;
->>>>>>> 9a92dc1c44a6a51bc2d2ab0afb10cd12d844190c
+export default Sider
