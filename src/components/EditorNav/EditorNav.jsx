@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./EditorNav.module.scss";
 import Bar from "./Bar/Bar";
+import { useNavigate } from "react-router-dom";
 
 const EditorNav = () => {
+
+  const navigate = useNavigate();
+
   const [barlist, setBarList] = useState([
     {
       content: "Gitee",
@@ -33,6 +37,13 @@ const EditorNav = () => {
     setBarList(newBarlist);
   };
 
+  function logout() {
+    const localStorage = window.localStorage;
+    const token = JSON.parse(localStorage.getItem("token"));
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
   return (
     <header className={style.container}>
       <Link to="/">
@@ -49,7 +60,7 @@ const EditorNav = () => {
             ></Bar>
           );
         })}
-        <button className={style.button}>退出登录</button>
+        <button className={style.button} onClick={logout}>退出登录</button>
         <button className={style.button}>预览</button>
         <button className={style.button}>保存</button>
         <button className={style.button}>发布</button>

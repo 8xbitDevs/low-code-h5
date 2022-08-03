@@ -1,6 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
+.numberinput {
+  cursor: pointer;
+  outline: none;
+  width: 3rem;
+  color: #595959;
+  border: 1px solid #dadada;
+  border-radius: 0.2rem;
 }
 
 .container {
@@ -14,7 +18,7 @@
   position: relative;
   user-select: none;
   .title {
-    height: 1.5rem;
+    height: 2.5rem;
     margin-bottom: 0.5rem;
     padding: 0.5rem 0 0.5rem 1rem;
     border-bottom: 0.1rem solid #dadada;
@@ -35,6 +39,7 @@
     }
   }
   p {
+    margin: 0;
     font-size: 14px;
     color: #595959;
   }
@@ -54,27 +59,26 @@
       outline: none;
     }
     label {
+      width: 1rem;
+      height: 1rem;
+      line-height: 1rem;
       cursor: pointer;
+      text-align: center;
     }
-    .numberinput {
-      cursor: pointer;
-      outline: none;
-      width: 3rem;
-      color: #595959;
-    }
+
     .up {
       text-align: center;
       flex-basis: 100%;
     }
     .left {
-      text-align: right;
+      text-align: center;
       display: flex;
       flex-direction: column;
       flex-flow: wrap;
       flex-basis: 22%;
     }
     .right {
-      text-align: left;
+      text-align: center;
       display: flex;
       flex-direction: column;
       flex-flow: wrap;
@@ -85,8 +89,7 @@
       flex-basis: 100%;
     }
     .box {
-      height: calc(100% - 2rem);
-      margin: auto;
+      height: calc(100% - 1rem);
       padding: 0 0.6rem 1rem 0.6rem;
       text-align: center;
       background-color: #52527e;
@@ -107,7 +110,7 @@
   position: relative;
   user-select: none;
   .title {
-    height: 1.5rem;
+    height: 2.5rem;
     margin-bottom: 0.5rem;
     padding: 0.5rem 0 0.5rem 1rem;
     border-bottom: 0.1rem solid #dadada;

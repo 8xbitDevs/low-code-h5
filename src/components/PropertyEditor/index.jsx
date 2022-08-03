@@ -129,12 +129,14 @@ const PropertyEditor = (props) => {
           <p>上</p>
           <input
             type="number"
+            className={style.numberinput}
             value={totop}
             onChange={(e) => settotop(e.target.value)}
           />
           <p>左</p>
           <input
             type="number"
+            className={style.numberinput}
             value={toleft}
             onChange={(e) => settoleft(e.target.value)}
           />
@@ -196,8 +198,8 @@ const PropertyEditor = (props) => {
           <div
             className={style.box}
             style={{
-              width: "8rem",
-              height: "6rem",
+              width: "9rem",
+              height: "8rem",
               fontSize: "14px",
               margin: "0.5rem",
               backgroundColor: `${boxstyle[0].bg}`,
