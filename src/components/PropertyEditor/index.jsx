@@ -7,18 +7,8 @@ import { selectPage, updateCurrentComponentAttributes } from '../../store/page/p
 const PropertyEditor = () => {
   const bgcolor = useRef();
   const page = useSelector(selectPage);
-  console.log(page);
   const dispatch = useDispatch();
-  const type = page.currentComponent.type;
-  const [width, setwidth] = useState(40); // 宽
-  const [height, setheight] = useState(100); // 高
   const [nowmbp, setnowmbp] = useState(0); // 当前选中的是margin,border,padding中的哪一个
-  const [mbp, setmbp] = useState([
-    // margin、border、padding
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ]);
   const [borderRadius, setborderRadius] = useState(100); // 圆角
   const [bgColor, setbgColor] = useState("rgba(0, 0, 0, 1)");
   const [check, setcheck] = useState("none"); // 盒子checkbox显示状态
@@ -81,7 +71,8 @@ const PropertyEditor = () => {
 
   // 设置mbp
   const setMBP = (nowmbp, tarindex, value) => {
-    const newset = mbp.map((item, index) => {
+    const temp = JSON.parse(JSON.stringify(page.currentComponent.attributes.mbp));
+    const newset = temp.map((item, index) => {
       if (nowmbp === index) {
         item[tarindex] = value;
         return item;
@@ -89,7 +80,13 @@ const PropertyEditor = () => {
         return item;
       }
     });
-    setmbp(newset);
+    dispatch(updateCurrentComponentAttributes({
+      attributes: {
+        ...page.currentComponent.attributes, mbp: newset
+      },
+      change: Date.now()
+    }))
+    // setmbp(newset);
   };
 
   // 返回属性设置模块,type为组件种类，根据组件种类返回不同属性设置模块，目前只有文本
@@ -209,7 +206,7 @@ const PropertyEditor = () => {
               <input
                 type="number"
                 className={style.numberinput}
-                value={mbp[nowmbp][0]}
+                value={page.currentComponent.attributes.mbp[nowmbp][0]}
                 onChange={(e) => setMBP(nowmbp, 0, e.target.value)}
               />
               <select>
@@ -226,7 +223,7 @@ const PropertyEditor = () => {
               <input
                 type="number"
                 className={style.numberinput}
-                value={mbp[nowmbp][3]}
+                value={page.currentComponent.attributes.mbp[nowmbp][3]}
                 onChange={(e) => setMBP(nowmbp, 3, e.target.value)}
               />
               <select>
@@ -268,7 +265,7 @@ const PropertyEditor = () => {
               >
                 padding
                 <div className={style.box}>
-                  {width} x {height}
+                  {page.currentComponent.attributes.width}x{page.currentComponent.attributes.height}
                 </div>
               </div>
             </div>
@@ -280,7 +277,7 @@ const PropertyEditor = () => {
               <input
                 type="number"
                 className={style.numberinput}
-                value={mbp[nowmbp][1]}
+                value={page.currentComponent.attributes.mbp[nowmbp][1]}
                 onChange={(e) => setMBP(nowmbp, 1, e.target.value)}
               />
               <select>
@@ -297,7 +294,7 @@ const PropertyEditor = () => {
               <input
                 type="number"
                 className={style.numberinput}
-                value={mbp[nowmbp][2]}
+                value={page.currentComponent.attributes.mbp[nowmbp][2]}
                 onChange={(e) => setMBP(nowmbp, 2, e.target.value)}
               />
               <select>
@@ -309,7 +306,7 @@ const PropertyEditor = () => {
           </div>
         </div>
       </div>
-      {propertyset(`${type}`)}
+      {propertyset(`${page.currentComponent.type}`)}
     </div>
   );
 };

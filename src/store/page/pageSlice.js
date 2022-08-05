@@ -10,7 +10,9 @@ export const pageSlice = createSlice({
         top: 0,
         left: 0,
         width: 0,
-        height: 0
+        height: 0,
+        mbp: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+        borderColor: ''
       },
       change: 0
     },

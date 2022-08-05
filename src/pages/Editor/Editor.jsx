@@ -31,7 +31,7 @@ const Editor = () => {
 
   return (
     <div>
-      <EditorNav></EditorNav>
+      <EditorNav />
       <div className={styles.Container}>
         <div className={styles.CollapseWrapper}>
           <aside ref={componentSide} className={styles.AsideContainer}>

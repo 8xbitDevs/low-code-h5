@@ -3,6 +3,7 @@
   height: calc(100vh - 4rem);
   background-color: #f0f2f5;
 }
+
 .AsideContainer {
   width: 245px;
   height: 100%;
@@ -16,9 +17,12 @@
   padding: 1rem;
   overflow: hidden;
 }
+
 .CollapseWrapper {
   position: relative;
+  z-index: 2;
 }
+
 .Collapse {
   position: absolute;
   height: 64px;
@@ -36,10 +40,12 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .Collapse:hover {
   cursor: pointer;
   background-color: #e5e5e5;
 }
+
 .WorkArea {
   display: flex;
   flex-direction: column;

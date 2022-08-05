@@ -2,8 +2,14 @@
 export const createElement = (type, { top, left }) => {
   const element = document.createElement(type);
   element.id = Date.now();
+  element.style.boxSizing = 'content-box';
   element.style.top = top;
   element.style.left = left;
+  element.style.borderStyle = 'solid';
+  element.style.display = 'block';
+  element.style.margin = '0';
+  element.style.borderWidth = '0';
+  element.style.padding = '0';
   // 设置各模板元素特有属性
   switch (type) {
     case 'button': createButtonAttributes(element, top, left); break;
