@@ -23,7 +23,7 @@ const AttributesPanel = () => {
   return (
     <div style={{ width: width }} className={styles.Container}>
       <div className={styles.OverflowHidden}>
-        <PropertyEditor type='文本'></PropertyEditor>
+        <PropertyEditor />
       </div>
       <button className={styles.ColResize} onMouseDown={handleResize}>|</button>
     </div>

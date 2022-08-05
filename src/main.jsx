@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './store/store'
 import App from './App'
 import './index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App></App>
+  <Provider store={store}>
+    <App></App>
+  </Provider>
 );

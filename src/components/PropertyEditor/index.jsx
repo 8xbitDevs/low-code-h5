@@ -1,11 +1,14 @@
 import React, { useRef, useState, forwardRef, useEffect } from "react";
 import style from "./index.module.scss";
 import ColorPicker from "../ColorPicker";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectPage, updateCurrentComponentAttributes } from '../../store/page/pageSlice';
 
 const PropertyEditor = (props) => {
-  const {type} = props;
-
   const bgcolor = useRef();
+  const page = useSelector(selectPage);
+  const dispatch = useDispatch();
+  const type = page.currentComponent.type;
 
   const [totop, settotop] = useState(0); // 上边距
   const [toleft, settoleft] = useState(0); // 左边距
@@ -93,7 +96,7 @@ const PropertyEditor = (props) => {
 
   // 返回属性设置模块,type为组件种类，根据组件种类返回不同属性设置模块，目前只有文本
   const propertyset = (type) => {
-    if (type === "文本") {
+    if (type === "span") {
       return (
         <div className={style.container2}>
           <div className={style.title}>属性设置</div>
@@ -113,6 +116,18 @@ const PropertyEditor = (props) => {
         </div>
       );
     }
+    if (type === 'button') {
+
+    }
+    if (type === 'a') {
+
+    }
+    if (type === 'img') {
+
+    }
+    if (type === 'video') {
+
+    }
   };
 
   useEffect(() => {
@@ -131,7 +146,15 @@ const PropertyEditor = (props) => {
             type="number"
             className={style.numberinput}
             value={totop}
-            onChange={(e) => settotop(e.target.value)}
+            onChange={(e) => {
+              dispatch(updateCurrentComponentAttributes({
+                attributes: {
+                  ...page.currentComponent.attributes, top: e.target.value
+                },
+                change: Date.now()
+              }))
+              settotop(e.target.value)
+            }}
           />
           <p>左</p>
           <input

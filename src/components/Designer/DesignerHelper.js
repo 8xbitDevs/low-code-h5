@@ -42,11 +42,13 @@ export const createElement = (type, { top, left }) => {
 const createButtonAttributes = (el, top, left) => {
   el.className = 'template_button';
   el.innerHTML = '按钮';
+  el.dataset.type = 'button';
   el.style.left = left - 24 + 'px';
   el.style.top = top - 12 + 'px';
 }
 const createSpanAttributes = (el, top, left) => {
   el.className = 'template_text';
+  el.dataset.type = 'span';
   el.innerHTML = '文本';
   el.contentEditable = true;
   el.style.left = left - 24 + 'px';
@@ -54,12 +56,14 @@ const createSpanAttributes = (el, top, left) => {
 }
 const createAAttributes = (el, top, left) => {
   el.className = 'template_link';
+  el.dataset.type = 'a';
   el.innerHTML = '链接';
   el.style.left = left - 24 + 'px';
   el.style.top = top - 12 + 'px';
 }
 const createImgAttributes = (el, top, left) => {
   el.className = 'template_image';
+  el.dataset.type = 'img';
   el.draggable = false;
   el.src = "https://cn.vitejs.dev/logo-with-shadow.png";
   el.style.left = left - 64 + 'px';
@@ -67,6 +71,7 @@ const createImgAttributes = (el, top, left) => {
 }
 const createVideoAttributes = (el, top, left) => {
   el.className = 'template_video';
+  el.dataset.type = 'video';
   el.src = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm";
   el.loop = true;
   el.controls = true;
