@@ -1,17 +1,15 @@
-import React, { useRef, useState, forwardRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import style from "./index.module.scss";
 import ColorPicker from "../ColorPicker";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPage, updateCurrentComponentAttributes } from '../../store/page/pageSlice';
 
-const PropertyEditor = (props) => {
+const PropertyEditor = () => {
   const bgcolor = useRef();
   const page = useSelector(selectPage);
+  console.log(page);
   const dispatch = useDispatch();
   const type = page.currentComponent.type;
-
-  const [totop, settotop] = useState(0); // 上边距
-  const [toleft, settoleft] = useState(0); // 左边距
   const [width, setwidth] = useState(40); // 宽
   const [height, setheight] = useState(100); // 高
   const [nowmbp, setnowmbp] = useState(0); // 当前选中的是margin,border,padding中的哪一个
@@ -101,7 +99,7 @@ const PropertyEditor = (props) => {
         <div className={style.container2}>
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
-            <ColorPicker text="背景色：" ref={bgcolor}></ColorPicker>
+            <ColorPicker text="背景色：" ref={bgcolor} />
             <div className={style.form1}>
               <p>圆角(px):</p>
               <input
@@ -111,7 +109,7 @@ const PropertyEditor = (props) => {
                 onChange={(e) => setborderRadius(e.target.value)}
               />
             </div>
-            <ColorPicker text="边框颜色：" ref={bgcolor}></ColorPicker>
+            <ColorPicker text="边框颜色：" ref={bgcolor} />
           </div>
         </div>
       );
@@ -145,7 +143,7 @@ const PropertyEditor = (props) => {
           <input
             type="number"
             className={style.numberinput}
-            value={totop}
+            value={page.currentComponent.attributes.top}
             onChange={(e) => {
               dispatch(updateCurrentComponentAttributes({
                 attributes: {
@@ -153,15 +151,21 @@ const PropertyEditor = (props) => {
                 },
                 change: Date.now()
               }))
-              settotop(e.target.value)
             }}
           />
           <p>左</p>
           <input
             type="number"
             className={style.numberinput}
-            value={toleft}
-            onChange={(e) => settoleft(e.target.value)}
+            value={page.currentComponent.attributes.left}
+            onChange={(e) => {
+              dispatch(updateCurrentComponentAttributes({
+                attributes: {
+                  ...page.currentComponent.attributes, left: e.target.value
+                },
+                change: Date.now()
+              }))
+            }}
           />
         </div>
         <div className={style.form1}>
@@ -169,15 +173,29 @@ const PropertyEditor = (props) => {
           <input
             type="number"
             className={style.numberinput}
-            value={width}
-            onChange={(e) => setwidth(e.target.value)}
+            value={page.currentComponent.attributes.width}
+            onChange={(e) => {
+              dispatch(updateCurrentComponentAttributes({
+                attributes: {
+                  ...page.currentComponent.attributes, width: e.target.value
+                },
+                change: Date.now()
+              }))
+            }}
           />
           <p>高</p>
           <input
             type="number"
             className={style.numberinput}
-            value={height}
-            onChange={(e) => setheight(e.target.value)}
+            value={page.currentComponent.attributes.height}
+            onChange={(e) => {
+              dispatch(updateCurrentComponentAttributes({
+                attributes: {
+                  ...page.currentComponent.attributes, height: e.target.value
+                },
+                change: Date.now()
+              }))
+            }}
           />
         </div>
         <div className={style.form1}>

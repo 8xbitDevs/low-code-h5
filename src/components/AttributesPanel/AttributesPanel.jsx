@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styles from './AttributesPanel.module.css'
-import PropertyEditor from '../PropertyEditor';
+import PropertyEditor from '../PropertyEditor/index';
 
 const AttributesPanel = () => {
   const [width, setWidth] = useState(345);

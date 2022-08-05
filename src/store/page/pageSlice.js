@@ -6,7 +6,12 @@ export const pageSlice = createSlice({
     currentComponent: {
       id: 0,
       type: 'button',
-      attributes: {},
+      attributes: {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0
+      },
       change: 0
     },
     pageData: {
