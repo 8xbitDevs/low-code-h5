@@ -80,11 +80,7 @@ const Designer = () => {
           left: focusComponent.current.style.left.slice(0, -2),
           width: focusComponent.current.style.width.slice(0, -2),
           height: focusComponent.current.style.height.slice(0, -2),
-          mbp: [
-            [margin[0], margin[1]?.trimStart(), margin[2]?.trimStart(), margin[3]?.trimStart()],
-            [borderWidth[0], borderWidth[1]?.trimStart(), borderWidth[2]?.trimStart(), borderWidth[3]?.trimStart()],
-            [padding[0], padding[1]?.trimStart(), padding[2]?.trimStart(), padding[3]?.trimStart()]
-          ]
+          mbp: [margin, borderWidth, padding]
         },
         change: page.currentComponent.change
       }));
