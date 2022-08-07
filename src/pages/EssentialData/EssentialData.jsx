@@ -3,6 +3,7 @@ import './EssentialData.scss'
 import { useState, useEffect } from 'react'
 import { Space, Table } from 'antd'
 import 'antd/dist/antd.css'
+import axios from 'axios'
 
 function EssentialData() {
   const columns = [
@@ -18,9 +19,9 @@ function EssentialData() {
       key: 'title',
     },
     {
-      title: 'Forms',
-      dataIndex: 'froms',
-      key: 'froms',
+      title: 'Describe',
+      dataIndex: 'describe',
+      key: 'describe',
     },
 
     {
@@ -39,38 +40,33 @@ function EssentialData() {
     data: [
       {
         key: '1',
-        id: '1',
-        title: 32,
-        froms: '1',
-      },
-
-      {
-        key: '1',
         id: '2',
         title: 32,
-        froms: '1 ',
+        describe: '1 ',
       },
-      { key: '2', id: '3', title: 42, froms: ' 1' },
+      { key: '2', id: '3', title: 42, describe: ' 1' },
       {
         key: '3',
         id: '4',
         title: 32,
-        froms: '1',
+        describe: '1',
       },
     ],
   })
   // 参数管理
   const [params, setParams] = useState({
     page: 1,
-    per_page: 6,
+    per_page: 7,
   })
   // 发送接口请求
   useEffect(() => {
     async function fetchDatasSource() {
-      const res = await http.get('#', { params })
-      setDatasSource({
-        list: res.data,
-      })
+      const res = await axios(
+        'http://127.0.0.1:4523/m1/1382018-0-default/api/document/getList',
+        { params }
+      )
+      console.log(res.data.documents)
+      setDatasSource(res.data)
     }
     fetchDatasSource()
   }, [params])
@@ -84,7 +80,7 @@ function EssentialData() {
   return (
     <Table
       columns={columns}
-      dataSource={datasSource.data}
+      dataSource={datasSource.documents}
       pagination={{
         position: ['bottomRight'],
         current: params.page,

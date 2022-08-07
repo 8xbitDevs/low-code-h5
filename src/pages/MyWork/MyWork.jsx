@@ -1,14 +1,28 @@
-import React, { useRef } from "react";
-import { useEffect, useState } from "react";
-import WorksCard from "../../components/WorksCard/WorksCard";
-import style from "./MyWork.module.scss";
-import "../../media/icon/iconfont.css";
-import { Link } from "react-router-dom";
+import React, { useRef } from 'react'
+import { useEffect, useState } from 'react'
+import WorksCard from '../../components/WorksCard/WorksCard'
+import style from './MyWork.module.scss'
+import '../../media/icon/iconfont.css'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 function MyWork() {
+  const [data, setData] = useState({
+    doc: [{ createTime: '', describe: '', id: '', title: '' }],
+  })
+  useEffect(() => {
+    async function fetchDatasSource() {
+      const res = await axios(
+        'http://127.0.0.1:4523/m1/1382018-0-default/api/document/get'
+      )
+      //console.log(res.data.doc)
+      setData(res.data.doc)
+    }
+    fetchDatasSource()
+  }, [])
   return (
     <div className={style.container}>
-      <Link to={"/editor"}>
+      <Link to={'/editor'}>
         <div className={style.cardcontainer}>
           <img src="src\media\icon\tianjia.svg" />
           <div className={style.option}>
@@ -18,12 +32,11 @@ function MyWork() {
       </Link>
 
       <WorksCard
-        cardname="示例"
-        description="这是一个示例"
-        date="2022/07/30"
-      ></WorksCard>
+        key={data.id}
+        cardname={data.title}
+        description={data.describe}
+        date={data.createTime}></WorksCard>
     </div>
-  );
+  )
 }
-
-export default MyWork;
+export default MyWork
