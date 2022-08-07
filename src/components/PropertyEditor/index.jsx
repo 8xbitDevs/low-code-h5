@@ -1,16 +1,35 @@
 import React, { useRef, useState, useEffect } from "react";
 import style from "./index.module.scss";
 import ColorPicker from "../ColorPicker";
-import { useSelector, useDispatch } from 'react-redux';
-import { selectPage, updateCurrentComponentAttributes } from '../../store/page/pageSlice';
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectPage,
+  updateCurrentComponentAttributes,
+} from "../../store/page/pageSlice";
 
 const PropertyEditor = () => {
   const bgcolor = useRef();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
+
+  // 通用
   const [nowmbp, setnowmbp] = useState(0); // 当前选中的是margin,border,padding中的哪一个
-  const [borderRadius, setborderRadius] = useState(100); // 圆角
-  const [bgColor, setbgColor] = useState("rgba(0, 0, 0, 1)");
+  const [borderRadius, setborderRadius] = useState(0); // 圆角
+  const [bgColor, setbgColor] = useState("rgba(0, 0, 0, 1)"); // 背景颜色
+  const [borderColor, setBorderColor] = useState("rgba(0, 0, 0, 1)"); // 边框颜色
+  const [textColor, setTextColor] = useState("rgba(0, 0, 0, 1)"); // 文字颜色
+  // button
+  const [buttonText, setButtonText] = useState("按钮"); // 按钮文字
+  const [fontsize, setFontsize] = useState(0); // 字号
+  const [lineheight, setLineheight] = useState(0); // 行高
+  const [align, setAlign] = useState("center"); // 设置对齐方式
+  // a
+  const [src, setSrc] = useState(""); // 链接地址
+  // img
+  const [imgsrc, setImg] = useState("");
+  // video
+  const [video, setVideo] = useState("");
+  // 其他
   const [check, setcheck] = useState("none"); // 盒子checkbox显示状态
   const [boxset, setboxset] = useState(["none", "none", "none", "none"]); // 盒子设置框显示状态
   const [boxstyle, setboxstyle] = useState([
@@ -71,7 +90,9 @@ const PropertyEditor = () => {
 
   // 设置mbp
   const setMBP = (nowmbp, tarindex, value) => {
-    const temp = JSON.parse(JSON.stringify(page.currentComponent.attributes.mbp));
+    const temp = JSON.parse(
+      JSON.stringify(page.currentComponent.attributes.mbp)
+    );
     const newset = temp.map((item, index) => {
       if (nowmbp === index) {
         item[tarindex] = value;
@@ -80,12 +101,15 @@ const PropertyEditor = () => {
         return item;
       }
     });
-    dispatch(updateCurrentComponentAttributes({
-      attributes: {
-        ...page.currentComponent.attributes, mbp: newset
-      },
-      change: Date.now()
-    }))
+    dispatch(
+      updateCurrentComponentAttributes({
+        attributes: {
+          ...page.currentComponent.attributes,
+          mbp: newset,
+        },
+        change: Date.now(),
+      })
+    );
     // setmbp(newset);
   };
 
@@ -111,17 +135,146 @@ const PropertyEditor = () => {
         </div>
       );
     }
-    if (type === 'button') {
-
+    if (type === "button") {
+      return (
+        <div className={style.container2}>
+          <div className={style.title}>属性设置</div>
+          <div className={style.form2}>
+            <div className={style.form1}>
+              <p>按钮文字：</p>
+              <input
+                type="text"
+                className={style.textinput}
+                value={buttonText}
+                onChange={(e) => setButtonText(e.target.value)}
+              />
+            </div>
+            <ColorPicker text="背景色：" ref={bgcolor} />
+            <ColorPicker text="文字颜色：" ref={bgcolor} />
+            <div className={style.form1}>
+              <p>字号(px)：</p>
+              <input
+                type="number"
+                className={style.numberinput}
+                value={fontsize}
+                onChange={(e) => setFontsize(e.target.value)}
+              />
+            </div>
+            <div className={style.form1}>
+              <p>行高：</p>
+              <input
+                type="number"
+                className={style.numberinput}
+                value={lineheight}
+                onChange={(e) => setLineheight(e.target.value)}
+              />
+            </div>
+            <div className={style.form1}>
+              <p>圆角(px)：</p>
+              <input
+                type="number"
+                className={style.numberinput}
+                value={borderRadius}
+                onChange={(e) => setborderRadius(e.target.value)}
+              />
+            </div>
+            <ColorPicker text="边框颜色：" ref={bgcolor} />
+          </div>
+          <div className={style.form1}>
+            <p>文字对齐：</p>
+            <div>
+              <input
+                type="radio"
+                name="align"
+                value="left"
+                id="leftAlign"
+                className={style.radioinput}
+                onClick={(e) => setAlign(e.target.value)}
+              />
+              <label htmlFor="leftAlign" className={style.label}>
+                左对齐
+              </label>
+              <input
+                type="radio"
+                name="align"
+                value="center"
+                id="centerAlign"
+                defaultChecked
+                className={style.radioinput}
+                onClick={(e) => setAlign(e.target.value)}
+              />
+              <label htmlFor="centerAlign" className={style.label}>
+                居中对齐
+              </label>
+              <input
+                type="radio"
+                name="align"
+                value="right"
+                id="rightAlign"
+                className={style.radioinput}
+                onClick={(e) => setAlign(e.target.value)}
+              />
+              <label htmlFor="rightAlign" className={style.label}>
+                右对齐
+              </label>
+            </div>
+          </div>
+        </div>
+      );
     }
-    if (type === 'a') {
-
+    if (type === "a") {
+      return (
+        <div className={style.container2}>
+          <div className={style.title}>属性设置</div>
+          <div className={style.form2}>
+            <div className={style.form1}>
+              <p>地址：</p>
+              <input
+                type="text"
+                className={style.numberinput}
+                value={src}
+                onChange={(e) => setSrc(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      );
     }
-    if (type === 'img') {
-
+    if (type === "img") {
+      return (
+        <div className={style.container2}>
+          <div className={style.title}>属性设置</div>
+          <div className={style.form2}>
+            <div className={style.form1}>
+              <p>上传图片：</p>
+              <input
+                className={style.fileinput}
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImg(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      );
     }
-    if (type === 'video') {
-
+    if (type === "video") {
+      return (
+        <div className={style.container2}>
+          <div className={style.title}>属性设置</div>
+          <div className={style.form2}>
+            <div className={style.form1}>
+              <p>上传视频：</p>
+              <input
+                className={style.fileinput}
+                type="file"
+                accept="video/*"
+                onChange={(e) => setVideo(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -142,12 +295,15 @@ const PropertyEditor = () => {
             className={style.numberinput}
             value={page.currentComponent.attributes.top}
             onChange={(e) => {
-              dispatch(updateCurrentComponentAttributes({
-                attributes: {
-                  ...page.currentComponent.attributes, top: e.target.value
-                },
-                change: Date.now()
-              }))
+              dispatch(
+                updateCurrentComponentAttributes({
+                  attributes: {
+                    ...page.currentComponent.attributes,
+                    top: e.target.value,
+                  },
+                  change: Date.now(),
+                })
+              );
             }}
           />
           <p>左</p>
@@ -156,12 +312,15 @@ const PropertyEditor = () => {
             className={style.numberinput}
             value={page.currentComponent.attributes.left}
             onChange={(e) => {
-              dispatch(updateCurrentComponentAttributes({
-                attributes: {
-                  ...page.currentComponent.attributes, left: e.target.value
-                },
-                change: Date.now()
-              }))
+              dispatch(
+                updateCurrentComponentAttributes({
+                  attributes: {
+                    ...page.currentComponent.attributes,
+                    left: e.target.value,
+                  },
+                  change: Date.now(),
+                })
+              );
             }}
           />
         </div>
@@ -172,12 +331,15 @@ const PropertyEditor = () => {
             className={style.numberinput}
             value={page.currentComponent.attributes.width}
             onChange={(e) => {
-              dispatch(updateCurrentComponentAttributes({
-                attributes: {
-                  ...page.currentComponent.attributes, width: e.target.value
-                },
-                change: Date.now()
-              }))
+              dispatch(
+                updateCurrentComponentAttributes({
+                  attributes: {
+                    ...page.currentComponent.attributes,
+                    width: e.target.value,
+                  },
+                  change: Date.now(),
+                })
+              );
             }}
           />
           <p>高</p>
@@ -186,12 +348,15 @@ const PropertyEditor = () => {
             className={style.numberinput}
             value={page.currentComponent.attributes.height}
             onChange={(e) => {
-              dispatch(updateCurrentComponentAttributes({
-                attributes: {
-                  ...page.currentComponent.attributes, height: e.target.value
-                },
-                change: Date.now()
-              }))
+              dispatch(
+                updateCurrentComponentAttributes({
+                  attributes: {
+                    ...page.currentComponent.attributes,
+                    height: e.target.value,
+                  },
+                  change: Date.now(),
+                })
+              );
             }}
           />
         </div>
@@ -265,7 +430,8 @@ const PropertyEditor = () => {
               >
                 padding
                 <div className={style.box}>
-                  {page.currentComponent.attributes.width}x{page.currentComponent.attributes.height}
+                  {page.currentComponent.attributes.width}x
+                  {page.currentComponent.attributes.height}
                 </div>
               </div>
             </div>

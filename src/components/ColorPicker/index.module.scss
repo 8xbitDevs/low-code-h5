@@ -1,19 +1,23 @@
-.title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.container {
+  height: 3rem;
 
-  .showcolor {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 1px solid #dadada;
-    border-radius: 0.2rem;
-    cursor: pointer;
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .showcolor {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1px solid #dadada;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
   }
-}
-.colorpicker {
-  transform: translateY(-125%);
-  position: absolute;
-  margin: 0.5rem;
-  z-index: 999;
+  .colorpicker {
+    transform: translateY(-125%);
+    position: absolute;
+    margin: 0.5rem;
+    z-index: 999;
+  }
 }

@@ -24,10 +24,13 @@ const ColorPicker = forwardRef((props, ref) => {
     if (text === "边框颜色：") {
       PubSub.publish("borderColor", color);
     }
+    if (text === "文字颜色：") {
+      PubSub.publish("textColor", color);
+    }
   };
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className={style.container}>
       <div className={style.title}>
         <p>{text}</p>
         <div
@@ -37,12 +40,6 @@ const ColorPicker = forwardRef((props, ref) => {
         ></div>
       </div>
       <div style={{display:`${bgoc ? 'block' : 'none'}`}} className={style.colorpicker} >
-        {/* <SketchPicker
-          color={color}
-          onChange={(getcolor) => {
-            handleChange(getcolor);
-          }}
-        /> */}
          <ChromePicker
           color={color}
           onChange={(getcolor) => {

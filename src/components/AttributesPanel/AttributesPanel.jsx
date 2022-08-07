@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
-import styles from './AttributesPanel.module.css'
-import PropertyEditor from '../PropertyEditor/index';
+import React, { useRef, useState } from "react";
+import styles from "./AttributesPanel.module.css";
+import PropertyEditor from "../PropertyEditor/index";
 
 const AttributesPanel = () => {
   const [width, setWidth] = useState(345);
@@ -10,7 +10,7 @@ const AttributesPanel = () => {
     const mouseDownX = mouseDownEvent.pageX;
 
     function onMouseMove(mouseMoveEvent) {
-      setWidth(prev => (initialWidth + mouseDownX - mouseMoveEvent.pageX));
+      setWidth((prev) => initialWidth + mouseDownX - mouseMoveEvent.pageX);
     }
     function onMouseUp() {
       document.body.removeEventListener("mousemove", onMouseMove);
@@ -23,11 +23,13 @@ const AttributesPanel = () => {
   return (
     <div style={{ width: width }} className={styles.Container}>
       <div className={styles.OverflowHidden}>
-        <PropertyEditor />
+        <PropertyEditor type="span" />
       </div>
-      <button className={styles.ColResize} onMouseDown={handleResize}>|</button>
+      <button className={styles.ColResize} onMouseDown={handleResize}>
+        |
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default AttributesPanel
+export default AttributesPanel;

@@ -5,7 +5,7 @@ export const pageSlice = createSlice({
   initialState: {
     currentComponent: {
       id: 0,
-      type: 'button',
+      type: '',
       attributes: {
         top: 0,
         left: 0,

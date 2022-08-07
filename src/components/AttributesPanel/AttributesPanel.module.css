@@ -20,5 +20,5 @@
   cursor: col-resize;
 }
 .OverflowHidden {
-  overflow: hidden;
+  overflow: auto;
 }
