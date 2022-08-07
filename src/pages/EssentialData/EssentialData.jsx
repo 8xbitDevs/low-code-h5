@@ -62,7 +62,13 @@ function EssentialData() {
   useEffect(() => {
     async function fetchDatasSource() {
       const res = await axios(
-        'http://127.0.0.1:4523/m1/1382018-0-default/api/document/getList',
+        {
+          method: 'get',
+          url: 'http://lowcode.wyy.ink/api/document/getList',
+          headers: {
+            token: JSON.parse(localStorage.getItem('token')).value,
+          },
+        },
         { params }
       )
       console.log(res.data.documents)

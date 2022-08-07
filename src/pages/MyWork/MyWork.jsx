@@ -8,7 +8,7 @@ import axios from 'axios'
 
 function MyWork() {
   const [data, setData] = useState({
-    doc: [{ createTime: '', describe: '', id: '', title: '' }],
+    documents: [{ createTime: '', describe: '', id: '', title: '' }],
   })
   useEffect(() => {
     async function fetchDatasSource() {
@@ -16,11 +16,11 @@ function MyWork() {
         method: 'get',
         url: 'http://lowcode.wyy.ink/api/document/getList',
         headers: {
-          'token': JSON.parse(localStorage.getItem("token")).value,
-        }
+          token: JSON.parse(localStorage.getItem('token')).value,
+        },
       })
-      //console.log(res.data.doc)
-      setData(res.data.doc)
+      //console.log(res.data)
+      setData(res.data)
     }
     fetchDatasSource()
   }, [])
@@ -34,12 +34,13 @@ function MyWork() {
           </div>
         </div>
       </Link>
-
-      <WorksCard
-        key={data.id}
-        cardname={data.title}
-        description={data.describe}
-        date={data.createTime}></WorksCard>
+      {data.documents.map((data) => (
+        <WorksCard
+          key={data.id}
+          cardname={data.title}
+          description={data.describe}
+          date={data.createTime}></WorksCard>
+      ))}
     </div>
   )
 }

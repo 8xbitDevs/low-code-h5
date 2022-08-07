@@ -1,10 +1,10 @@
-import React from "react";
-import style from "./TemplateCard.module.scss";
-import "../../media/icon/iconfont.css";
+import React from 'react'
+import style from './TemplateCard.module.scss'
+import '../../media/icon/iconfont.css'
 
 // 参数：img cardname description  date data(暂定)
 const TemplateCard = (props) => {
-  const { cardname, description, date } = props;
+  const { cardname, description, date } = props
   return (
     <div className={style.container}>
       <div className={style.img}></div>
@@ -18,7 +18,7 @@ const TemplateCard = (props) => {
         <span title="预览" className="iconfont icon-preview"></span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TemplateCard;
+export default TemplateCard

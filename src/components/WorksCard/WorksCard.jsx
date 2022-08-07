@@ -1,14 +1,15 @@
 import React from 'react'
 import style from './WorksCard.module.scss'
 import '../../media/icon/iconfont.css'
+import { getKeyThenIncreaseKey } from 'antd/lib/message'
 
 // 参数：img cardname description  date data （暂定）
 const WorksCard = (props) => {
-  const { cardname, description, date } = props
+  const { cardname, description, date, key } = props
   return (
     <div className={style.container}>
       <div className={style.img}></div>
-      <div className={style.inf}>
+      <div id={key} className={style.inf}>
         <p>名称：{cardname}</p>
         <p>描述：{description}</p>
         <p>时间：{date}</p>
