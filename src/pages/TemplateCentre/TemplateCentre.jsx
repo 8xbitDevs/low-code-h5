@@ -23,7 +23,7 @@ function TemplateCentre() {
   return (
     <div className={style.container}>
       {data?.documents?.map((data, index) => (
-        <div key={index}>
+        <div className={style.card} key={index}>
           <TemplateCard
             key={data.id}
             cardname={data.title}

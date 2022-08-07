@@ -1,11 +1,12 @@
 .container {
-  width: 23rem;
+  width: 20rem;
   height: 25rem;
   position: relative;
   margin: 0 1rem 2rem 1rem;
   background-color: #ffffff;
   border-radius: 0.5rem;
   border: 2px solid rgba(233, 233, 233, 0.765);
+  overflow: hidden;
 
   .img {
     width: 10rem;
@@ -22,7 +23,7 @@
   }
 
   .option {
-    width: 23rem;
+    width: 20rem;
     height: 3rem;
     position: absolute;
     bottom: 0;

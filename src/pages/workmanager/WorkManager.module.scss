@@ -10,11 +10,11 @@
     flex-direction: row;
     align-items: center;
     background-color: #f0f2f5;
+    overflow: hidden;
 
     .wpcontainer {
       width: 100%;
-      height: auto;
-      min-height: calc(100% - 4rem);
+      height: calc(100% - 4rem);
       margin: 2rem;
       background-color: #f0f2f5;
       flex: 1;

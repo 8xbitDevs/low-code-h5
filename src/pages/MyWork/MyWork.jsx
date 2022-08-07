@@ -34,7 +34,7 @@ function MyWork() {
         </div>
       </Link>
       {data?.documents?.map((item, index) => (
-        <div key={index}>
+        <div className={style.card} key={index}>
           <WorksCard
             workId={item.id}
             cardname={item.title}
