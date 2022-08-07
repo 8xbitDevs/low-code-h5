@@ -12,9 +12,13 @@ function MyWork() {
   })
   useEffect(() => {
     async function fetchDatasSource() {
-      const res = await axios(
-        'http://127.0.0.1:4523/m1/1382018-0-default/api/document/get'
-      )
+      const res = await axios({
+        method: 'get',
+        url: 'http://lowcode.wyy.ink/api/document/getList',
+        headers: {
+          'token': JSON.parse(localStorage.getItem("token")).value,
+        }
+      })
       //console.log(res.data.doc)
       setData(res.data.doc)
     }
