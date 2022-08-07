@@ -1,32 +1,31 @@
-import React, { useRef } from 'react'
-import { useEffect, useState } from 'react'
-import WorksCard from '../../components/WorksCard/WorksCard'
-import style from './MyWork.module.scss'
-import '../../media/icon/iconfont.css'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { useRef } from "react";
+import { useEffect, useState } from "react";
+import WorksCard from "../../components/WorksCard/WorksCard";
+import style from "./MyWork.module.scss";
+import "../../media/icon/iconfont.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function MyWork() {
-  const [data, setData] = useState({
-    documents: [{ createTime: '', describe: '', id: '', title: '' }],
-  })
+  const [data, setData] = useState({});
+
   useEffect(() => {
     async function fetchDatasSource() {
       const res = await axios({
-        method: 'get',
-        url: 'http://lowcode.wyy.ink/api/document/getList',
+        method: "get",
+        url: "http://lowcode.wyy.ink/api/document/getList",
         headers: {
-          token: JSON.parse(localStorage.getItem('token')).value,
+          token: JSON.parse(localStorage.getItem("token")).value,
         },
-      })
-      //console.log(res.data)
-      setData(res.data)
+      });
+      console.log(res.data, "work");
+      setData(res.data);
     }
-    fetchDatasSource()
-  }, [])
+    fetchDatasSource();
+  }, []);
   return (
     <div className={style.container}>
-      <Link to={'/editor'}>
+      <Link to={"/editor"}>
         <div className={style.cardcontainer}>
           <img src="src\media\icon\tianjia.svg" />
           <div className={style.option}>
@@ -34,14 +33,17 @@ function MyWork() {
           </div>
         </div>
       </Link>
-      {data.documents.map((data) => (
-        <WorksCard
-          key={data.id}
-          cardname={data.title}
-          description={data.describe}
-          date={data.createTime}></WorksCard>
+      {data?.documents?.map((item, index) => (
+        <div key={index}>
+          <WorksCard
+            workId={item.id}
+            cardname={item.title}
+            description={item.describe}
+            date={item.createTime}
+          ></WorksCard>
+        </div>
       ))}
     </div>
-  )
+  );
 }
-export default MyWork
+export default MyWork;
