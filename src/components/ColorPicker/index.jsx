@@ -32,7 +32,7 @@ const ColorPicker = forwardRef((props, ref) => {
   return (
     <div ref={ref} className={style.container}>
       <div className={style.title}>
-        <p>{text}</p>
+        <p className={style.p}>{text}</p>
         <div
           style={{ backgroundColor: `${color}` }}
           className={style.showcolor}

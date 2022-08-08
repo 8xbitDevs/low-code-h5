@@ -1,5 +1,8 @@
 .container {
-  height: 3rem;
+  height: 3.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   .title {
     display: flex;
@@ -20,4 +23,10 @@
     margin: 0.5rem;
     z-index: 999;
   }
+}
+
+.p {
+  margin: 0;
+  font-size: 14px;
+  color: #595959;
 }

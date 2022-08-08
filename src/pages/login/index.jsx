@@ -129,7 +129,7 @@ function Login(props) {
           没有账户？去注册
         </a>
         <div id="username">
-          <label>用户名：</label>
+          <label className='lable'>用户名：</label>
           <input
             type="text"
             className={'typeBox ' + (username.error ? 'errorType' : '')}
@@ -140,7 +140,7 @@ function Login(props) {
             onKeyDown={handleKeyDown}></input>
         </div>
         <div id="password">
-          <label>密码：</label>
+          <label className='lable'>密码：</label>
           <input
             type={password.error ? 'text' : 'password'}
             className={'typeBox ' + (password.error ? 'errorType' : '')}

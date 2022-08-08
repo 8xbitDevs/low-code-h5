@@ -5,16 +5,11 @@
     position: relative;
 }
 
-label {
+.label {
     width: 70px;
     display: inline-block;
     height: 30px;
     text-align: right;
-}
-
-input{
-    outline: none;
-    border: 1px solid grey;
 }
 
 #loginBox {
@@ -55,6 +50,8 @@ input{
 }
 
 .typeBox {
+    outline: none;
+    border: 1px solid grey;
     width: 220px;
     height: 30px;
     padding: 0 10px;

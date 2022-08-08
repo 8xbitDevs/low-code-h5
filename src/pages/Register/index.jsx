@@ -143,7 +143,7 @@ function Register(props) {
                 </div>
                 <a id="tologin" href="/login">已有账户？去登录</a>
                 <div id="username">
-                    <label>用户名：</label>
+                    <label className='lable'>用户名：</label>
                     <input
                         type="text"
                         className={"typeBox " + (username.error ? "errorType" : "")}
@@ -155,7 +155,7 @@ function Register(props) {
                     ></input>
                 </div>
                 <div id="password">
-                    <label>密码：</label>
+                    <label className='lable'>密码：</label>
                     <input
                         type={password.error ? "text" : "password"}
                         className={"typeBox " + (password.error ? "errorType" : "")}
@@ -167,7 +167,7 @@ function Register(props) {
                     ></input>
                 </div>
                 <div id="repassword">
-                    <label>重复密码：</label>
+                    <label className='lable'>重复密码：</label>
                     <input
                         type={rePassword.error ? "text" : "password"}
                         className={"typeBox " + (rePassword.error ? "errorType" : "")}

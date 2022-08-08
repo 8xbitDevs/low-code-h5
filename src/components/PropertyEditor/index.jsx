@@ -121,8 +121,9 @@ const PropertyEditor = () => {
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
             <ColorPicker text="背景色：" ref={bgcolor} />
+
             <div className={style.form1}>
-              <p>圆角(px):</p>
+              <p className={style.p}>圆角(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
@@ -141,7 +142,7 @@ const PropertyEditor = () => {
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
             <div className={style.form1}>
-              <p>按钮文字：</p>
+              <p className={style.p}>按钮文字：</p>
               <input
                 type="text"
                 className={style.textinput}
@@ -152,7 +153,7 @@ const PropertyEditor = () => {
             <ColorPicker text="背景色：" ref={bgcolor} />
             <ColorPicker text="文字颜色：" ref={bgcolor} />
             <div className={style.form1}>
-              <p>字号(px)：</p>
+              <p className={style.p}>字号(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
@@ -161,7 +162,7 @@ const PropertyEditor = () => {
               />
             </div>
             <div className={style.form1}>
-              <p>行高：</p>
+              <p className={style.p}>行高：</p>
               <input
                 type="number"
                 className={style.numberinput}
@@ -170,7 +171,7 @@ const PropertyEditor = () => {
               />
             </div>
             <div className={style.form1}>
-              <p>圆角(px)：</p>
+              <p className={style.p}>圆角(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
@@ -179,44 +180,44 @@ const PropertyEditor = () => {
               />
             </div>
             <ColorPicker text="边框颜色：" ref={bgcolor} />
-          </div>
-          <div className={style.form1}>
-            <p>文字对齐：</p>
-            <div>
-              <input
-                type="radio"
-                name="align"
-                value="left"
-                id="leftAlign"
-                className={style.radioinput}
-                onClick={(e) => setAlign(e.target.value)}
-              />
-              <label htmlFor="leftAlign" className={style.label}>
-                左对齐
-              </label>
-              <input
-                type="radio"
-                name="align"
-                value="center"
-                id="centerAlign"
-                defaultChecked
-                className={style.radioinput}
-                onClick={(e) => setAlign(e.target.value)}
-              />
-              <label htmlFor="centerAlign" className={style.label}>
-                居中对齐
-              </label>
-              <input
-                type="radio"
-                name="align"
-                value="right"
-                id="rightAlign"
-                className={style.radioinput}
-                onClick={(e) => setAlign(e.target.value)}
-              />
-              <label htmlFor="rightAlign" className={style.label}>
-                右对齐
-              </label>
+            <div style={{ height: "56px" }}>
+              <p className={style.p}>文字对齐：</p>
+              <div>
+                <input
+                  type="radio"
+                  name="align"
+                  value="left"
+                  id="leftAlign"
+                  className={style.radioinput}
+                  onClick={(e) => setAlign(e.target.value)}
+                />
+                <label htmlFor="leftAlign" className={style.label}>
+                  左对齐
+                </label>
+                <input
+                  type="radio"
+                  name="align"
+                  value="center"
+                  id="centerAlign"
+                  defaultChecked
+                  className={style.radioinput}
+                  onClick={(e) => setAlign(e.target.value)}
+                />
+                <label htmlFor="centerAlign" className={style.label}>
+                  居中对齐
+                </label>
+                <input
+                  type="radio"
+                  name="align"
+                  value="right"
+                  id="rightAlign"
+                  className={style.radioinput}
+                  onClick={(e) => setAlign(e.target.value)}
+                />
+                <label htmlFor="rightAlign" className={style.label}>
+                  右对齐
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -228,7 +229,7 @@ const PropertyEditor = () => {
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
             <div className={style.form1}>
-              <p>地址：</p>
+              <p className={style.p}>地址：</p>
               <input
                 type="text"
                 className={style.numberinput}
@@ -246,7 +247,7 @@ const PropertyEditor = () => {
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
             <div className={style.form1}>
-              <p>上传图片：</p>
+              <p className={style.p}>上传图片：</p>
               <input
                 className={style.fileinput}
                 type="file"
@@ -264,7 +265,7 @@ const PropertyEditor = () => {
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
             <div className={style.form1}>
-              <p>上传视频：</p>
+              <p className={style.p}>上传视频：</p>
               <input
                 className={style.fileinput}
                 type="file"
@@ -289,7 +290,7 @@ const PropertyEditor = () => {
       <div className={style.container}>
         <div className={style.title}>通用样式</div>
         <div className={style.form1}>
-          <p>上</p>
+          <p className={style.p}>上</p>
           <input
             type="number"
             className={style.numberinput}
@@ -306,7 +307,7 @@ const PropertyEditor = () => {
               );
             }}
           />
-          <p>左</p>
+          <p className={style.p}>左</p>
           <input
             type="number"
             className={style.numberinput}
@@ -325,7 +326,7 @@ const PropertyEditor = () => {
           />
         </div>
         <div className={style.form1}>
-          <p>宽</p>
+          <p className={style.p}>宽</p>
           <input
             type="number"
             className={style.numberinput}
@@ -342,7 +343,7 @@ const PropertyEditor = () => {
               );
             }}
           />
-          <p>高</p>
+          <p className={style.p}>高</p>
           <input
             type="number"
             className={style.numberinput}
@@ -361,11 +362,13 @@ const PropertyEditor = () => {
           />
         </div>
         <div className={style.form1}>
-          <p>选择 margin/border/padding进行设置</p>
+          <p className={style.p}>选择 margin/border/padding进行设置</p>
         </div>
         <div className={style.boxcontainer}>
           <div className={style.up} style={{ display: `${check}` }}>
-            <label htmlFor="up">上</label>
+            <label htmlFor="up" className={style.label}>
+              上
+            </label>
             <input id="up" type="checkbox" onChange={(e) => showboxset(0)} />
             <div style={{ display: `${boxset[0]}` }}>
               <input
@@ -382,7 +385,9 @@ const PropertyEditor = () => {
             </div>
           </div>
           <div className={style.left} style={{ display: `${check}` }}>
-            <label htmlFor="left">左</label>
+            <label htmlFor="left" className={style.label}>
+              左
+            </label>
             <input id="left" type="checkbox" onChange={(e) => showboxset(1)} />
             <div style={{ display: `${boxset[1]}` }}>
               <input
@@ -437,7 +442,7 @@ const PropertyEditor = () => {
             </div>
           </div>
           <div className={style.right} style={{ display: `${check}` }}>
-            <label htmlFor="right">右</label>
+            <label htmlFor="right"  className={style.label}>右</label>
             <input id="right" type="checkbox" onChange={(e) => showboxset(2)} />
             <div style={{ display: `${boxset[2]}` }}>
               <input
@@ -454,7 +459,7 @@ const PropertyEditor = () => {
             </div>
           </div>
           <div className={style.down} style={{ display: `${check}` }}>
-            <label htmlFor="down">下</label>
+            <label htmlFor="down" className={style.label}>下</label>
             <input id="down" type="checkbox" onChange={(e) => showboxset(3)} />
             <div style={{ display: `${boxset[3]}` }}>
               <input
