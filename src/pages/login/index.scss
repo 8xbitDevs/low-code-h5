@@ -1,6 +1,7 @@
 .container {
     width: 100vw;
     height: 100vh;
+    background-color: #f0f2f5;
     position: relative;
 }
 
@@ -11,6 +12,11 @@ label {
     text-align: right;
 }
 
+input{
+    outline: none;
+    border: 1px solid grey;
+}
+
 #loginBox {
     top: 50%;
     left: 50%;
@@ -19,8 +25,9 @@ label {
     margin-left: -200px;
     margin-top: -150px;
     position: absolute;
-    border-radius: 20px;
-    background-color: rgba(17, 37, 98, 0.3);
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.333);
 }
 
 #loginTitle {
@@ -36,12 +43,14 @@ label {
 }
 
 #submitBtn {
+    outline: none;
     display: block;
     height: 40px;
     width: 120px;
     border-radius: 20px;
-    background-color: white;
-    border-width: 2px;
+    background-color: #1890ff;
+    border: 0;
+    color: white;
     margin: auto;
 }
 
