@@ -3,9 +3,16 @@ import React, { useState, useEffect, useRef, forwardRef } from "react";
 import { SketchPicker, ChromePicker } from "react-color";
 import PubSub from "pubsub-js";
 import style from "./index.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectPage,
+  updateCurrentComponentAttributes,
+  updateCurrentComponentIdType,
+} from "../../store/page/pageSlice";
 
 const ColorPicker = forwardRef((props, ref) => {
-  const { text } = props;
+  const { text, getColor } = props;
+  const page = useSelector(selectPage);
   const [bgoc, setbgoc] = useState(false)
   const [color, setColor] = useState({
     r: "255",
@@ -13,6 +20,11 @@ const ColorPicker = forwardRef((props, ref) => {
     b: "255",
     a: "1",
   });
+
+  useEffect(() => {
+    console.log('set', getColor)
+    setColor(getColor)
+  },[page.currentComponent.id])
 
   const handleChange = (getcolor) => {
     setColor(

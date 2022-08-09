@@ -2,13 +2,17 @@ import React, { useRef, useState, useEffect } from "react";
 import style from "./index.module.scss";
 import ColorPicker from "../ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, message, Upload } from "antd";
 import {
   selectPage,
   updateCurrentComponentAttributes,
 } from "../../store/page/pageSlice";
 
 const PropertyEditor = () => {
-  const bgcolor = useRef();
+  const bgColorRef = useRef();
+  const borderColorRef = useRef();
+  const textColorRef = useRef();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 
@@ -50,6 +54,45 @@ const PropertyEditor = () => {
       state: "false",
     },
   ]);
+
+  // antd image上传
+  const imageProps = {
+    beforeUpload: (file) => {
+      console.log("image");
+      const isJPG = file.type === "image/jpeg";
+      const isJPEG = file.type === "image/jpeg";
+      const isGIF = file.type === "image/gif";
+      const isPNG = file.type === "image/png";
+
+      if (!(isJPG || isJPEG || isGIF || isPNG)) {
+        message.error("只能上传JPG 、JPEG 、GIF、 PNG格式的图片");
+      }
+
+      return isJPG || isJPEG || isGIF || isPNG || Upload.LIST_IGNORE;
+    },
+    onChange: (info) => {
+      console.log(info);
+    },
+  };
+  // antd video上传
+  const videoProps = {
+    beforeUpload: (file) => {
+      console.log('video');
+      const isAVI = file.type === "video/avi";
+      const isMP4 = file.type === "video/mp4";
+      const isWMA = file.type === "video/wma";
+      const isWMV = file.type === "video/x-ms-wmv";
+
+      if (!(isAVI || isMP4 || isWMA || isWMV)) {
+        message.error("只能上传AVI、MP4、WMA、WMV格式的图片");
+      }
+
+      return isAVI || isMP4 || isWMA || isWMV || Upload.LIST_IGNORE;
+    },
+    onChange: (info) => {
+      console.log(info);
+    },
+  };
 
   // 改变盒子样式
   const changeboxstyle = (e, tarindex) => {
@@ -120,18 +163,35 @@ const PropertyEditor = () => {
         <div className={style.container2}>
           <div className={style.title}>属性设置</div>
           <div className={style.form2}>
-            <ColorPicker text="背景色：" ref={bgcolor} />
-
+            <ColorPicker
+              text="背景色："
+              ref={bgColorRef}
+              getColor={page.currentComponent.attributes.bgColor}
+            />
             <div className={style.form1}>
               <p className={style.p}>圆角(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
-                value={borderRadius}
-                onChange={(e) => setborderRadius(e.target.value)}
+                value={page.currentComponent.attributes.borderRadius}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        borderRadius: e.target.value,
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
             </div>
-            <ColorPicker text="边框颜色：" ref={bgcolor} />
+            <ColorPicker
+              text="边框颜色："
+              ref={borderColorRef}
+              getColor={page.currentComponent.attributes.borderColor}
+            />
           </div>
         </div>
       );
@@ -146,40 +206,96 @@ const PropertyEditor = () => {
               <input
                 type="text"
                 className={style.textinput}
-                value={buttonText}
-                onChange={(e) => setButtonText(e.target.value)}
+                value={page.currentComponent.attributes.button.innerHTML}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        button: {
+                          ...page.currentComponent.attributes.button,
+                          innerHTML: e.target.value,
+                        },
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
             </div>
-            <ColorPicker text="背景色：" ref={bgcolor} />
-            <ColorPicker text="文字颜色：" ref={bgcolor} />
+            <ColorPicker
+              text="背景色："
+              ref={bgColorRef}
+              getColor={page.currentComponent.attributes.bgColor}
+            />
+            <ColorPicker
+              text="文字颜色："
+              ref={textColorRef}
+              getColor={page.currentComponent.attributes.textColor}
+            />
             <div className={style.form1}>
               <p className={style.p}>字号(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
-                value={fontsize}
-                onChange={(e) => setFontsize(e.target.value)}
+                value={page.currentComponent.attributes.fontSize}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        fontSize: e.target.value,
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
             </div>
-            <div className={style.form1}>
+            {/* <div className={style.form1}>
               <p className={style.p}>行高：</p>
               <input
                 type="number"
                 className={style.numberinput}
-                value={lineheight}
-                onChange={(e) => setLineheight(e.target.value)}
+                value={page.currentComponent.attributes.lineHeight}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        lineHeight: e.target.value,
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
-            </div>
+            </div> */}
             <div className={style.form1}>
               <p className={style.p}>圆角(px)：</p>
               <input
                 type="number"
                 className={style.numberinput}
-                value={borderRadius}
-                onChange={(e) => setborderRadius(e.target.value)}
+                value={page.currentComponent.attributes.borderRadius}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        borderRadius: e.target.value,
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
             </div>
-            <ColorPicker text="边框颜色：" ref={bgcolor} />
+            <ColorPicker
+              text="边框颜色："
+              ref={borderColorRef}
+              getColor={page.currentComponent.attributes.borderColor}
+            />
             <div style={{ height: "56px" }}>
               <p className={style.p}>文字对齐：</p>
               <div>
@@ -232,9 +348,22 @@ const PropertyEditor = () => {
               <p className={style.p}>地址：</p>
               <input
                 type="text"
-                className={style.numberinput}
-                value={src}
-                onChange={(e) => setSrc(e.target.value)}
+                className={style.textinput}
+                value={page.currentComponent.attributes.a.href}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        a: {
+                          ...page.currentComponent.attributes.button,
+                          href: e.target.value,
+                        },
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
               />
             </div>
           </div>
@@ -248,12 +377,15 @@ const PropertyEditor = () => {
           <div className={style.form2}>
             <div className={style.form1}>
               <p className={style.p}>上传图片：</p>
-              <input
+              <Upload {...imageProps} maxCount={1}>
+                <Button icon={<UploadOutlined />}>PNG/JPG/JPEG?GIF</Button>
+              </Upload>
+              {/* <input
                 className={style.fileinput}
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImg(e.target.value)}
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -266,12 +398,9 @@ const PropertyEditor = () => {
           <div className={style.form2}>
             <div className={style.form1}>
               <p className={style.p}>上传视频：</p>
-              <input
-                className={style.fileinput}
-                type="file"
-                accept="video/*"
-                onChange={(e) => setVideo(e.target.value)}
-              />
+              <Upload {...videoProps} maxCount={1}>
+                <Button icon={<UploadOutlined />}>AVI/MP4/WMA/WMV</Button>
+              </Upload>
             </div>
           </div>
         </div>
@@ -281,9 +410,39 @@ const PropertyEditor = () => {
 
   useEffect(() => {
     PubSub.subscribe("bgColor", (msg, data) => {
-      setbgColor(data);
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            bgColor: `${data}`,
+          },
+          change: Date.now(),
+        })
+      );
     });
-  }, [bgColor]);
+    PubSub.subscribe("borderColor", (msg, data) => {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            borderColor: `${data}`,
+          },
+          change: Date.now(),
+        })
+      );
+    });
+    PubSub.subscribe("textColor", (msg, data) => {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            textColor: `${data}`,
+          },
+          change: Date.now(),
+        })
+      );
+    });
+  }, [[page.currentComponent.change]]);
 
   return (
     <div>
@@ -442,7 +601,9 @@ const PropertyEditor = () => {
             </div>
           </div>
           <div className={style.right} style={{ display: `${check}` }}>
-            <label htmlFor="right"  className={style.label}>右</label>
+            <label htmlFor="right" className={style.label}>
+              右
+            </label>
             <input id="right" type="checkbox" onChange={(e) => showboxset(2)} />
             <div style={{ display: `${boxset[2]}` }}>
               <input
@@ -459,7 +620,9 @@ const PropertyEditor = () => {
             </div>
           </div>
           <div className={style.down} style={{ display: `${check}` }}>
-            <label htmlFor="down" className={style.label}>下</label>
+            <label htmlFor="down" className={style.label}>
+              下
+            </label>
             <input id="down" type="checkbox" onChange={(e) => showboxset(3)} />
             <div style={{ display: `${boxset[3]}` }}>
               <input

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import style from "./EditorNav.module.scss";
 import Bar from "./Bar/Bar";
 import { useNavigate } from "react-router-dom";
+import PubSub from "pubsub-js";
 
 const EditorNav = () => {
 
@@ -44,6 +45,10 @@ const EditorNav = () => {
     navigate("/login");
   }
 
+  const save =() => {
+    PubSub.publish('save', 1)
+  }
+
   return (
     <header className={style.container}>
       <Link to="/">
@@ -62,7 +67,7 @@ const EditorNav = () => {
         })}
         <button className={style.button} onClick={logout}>退出登录</button>
         <button className={style.button}>预览</button>
-        <button className={style.button}>保存</button>
+        <button className={style.button} onClick={save} >保存</button>
         <button className={style.button}>发布</button>
       </div>
     </header>
