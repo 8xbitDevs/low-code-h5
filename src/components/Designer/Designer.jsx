@@ -71,6 +71,7 @@ const Designer = () => {
 
   // 组件焦点处理
   useEffect(() => {
+    const element = container.current;
     function activeComponent(event) {
       // 上个获得焦点的组件
       if (focusComponent.current) {
@@ -121,7 +122,7 @@ const Designer = () => {
             borderColor: focusComponent.current.style.borderColor,
             textColor: focusComponent.current.style.textColor,
             fontSize: focusComponent.current.style.fontSize.slice(0, -2),
-            button:{
+            button: {
               innerHTML: focusComponent.current.innerHTML
             },
             a: {
@@ -135,7 +136,7 @@ const Designer = () => {
 
     container.current.addEventListener("click", activeComponent);
     return () => {
-      container.current.removeEventListener("click", activeComponent);
+      element.removeEventListener("click", activeComponent);
     };
   }, []);
 
