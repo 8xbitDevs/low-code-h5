@@ -296,7 +296,7 @@ const PropertyEditor = () => {
               ref={borderColorRef}
               getColor={page.currentComponent.attributes.borderColor}
             />
-            <div style={{ height: "56px" }}>
+            {/* <div style={{ height: "56px" }}>
               <p className={style.p}>文字对齐：</p>
               <div>
                 <input
@@ -334,7 +334,7 @@ const PropertyEditor = () => {
                   右对齐
                 </label>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       );
