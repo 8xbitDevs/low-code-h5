@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./NavigationBar.module.scss";
-import Bar from "./Bar/Bar";
+import Bar from "../Bar/Bar";
 import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
@@ -9,13 +9,9 @@ const NavigationBar = () => {
 
   const [barlist, setBarList] = useState([
     {
-      content: "Gitee",
-      active: false,
-    },
-    {
+      HREF:'https://github.com/8xbitDevs/low-code-h5',
       content: "Github",
       active: false,
-      src: "https://github.com/8xbitDevs/low-code-h5",
     },
   ]);
 
@@ -56,7 +52,7 @@ const NavigationBar = () => {
               key={index}
               content={item.content}
               active={item.active}
-              src={item.src}
+              HREF={item.HREF}
               click={() => {
                 changeStateBar(index);
               }}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./EditorNav.module.scss";
-import Bar from "./Bar/Bar";
+import Bar from "../Bar/Bar";
 import { useNavigate } from "react-router-dom";
 import PubSub from "pubsub-js";
 
@@ -11,10 +11,7 @@ const EditorNav = () => {
 
   const [barlist, setBarList] = useState([
     {
-      content: "Gitee",
-      active: false,
-    },
-    {
+      HREF:'https://github.com/8xbitDevs/low-code-h5',
       content: "Github",
       active: false,
     },
@@ -60,6 +57,7 @@ const EditorNav = () => {
             <Bar
               key={index}
               content={item.content}
+              HREF={item.HREF}
               active={item.active}
               click={() => changeStateBar(index)}
             ></Bar>
