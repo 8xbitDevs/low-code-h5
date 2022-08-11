@@ -4,6 +4,7 @@ import style from "./EditorNav.module.scss";
 import Bar from "../Bar/Bar";
 import PubSub from "pubsub-js";
 import { useNavigate } from "react-router-dom";
+import PubSub from "pubsub-js";
 import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
 
 
@@ -13,9 +14,6 @@ const EditorNav = () => {
   const [barlist, setBarList] = useState([
     {
       HREF:'https://github.com/8xbitDevs/low-code-h5',
-      content: "Github",
-    },
-    {
       content: "Github",
       active: false,
     },
@@ -45,6 +43,7 @@ const EditorNav = () => {
     localStorage.removeItem("token");
     navigate("/login");
   }
+
   const save =() => {
     PubSub.publish('save', 1)
   }
