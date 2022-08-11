@@ -12,7 +12,18 @@ export const pageSlice = createSlice({
         width: 0,
         height: 0,
         mbp: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
-        borderColor: ''
+        borderRadius: 0,
+        borderColor: 'rgba(0,0,0,0)',
+        bgColor: '',
+        fontSize: 12,
+        textColor: 'rgba(0,0,0,1)',
+        button: {
+          innerHTML:'按钮',        
+        },
+        a:{
+          href:'https://github.com/8xbitDevs/low-code-h5'
+        }
+        
       },
       change: 0
     },

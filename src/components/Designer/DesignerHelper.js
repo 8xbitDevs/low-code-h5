@@ -57,8 +57,11 @@ const createButtonAttributes = (el, top, left) => {
   el.style.height = '24px';
   el.style.left = left - 24 + 'px';
   el.style.top = top - 12 + 'px';
+  el.style.borderRadius = '0px',
+  el.style.fontSize = '12px'
 }
 const createSpanAttributes = (el, top, left) => {
+  el.style.borderRadius = '0px',
   el.className = 'template_text';
   el.dataset.type = 'span';
   el.innerHTML = '文本';
@@ -73,10 +76,13 @@ const createAAttributes = (el, top, left) => {
   el.className = 'template_link';
   el.dataset.type = 'a';
   el.innerHTML = '链接';
+  // el.onClick = 'return false'
+  el.contentEditable = true;
   el.style.width = '48px';
   el.style.height = '24px';
   el.style.left = left - 24 + 'px';
   el.style.top = top - 12 + 'px';
+  el.href = ''
 }
 const createImgAttributes = (el, top, left) => {
   el.className = 'template_image';

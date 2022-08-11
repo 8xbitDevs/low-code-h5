@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import style from './EditorNav.module.scss'
-import Bar from './Bar/Bar'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import style from "./EditorNav.module.scss";
+import Bar from "../Bar/Bar";
+import PubSub from "pubsub-js";
+import { useNavigate } from "react-router-dom";
 import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
+
+
 const EditorNav = () => {
   const navigate = useNavigate()
 
   const [barlist, setBarList] = useState([
     {
-      content: 'Gitee',
-      active: false,
+      HREF:'https://github.com/8xbitDevs/low-code-h5',
+      content: "Github",
     },
     {
-      content: 'Github',
+      content: "Github",
       active: false,
     },
   ])
@@ -37,10 +40,13 @@ const EditorNav = () => {
   }
 
   function logout() {
-    const localStorage = window.localStorage
-    const token = JSON.parse(localStorage.getItem('token'))
-    localStorage.removeItem('token')
-    navigate('/login')
+    const localStorage = window.localStorage;
+    const token = JSON.parse(localStorage.getItem("token"));
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+  const save =() => {
+    PubSub.publish('save', 1)
   }
 
   return (
@@ -54,6 +60,7 @@ const EditorNav = () => {
             <Bar
               key={index}
               content={item.content}
+              HREF={item.HREF}
               active={item.active}
               click={() => changeStateBar(index)}></Bar>
           )
