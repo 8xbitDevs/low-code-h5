@@ -8,7 +8,6 @@ function getToken() {
       localStorage.removeItem('token')
       return null
     } else {
-        console.log(token.value)
       return token.value
     }
   }  

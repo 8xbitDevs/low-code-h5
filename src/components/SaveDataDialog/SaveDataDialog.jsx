@@ -3,6 +3,13 @@ import React, { useEffect, useState } from "react";
 import style from "./SaveDataDialog.module.scss";
 import "antd/dist/antd.css";
 import { http } from "../../utils/http";
+import PubSub from "pubsub-js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectPage,
+  updatesaveData,
+  updateMyWork,
+} from "../../store/page/pageSlice";
 
 export default function SaveDataDialog() {
   const { TextArea } = Input;
@@ -10,13 +17,19 @@ export default function SaveDataDialog() {
   const [title, setTitle] = useState();
   const [describe, setDescribe] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const page = useSelector(selectPage);
   const showModal = () => {
     save();
     setIsModalVisible(true);
   };
   const handleOk = () => {
     setIsModalVisible(false);
-    handleSubmit();
+    console.log(page.saveData.id);
+    if (page.saveData.id === "" && page.saveData.html === "") {
+      handleSubmit();
+    } else {
+      handleUpdate();
+    }
   };
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -31,6 +44,17 @@ export default function SaveDataDialog() {
     if (e.keyCode === 13) {
       handleOk();
     }
+  };
+
+  const handleUpdate = () => {
+    const form = {
+      id: page.saveData.id,
+      title: title,
+      describe: describe,
+      pic: "https://s1.ax1x.com/2022/08/11/v87sFs.jpg",
+      html: saveData,
+    };
+    http.post("/api/document/update", form);
   };
   const handleSubmit = () => {
     const form = {

@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPage,
-  updateCurrentComponentAttributes,
-  updateCurrentComponentIdType,
+  updatesaveData,
+  updateMyWork,
 } from "../../store/page/pageSlice";
 
 // 参数：img cardname description  date data （暂定）
@@ -28,12 +28,26 @@ const WorksCard = (props) => {
   // 获取文档
   async function update() {
     const res = await http.get("/api/document/get", { params: { id: workId } });
-    const data = { html: res.doc.html, id: res.doc.id };
     // console.log(data);
-    PubSub.publish("update", data);
+    dispatch(
+      updatesaveData({
+        id: res.doc.id,
+        html:res.doc.html
+      })
+    );
     navigate("/editor");
     // console.log(res, "getWork");
   }
+
+    // 删除文档
+    async function del() {
+      const res = await http.post("/api/document/delete", { id: workId });
+      const newList = page.myWork.filter((item) => item.id != workId)
+      dispatch(
+        updateMyWork(newList)
+      );
+    }
+  
 
   return (
     <div className={style.container}>
@@ -50,7 +64,7 @@ const WorksCard = (props) => {
           onClick={() => update()}
         ></span>
         <span title="预览" className="iconfont icon-preview"></span>
-        <span title="删除" className="iconfont icon-shanchu"></span>
+        <span title="删除" className="iconfont icon-shanchu" onClick={()=>del()}></span>
       </div>
     </div>
   );

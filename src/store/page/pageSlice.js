@@ -27,6 +27,7 @@ export const pageSlice = createSlice({
       },
       change: 0
     },
+    myWork: [],
     saveData: {
       id: '',
       html:''
@@ -54,6 +55,12 @@ export const pageSlice = createSlice({
       state.currentComponent.attributes = action.payload.attributes;
       state.currentComponent.change = action.payload.change;
     },
+    updatesaveData: (state, action) => {
+      state.saveData = action.payload
+    },
+    updateMyWork: (state, action) => {
+      state.myWork = action.payload
+    },
     updatePageData: (state, action) => {
       state.pageData.data = action.payload
     },
@@ -66,6 +73,6 @@ export const pageSlice = createSlice({
 
 export const selectPage = state => state.page;
 
-export const { updatePageData, updatePageInfo, updateCurrentComponentAttributes, updateCurrentComponentIdType } = pageSlice.actions;
+export const { updatePageData, updatePageInfo, updateCurrentComponentAttributes, updateCurrentComponentIdType, updatesaveData, updateMyWork } = pageSlice.actions;
 
 export default pageSlice.reducer;
