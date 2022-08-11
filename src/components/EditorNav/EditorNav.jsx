@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import style from "./EditorNav.module.scss";
-import Bar from "./Bar/Bar";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import style from './EditorNav.module.scss'
+import Bar from './Bar/Bar'
+import { useNavigate } from 'react-router-dom'
+import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
 const EditorNav = () => {
-
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [barlist, setBarList] = useState([
     {
-      content: "Gitee",
+      content: 'Gitee',
       active: false,
     },
     {
-      content: "Github",
+      content: 'Github',
       active: false,
     },
-  ]);
+  ])
 
   // bar点击状态改变（单选）
   const changeStateBar = (clickIndex) => {
@@ -26,22 +25,22 @@ const EditorNav = () => {
         return {
           ...item,
           active: !item.active,
-        };
+        }
       } else {
         return {
           ...item,
           active: false,
-        };
+        }
       }
-    });
-    setBarList(newBarlist);
-  };
+    })
+    setBarList(newBarlist)
+  }
 
   function logout() {
-    const localStorage = window.localStorage;
-    const token = JSON.parse(localStorage.getItem("token"));
-    localStorage.removeItem("token");
-    navigate("/login");
+    const localStorage = window.localStorage
+    const token = JSON.parse(localStorage.getItem('token'))
+    localStorage.removeItem('token')
+    navigate('/login')
   }
 
   return (
@@ -56,17 +55,18 @@ const EditorNav = () => {
               key={index}
               content={item.content}
               active={item.active}
-              click={() => changeStateBar(index)}
-            ></Bar>
-          );
+              click={() => changeStateBar(index)}></Bar>
+          )
         })}
-        <button className={style.button} onClick={logout}>退出登录</button>
+        <button className={style.button} onClick={logout}>
+          退出登录
+        </button>
         <button className={style.button}>预览</button>
-        <button className={style.button}>保存</button>
+        <SaveDataDialog />
         <button className={style.button}>发布</button>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default EditorNav;
+export default EditorNav
