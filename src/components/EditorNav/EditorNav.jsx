@@ -4,7 +4,6 @@ import style from "./EditorNav.module.scss";
 import Bar from "../Bar/Bar";
 import PubSub from "pubsub-js";
 import { useNavigate } from "react-router-dom";
-import PubSub from "pubsub-js";
 import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
 
 
