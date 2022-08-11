@@ -1,38 +1,62 @@
-import { Modal, Input, Button } from 'antd'
-import React, { useState } from 'react'
-import style from './SaveDataDialog.module.scss'
-import 'antd/dist/antd.css'
+import { Modal, Input, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import style from "./SaveDataDialog.module.scss";
+import "antd/dist/antd.css";
+import { http } from "../../utils/http";
 
 export default function SaveDataDialog() {
-  const { TextArea } = Input
-  const [title, setTitle] = useState()
-  const [describe, setDescribe] = useState()
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const { TextArea } = Input;
+  const [saveData, setSaveData] = useState("");
+  const [title, setTitle] = useState();
+  const [describe, setDescribe] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
-    setIsModalVisible(true)
-  }
+    save();
+    setIsModalVisible(true);
+  };
   const handleOk = () => {
-    setIsModalVisible(false)
-    handleSubmit()
-  }
+    setIsModalVisible(false);
+    handleSubmit();
+  };
   const handleCancel = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
   const saveTitle = (e) => {
-    setTitle(e.target.value)
-  }
+    setTitle(e.target.value);
+  };
   const saveDescribe = (e) => {
-    setDescribe(e.target.value)
-  }
+    setDescribe(e.target.value);
+  };
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      handleOk()
+      handleOk();
     }
-  }
+  };
   const handleSubmit = () => {
+    const form = {
+      title: title,
+      describe: describe,
+      pic: "https://s1.ax1x.com/2022/08/11/v87sFs.jpg",
+      html: saveData,
+    };
     //获取表单数据
-    console.log({ title }, { describe })
-  }
+    console.log(form);
+    http.post("/api/document/add", form);
+  };
+
+  const save = () => {
+    PubSub.publish("save", 1);
+  };
+
+  useEffect(() => {
+    PubSub.subscribe("innerHTML", (msg, data) => {
+      console.log(data);
+      setSaveData(data);
+    });
+    return () => {
+      PubSub.unsubscribe("innerHTML");
+    };
+  }, []);
 
   return (
     <>
@@ -40,10 +64,11 @@ export default function SaveDataDialog() {
         保存
       </button>
       <Modal
-        title="新建作品"
+        title="保存作品"
         visible={isModalVisible}
         onOk={handleOk}
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+      >
         <>
           <label htmlFor="">标题：</label>
           <Input
@@ -66,5 +91,5 @@ export default function SaveDataDialog() {
         </>
       </Modal>
     </>
-  )
+  );
 }

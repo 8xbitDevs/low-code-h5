@@ -5,21 +5,16 @@ import style from "./MyWork.module.scss";
 import "../../media/icon/iconfont.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { http } from "../../utils/http";
 
 function MyWork() {
   const [data, setData] = useState({});
 
   useEffect(() => {
     async function fetchDatasSource() {
-      const res = await axios({
-        method: "get",
-        url: "http://lowcode.wyy.ink/api/document/getList",
-        headers: {
-          token: JSON.parse(localStorage.getItem("token")).value,
-        },
-      });
-      console.log(res.data, "work");
-      setData(res.data);
+      const res = await http.get('/api/document/getList')
+      console.log(res, "work");
+      setData(res);
     }
     fetchDatasSource();
   }, []);

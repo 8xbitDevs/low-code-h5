@@ -43,10 +43,6 @@ const EditorNav = () => {
     navigate("/login");
   }
 
-  const save =() => {
-    PubSub.publish('save', 1)
-  }
-
   return (
     <header className={style.container}>
       <Link to="/">

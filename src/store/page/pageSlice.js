@@ -27,6 +27,10 @@ export const pageSlice = createSlice({
       },
       change: 0
     },
+    saveData: {
+      id: '',
+      html:''
+    },
     pageData: {
       projectID: '0',
       name: '空项目',

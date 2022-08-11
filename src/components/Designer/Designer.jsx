@@ -9,6 +9,10 @@ import {
 import styles from "./Designer.module.css";
 import "./TemplateStyle.css";
 
+// 引入
+import html2canvas from "html2canvas";
+import Canvas2Image from "./canvas2image.js"
+
 const Designer = () => {
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -140,10 +144,68 @@ const Designer = () => {
     };
   }, []);
 
+  // 截图函数
+  function generateImage(designer) {
+
+    var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
+    var height = designer.offsetHeight;// 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
+    var canvas = document.createElement("canvas"); //创建一个canvas标签元素
+    var scale = 1; //定义放大倍数，可以支持小数
+    var imgType = "image/jpg";//设置默认下载的图片格式
+
+    canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
+    canvas.height = height * scale; //定义canvas高度 * 倍数，默认高度为150px
+    canvas.getContext("2d").scale(scale,
+      scale); //创建canvas的context对象，设置scale，相当于画布的“画笔”拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
+
+
+    var opts = { //初始化对象
+      scale: scale, //添加的scale参数
+      canvas: canvas, //自定义canvas
+      logging: true, //日志开关，便于查看html2canvas的内部执行流程
+      width: width, //dom的原始宽度和高度
+      height: height,
+      useCORS: true //开启html2canvas的useCORS配置，跨域配置，以解决图片跨域的问题
+    };
+    const imgSrc=html2canvas(designer, opts).then(function (canvas) {
+
+      var context = canvas.getContext('2d');
+      // 【重要】关闭抗锯齿，进一步优化清晰度
+      context.mozImageSmoothingEnabled = false;
+      context.webkitImageSmoothingEnabled = false;
+      context.msImageSmoothingEnabled = false;
+      context.imageSmoothingEnabled = false;
+
+      var img = Canvas2Image.convertToImage(canvas, canvas.width, canvas.height, imgType); //将绘制好的画布转换为img标签,默认图片格式为PNG.
+
+      // 此处代码是为了下载到本地
+      //  document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
+
+      // 生成一个a超链接元素
+      // var a = document.createElement('a');
+      // 创建一个单击事件
+      // var event = new MouseEvent('click');
+
+      // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+      // a.download = name || '下载图片名称';
+      // a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
+
+      // 触发a的单击事件
+      // a.dispatchEvent(event);
+
+      // 将图片的url传递出去
+      return img.src
+    });
+     return  imgSrc
+  }
+
   useEffect(() => {
     PubSub.subscribe("save", (msg, data) => {
       const designer = document.getElementById("designer");
-      console.log(designer.innerHTML);
+      // console.log(designer.innerHTML);
+      // 调用截图函数,传入结点，并保存图片的url
+      let faceImg =generateImage(designer)
+      console.log(faceImg)
     });
   }, []);
 
@@ -155,7 +217,9 @@ const Designer = () => {
       onDragOver={dragOver}
       onDrop={drop}
       data-type="div"
-    ></div>
+    >
+
+    </div>
   );
 };
 
