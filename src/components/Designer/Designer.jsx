@@ -130,7 +130,12 @@ const Designer = () => {
       }
       if (focusComponent.current.dataset.type === "a") {
         focusComponent.current.href = page.currentComponent.attributes.a.href;
-        console.log(focusComponent.current);
+      }
+      if (focusComponent.current.dataset.type === "img") {
+        focusComponent.current.src = page.currentComponent.attributes.img.src;
+      }
+      if (focusComponent.current.dataset.type === "video") {
+        focusComponent.current.src = page.currentComponent.attributes.video.src;
       }
     }
   }, [page.currentComponent.change]);
@@ -197,6 +202,12 @@ const Designer = () => {
             a: {
               href: focusComponent.current.href,
             },
+            img: {
+              src:focusComponent.current.src,
+            },
+            video: {
+                src:focusComponent.current.src,
+            }
           },
           change: page.currentComponent.change,
         })
@@ -211,7 +222,6 @@ const Designer = () => {
 
   useEffect(() => {
     const designer = document.getElementById("designer");
-    console.log(page.saveData.html)
     designer.innerHTML = page.saveData.html
     PubSub.subscribe("save", (msg, data) => {
       PubSub.publish('innerHTML', designer.innerHTML)

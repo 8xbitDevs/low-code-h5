@@ -22,6 +22,12 @@ export const pageSlice = createSlice({
         },
         a:{
           href:'https://github.com/8xbitDevs/low-code-h5'
+        },
+        img: {
+          src:'https://cn.vitejs.dev/logo-with-shadow.png'
+        },
+        video: {
+          src:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm'
         }
         
       },

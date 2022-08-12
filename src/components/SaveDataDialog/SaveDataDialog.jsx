@@ -7,8 +7,6 @@ import PubSub from "pubsub-js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPage,
-  updatesaveData,
-  updateMyWork,
 } from "../../store/page/pageSlice";
 
 export default function SaveDataDialog() {
@@ -25,7 +23,7 @@ export default function SaveDataDialog() {
   const handleOk = () => {
     setIsModalVisible(false);
     console.log(page.saveData.id);
-    if (page.saveData.id === "" && page.saveData.html === "") {
+    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在数据则为修改文档，否则为初次保存
       handleSubmit();
     } else {
       handleUpdate();

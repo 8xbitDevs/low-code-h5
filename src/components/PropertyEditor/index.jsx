@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import style from "./index.module.scss";
 import ColorPicker from "../ColorPicker";
+import { getToken, http } from "../../utils/http";
 import { useSelector, useDispatch } from "react-redux";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
@@ -54,44 +55,97 @@ const PropertyEditor = () => {
       state: "false",
     },
   ]);
+  // 覆盖antd默认的上传行为，可以自定义自己的上传实现
+  const onImgFilesChange = async (data) => {
+    console.log("image");
+    const file = data.file;
+    const isJPG = file.type === "image/jpeg";
+    const isJPEG = file.type === "image/jpeg";
+    const isGIF = file.type === "image/gif";
+    const isPNG = file.type === "image/png";
+    const is128M = file.size / 1024 / 1024 < 128;
+
+    if (!(isJPG || isJPEG || isGIF || isPNG)) {
+      message.error("只能上传JPG 、JPEG 、GIF、 PNG格式的图片");
+      return false;
+    } else if (!is128M) {
+      message.error("文件大小不得超过128M");
+      return false;
+    }
+    uploadfile(file, "img");
+  };
+  const onVideoFilesChange = async (data) => {
+    console.log("video");
+    const file = data.file;
+    const isAVI = file.type === "video/avi";
+    const isMP4 = file.type === "video/mp4";
+    const isWMA = file.type === "video/wma";
+    const isWMV = file.type === "video/x-ms-wmv";
+    const is128M = file.size / 1024 / 1024 < 128;
+
+    if (!(isAVI || isMP4 || isWMA || isWMV)) {
+      message.error("只能上传AVI、MP4、WMA、WMV格式的图片");
+      return false;
+    } else if (!is128M) {
+      message.error("文件大小不得超过128M");
+      return false;
+    }
+    uploadfile(file, "video");
+  };
+
+  const uploadfile = async (file, type) => {
+    //转化为formData格式
+    let formData = new FormData();
+    formData.append("file", file);
+    console.log(formData);
+    const res = await http.post("/api/upload", formData); //发请求
+    console.log(res);
+    if (type === "video") {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            video: {
+              src: "http://lowcode.wyy.ink" + res.uri,
+            },
+          },
+          change: Date.now(),
+        })
+      );
+    }
+    if (type === "img") {
+      console.log(res.uri);
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            img: {
+              src: "http://lowcode.wyy.ink" + res.uri,
+            },
+          },
+          change: Date.now(),
+        })
+      );
+    }
+  };
 
   // antd image上传
   const imageProps = {
-    beforeUpload: (file) => {
-      console.log("image");
-      const isJPG = file.type === "image/jpeg";
-      const isJPEG = file.type === "image/jpeg";
-      const isGIF = file.type === "image/gif";
-      const isPNG = file.type === "image/png";
-
-      if (!(isJPG || isJPEG || isGIF || isPNG)) {
-        message.error("只能上传JPG 、JPEG 、GIF、 PNG格式的图片");
-      }
-
-      return isJPG || isJPEG || isGIF || isPNG || Upload.LIST_IGNORE;
+    action: "http://lowcode.wyy.ink/api/upload",
+    Headers: {
+      token: getToken(),
     },
-    onChange: (info) => {
-      console.log(info);
-    },
+    maxCount: 1,
+    customRequest: onImgFilesChange,
   };
   // antd video上传
   const videoProps = {
-    beforeUpload: (file) => {
-      console.log('video');
-      const isAVI = file.type === "video/avi";
-      const isMP4 = file.type === "video/mp4";
-      const isWMA = file.type === "video/wma";
-      const isWMV = file.type === "video/x-ms-wmv";
-
-      if (!(isAVI || isMP4 || isWMA || isWMV)) {
-        message.error("只能上传AVI、MP4、WMA、WMV格式的图片");
-      }
-
-      return isAVI || isMP4 || isWMA || isWMV || Upload.LIST_IGNORE;
+    action: "http://lowcode.wyy.ink/api/upload",
+    Headers: {
+      token: getToken(),
     },
-    onChange: (info) => {
-      console.log(info);
-    },
+    maxCount: 1,
+    customRequest: onVideoFilesChange,
   };
 
   // 改变盒子样式
@@ -253,25 +307,6 @@ const PropertyEditor = () => {
                 }}
               />
             </div>
-            {/* <div className={style.form1}>
-              <p className={style.p}>行高：</p>
-              <input
-                type="number"
-                className={style.numberinput}
-                value={page.currentComponent.attributes.lineHeight}
-                onChange={(e) => {
-                  dispatch(
-                    updateCurrentComponentAttributes({
-                      attributes: {
-                        ...page.currentComponent.attributes,
-                        lineHeight: e.target.value,
-                      },
-                      change: Date.now(),
-                    })
-                  );
-                }}
-              />
-            </div> */}
             <div className={style.form1}>
               <p className={style.p}>圆角(px)：</p>
               <input
@@ -296,45 +331,6 @@ const PropertyEditor = () => {
               ref={borderColorRef}
               getColor={page.currentComponent.attributes.borderColor}
             />
-            {/* <div style={{ height: "56px" }}>
-              <p className={style.p}>文字对齐：</p>
-              <div>
-                <input
-                  type="radio"
-                  name="align"
-                  value="left"
-                  id="leftAlign"
-                  className={style.radioinput}
-                  onClick={(e) => setAlign(e.target.value)}
-                />
-                <label htmlFor="leftAlign" className={style.label}>
-                  左对齐
-                </label>
-                <input
-                  type="radio"
-                  name="align"
-                  value="center"
-                  id="centerAlign"
-                  defaultChecked
-                  className={style.radioinput}
-                  onClick={(e) => setAlign(e.target.value)}
-                />
-                <label htmlFor="centerAlign" className={style.label}>
-                  居中对齐
-                </label>
-                <input
-                  type="radio"
-                  name="align"
-                  value="right"
-                  id="rightAlign"
-                  className={style.radioinput}
-                  onClick={(e) => setAlign(e.target.value)}
-                />
-                <label htmlFor="rightAlign" className={style.label}>
-                  右对齐
-                </label>
-              </div>
-            </div> */}
           </div>
         </div>
       );
@@ -377,7 +373,7 @@ const PropertyEditor = () => {
           <div className={style.form2}>
             <div className={style.form1}>
               <p className={style.p}>上传图片：</p>
-              <Upload {...imageProps} maxCount={1}>
+              <Upload {...imageProps}>
                 <Button icon={<UploadOutlined />}>PNG/JPG/JPEG?GIF</Button>
               </Upload>
               {/* <input
@@ -398,7 +394,7 @@ const PropertyEditor = () => {
           <div className={style.form2}>
             <div className={style.form1}>
               <p className={style.p}>上传视频：</p>
-              <Upload {...videoProps} maxCount={1}>
+              <Upload {...videoProps}>
                 <Button icon={<UploadOutlined />}>AVI/MP4/WMA/WMV</Button>
               </Upload>
             </div>

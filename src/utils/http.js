@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-function getToken() {
+export function getToken() {
     const localStorage = window.localStorage
     const token = JSON.parse(localStorage.getItem('token'))
     if (token == null) return null
@@ -8,12 +8,14 @@ function getToken() {
       localStorage.removeItem('token')
       return null
     } else {
+      // console.log(token.value)
       return token.value
     }
-  }  
+}  
+  
 const http = axios.create({
   baseURL: 'http://lowcode.wyy.ink',
-  timeout: 5000
+  timeout: 600000
 })
 // 添加请求拦截器
 http.interceptors.request.use((config) => {
