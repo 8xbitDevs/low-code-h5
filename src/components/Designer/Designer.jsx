@@ -18,8 +18,6 @@ const Designer = () => {
   const dispatch = useDispatch();
   const focusComponent = useRef(null);
   const container = useRef(null);
-  const [id, setId] = useState("");
-  const [html, setHtml] = useState("");
 
   // 放置组件
   const drop = (e) => {
@@ -143,6 +141,7 @@ const Designer = () => {
   // 组件焦点处理
   useEffect(() => {
     const element = container.current;
+    let elementId = "";
     function activeComponent(event) {
       // 上个获得焦点的组件
       if (focusComponent.current) {
@@ -150,6 +149,7 @@ const Designer = () => {
       }
       // 设为当前点击的组件
       focusComponent.current = event.target;
+      elementId = event.target.id;
       focusComponent.current.style.boxShadow = "0px 0px 0px 1px #1890ff";
 
       dispatch(
@@ -203,36 +203,109 @@ const Designer = () => {
               href: focusComponent.current.href,
             },
             img: {
-              src:focusComponent.current.src,
+              src: focusComponent.current.src,
             },
             video: {
-                src:focusComponent.current.src,
-            }
+              src: focusComponent.current.src,
+            },
           },
           change: page.currentComponent.change,
         })
       );
     }
+    const dragComponent = () => {
+      // 拖动处理
+      if (elementId != "designer" && elementId != "") {
+        const element = document.getElementById(elementId);
+        element.onmousedown = (mouseDown) => {
+          const mouseDownX = mouseDown.pageX;
+          const mouseDownY = mouseDown.pageY;
+          const currentTarget = mouseDown.target;
+          const currentLeft = Number(currentTarget.style.left.slice(0, -2));
+          const currentTop = Number(currentTarget.style.top.slice(0, -2));
 
+          // 按下超过100ms判定要拖动
+          let cursorTask = setTimeout(() => {
+            element.style.cursor = "move";
+          }, 100);
+
+          function onMouseMove(mouseMove) {
+            currentTarget.style.left =
+              currentLeft - mouseDownX + mouseMove.pageX + "px";
+            currentTarget.style.top =
+              currentTop - mouseDownY + mouseMove.pageY + "px";
+          }
+          function onMouseUp() {
+            element.style.cursor = "";
+            clearTimeout(cursorTask);
+            document.body.removeEventListener("mousemove", onMouseMove);
+          }
+          document.body.addEventListener("mousemove", onMouseMove);
+          document.body.addEventListener("mouseup", onMouseUp, { once: true });
+        };
+      }
+    };
+
+    // 组件删除功能
+    const deleteComponent = (e) => {
+      if (e.keyCode === 46 && elementId != "designer") {
+        const target = document.getElementById(elementId);
+        container.current.removeChild(target);
+      }
+    };
+    setTimeout(() => {
+      for (let i = 0; i < container.current.childNodes.length; i++) {
+        const temp = document.getElementById(container.current.childNodes[i].id)
+        temp.onmousedown = (mouseDown) => {
+          const mouseDownX = mouseDown.pageX;
+          const mouseDownY = mouseDown.pageY;
+          const currentTarget = mouseDown.target;
+          const currentLeft = Number(currentTarget.style.left.slice(0, -2));
+          const currentTop = Number(currentTarget.style.top.slice(0, -2));
+
+          // 按下超过100ms判定要拖动
+          let cursorTask = setTimeout(() => {
+            temp.style.cursor = "move";
+          }, 100);
+
+          function onMouseMove(mouseMove) {
+            currentTarget.style.left =
+              currentLeft - mouseDownX + mouseMove.pageX + "px";
+            currentTarget.style.top =
+              currentTop - mouseDownY + mouseMove.pageY + "px";
+          }
+          function onMouseUp() {
+            temp.style.cursor = "";
+            clearTimeout(cursorTask);
+            document.body.removeEventListener("mousemove", onMouseMove);
+          }
+          document.body.addEventListener("mousemove", onMouseMove);
+          document.body.addEventListener("mouseup", onMouseUp, { once: true });
+        };
+      }
+    }, 400);
+
+    document.addEventListener("keydown", deleteComponent);
     container.current.addEventListener("click", activeComponent);
     return () => {
       element.removeEventListener("click", activeComponent);
+      document.removeEventListener("keydown", deleteComponent);
     };
   }, []);
 
   useEffect(() => {
     const designer = document.getElementById("designer");
-    designer.innerHTML = page.saveData.html
+    designer.innerHTML = page.saveData.html;
     PubSub.subscribe("save", (msg, data) => {
-      PubSub.publish('innerHTML', designer.innerHTML)
+      PubSub.publish("innerHTML", designer.innerHTML);
       // console.log(designer.innerHTML);
       // 调用截图函数,传入结点，并保存图片的url
-      // let faceImg = generateImage(designer);
-      // console.log(faceImg);
+      let faceImg = generateImage(designer);
+      console.log(faceImg);
     });
     return () => {
-      PubSub.unsubscribe('save')
-    }
+      PubSub.unsubscribe("save");
+    };
   }, []);
 
   return (

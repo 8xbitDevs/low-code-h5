@@ -20,8 +20,6 @@ function MyWork() {
 
   const init = () => {
     dispatch(updatesaveData({id:'',html:''}));
-    console.log(page.saveData,123)
-
 }
 
   useEffect(() => {

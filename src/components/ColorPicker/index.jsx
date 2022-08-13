@@ -22,7 +22,6 @@ const ColorPicker = forwardRef((props, ref) => {
   });
 
   useEffect(() => {
-    console.log('set', getColor)
     setColor(getColor)
   },[page.currentComponent.id])
 
