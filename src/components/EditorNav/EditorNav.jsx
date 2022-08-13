@@ -5,10 +5,16 @@ import Bar from "../Bar/Bar";
 import PubSub from "pubsub-js";
 import { useNavigate } from "react-router-dom";
 import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
+import { useDispatch, useSelector } from "react-redux";
+import { selectPage } from "../../store/page/pageSlice";
+import { http } from "../../utils/http";
+import { updatesaveData } from "../../store/page/pageSlice";
 
 
 const EditorNav = () => {
   const navigate = useNavigate()
+  const page = useSelector(selectPage);
+  const dispatch = useDispatch();
 
   const [barlist, setBarList] = useState([
     {
@@ -43,6 +49,21 @@ const EditorNav = () => {
     navigate("/login");
   }
 
+  // 预览文档
+  async function preview() {
+    const id = page.saveData.id;
+    const res = await http.get("/api/document/get", { params: { id: id } });
+    // console.log(data);
+    dispatch(
+      updatesaveData({
+        id: res.doc.id,
+        html:res.doc.html
+      })
+    );
+    navigate("/preview");
+    // console.log(res, "getWork");
+  }
+
   return (
     <header className={style.container}>
       <Link to="/">
@@ -62,9 +83,7 @@ const EditorNav = () => {
         <button className={style.button} onClick={logout}>
           退出登录
         </button>
-        <Link to="/preview">
-          <button className={style.button}>预览</button>
-        </Link>
+        <button className={style.button} onClick={preview}>预览</button>
         <SaveDataDialog />
         <button className={style.button}>发布</button>
       </div>
