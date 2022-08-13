@@ -39,16 +39,29 @@ const WorksCard = (props) => {
     // console.log(res, "getWork");
   }
 
-    // 删除文档
-    async function del() {
-      const res = await http.post("/api/document/delete", { id: workId });
-      const newList = page.myWork.filter((item) => item.id != workId)
-      dispatch(
-        updateMyWork(newList)
-      );
-    }
-  
+  // 预览文档
+  async function preview() {
+    const res = await http.get("/api/document/get", { params: { id: workId } });
+    // console.log(data);
+    dispatch(
+      updatesaveData({
+        id: res.doc.id,
+        html:res.doc.html
+      })
+    );
+    navigate("/preview");
+    // console.log(res, "getWork");
+  }
 
+  // 删除文档
+  async function del() {
+    const res = await http.post("/api/document/delete", { id: workId });
+    const newList = page.myWork.filter((item) => item.id != workId)
+    dispatch(
+      updateMyWork(newList)
+    );
+  }
+  
   return (
     <div className={style.container}>
       <div className={style.img}></div>
@@ -63,7 +76,7 @@ const WorksCard = (props) => {
           className="iconfont icon-bianjishuru-xianxing"
           onClick={() => update()}
         ></span>
-        <span title="预览" className="iconfont icon-preview"></span>
+        <span title="预览" className="iconfont icon-preview" onClick={() => preview()}></span>
         <span title="删除" className="iconfont icon-shanchu" onClick={()=>del()}></span>
       </div>
     </div>

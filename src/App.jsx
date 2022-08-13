@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EssentialData from "./pages/EssentialData/EssentialData";
 import { AuthRoute } from "./components/AuthRoute";
+import Preview from "./pages/Preview";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <AuthRoute>
               <Editor />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/preview"
+          element={
+            <AuthRoute>
+              <Preview />
             </AuthRoute>
           }
         />

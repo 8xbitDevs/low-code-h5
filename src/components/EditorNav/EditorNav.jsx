@@ -62,7 +62,9 @@ const EditorNav = () => {
         <button className={style.button} onClick={logout}>
           退出登录
         </button>
-        <button className={style.button}>预览</button>
+        <Link to="/preview">
+          <button className={style.button}>预览</button>
+        </Link>
         <SaveDataDialog />
         <button className={style.button}>发布</button>
       </div>
