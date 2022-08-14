@@ -12,6 +12,12 @@ const Preview = () => {
   useEffect(() => {
     const previewer = document.getElementById("previewer");
     previewer.innerHTML = page.saveData.html;
+    for (let i = 0; i < previewer.childNodes.length; i++) {
+      let item = previewer.childNodes[i];
+      if (item.getAttribute("contenteditable") == "true") {
+        item.setAttribute("contenteditable", "false");
+      }
+    }
   })
 
   return (
