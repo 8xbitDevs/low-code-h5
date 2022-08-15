@@ -357,6 +357,7 @@ const Designer = () => {
         });
     });
     PubSub.subscribe("preview", (msg, data) => {
+      deleteAttritube();
       sessionStorage.setItem("html", designer.innerHTML);
       window.open("/preview");
     });
