@@ -88,7 +88,7 @@ const createImgAttributes = (el, top, left) => {
   el.className = 'template_image';
   el.dataset.type = 'img';
   el.draggable = false;
-  el.src = "https://cn.vitejs.dev/logo-with-shadow.png";
+  el.src = "http://lowcode.wyy.ink/api/files/20220815/171f7028c6efcc4d73925829418854bd91.png";
   el.style.width = '128px';
   el.style.height = '128px';
   el.style.left = left - 64 + 'px';

@@ -13,7 +13,7 @@ import "./TemplateStyle.css";
 import html2canvas from "html2canvas";
 import Canvas2Image from "./canvas2image.js";
 
-import {  http } from "../../utils/http";
+import { http } from "../../utils/http";
 
 const Designer = () => {
   const page = useSelector(selectPage);
@@ -37,7 +37,7 @@ const Designer = () => {
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
     var height = designer.offsetHeight; // 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
-    var scale = 0.8; //定义放大倍数，可以支持小数
+    var scale = 1; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
 
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
@@ -69,16 +69,16 @@ const Designer = () => {
       ); //将绘制好的画布转换为img标签,默认图片格式为PNG.
 
       // 此处代码是为了下载到本地
-          // document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
+      // document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
 
       // 生成一个a超链接元素
-        //  var a = document.createElement('a');
+      //  var a = document.createElement('a');
       // 创建一个单击事件
-        //  var event = new MouseEvent('click');
+      //  var event = new MouseEvent('click');
 
       // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
       // a.download = name || '下载图片名称';
-        //  a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
+      //  a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
 
       // 触发a的单击事件
       //  a.dispatchEvent(event);
@@ -92,7 +92,7 @@ const Designer = () => {
   // 更改图片格式并向后端发送信息
   const uploadfile = async (file) => {
     //这里对base64串进行操作，去掉url头，并转换为byte
-    var bytes = window.atob(file.split(',')[1]);
+    var bytes = window.atob(file.split(",")[1]);
 
     //处理异常，将ASCII码小于0的转换为大于0
     var ab = new ArrayBuffer(bytes.length);
@@ -101,16 +101,16 @@ const Designer = () => {
       ia[i] = bytes.charCodeAt(i); //这里有点疑惑，ia是怎么改变ab的
     }
     //先转化为Blob对象
-    var blob = new Blob([ab], { type: 'image'}); //type为图片的格式
+    var blob = new Blob([ab], { type: "image" }); //type为图片的格式
     //FormData对象接受三个参数，第三个参数为文件名，通常只传前两个参数，第三个参数不传则使用默认文件名，这里使用的Blob对象，所以需要一个文件名，用时间戳代替。
     // 转化为formData格式
     let formData = new FormData();
-    formData.append('file',blob,Date.now() + '.jpg');
+    formData.append("file", blob, Date.now() + ".jpg");
 
     // 向服务器存储数据
-     const res = await http.post("/api/upload", formData); 
-     return res
-  }
+    const res = await http.post("/api/upload", formData);
+    return res;
+  };
 
   const dragOver = (e) => {
     e.preventDefault();
@@ -127,15 +127,12 @@ const Designer = () => {
         page.currentComponent.attributes.height + "px";
       focusComponent.current.style.width =
         page.currentComponent.attributes.width + "px";
-      focusComponent.current.style.margin = `${page.currentComponent.attributes.mbp[0][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[0][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[0][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[0][3]}${page.currentComponent.attributes.unitLeft}`;
-      focusComponent.current.style.borderWidth = `${page.currentComponent.attributes.mbp[1][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[1][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[1][2]}${page.currentComponent.attributes.unitButton} ${page.currentComponent.attributes.mbp[1][3]}${page.currentComponent.attributes.unitLeft}`;
-      console.log(
-        `${page.currentComponent.attributes.mbp[1][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[1][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[1][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[1][3]}${page.currentComponent.attributes.unitLeft}`
-      );
-      console.log(focusComponent.current.style.margin);
-      console.log(page.currentComponent.attributes.mbp);
-      console.log(page.currentComponent.attributes.unitTop, 222)
-      focusComponent.current.style.padding = `${page.currentComponent.attributes.mbp[2][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[2][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[2][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[2][3]}${page.currentComponent.attributes.unitLeft}`;
+      focusComponent.current.style.margin =
+        page.currentComponent.attributes.mbp[0].join("px ") + "px";
+      focusComponent.current.style.borderWidth =
+        page.currentComponent.attributes.mbp[1].join("px ") + "px";
+      focusComponent.current.style.padding =
+        page.currentComponent.attributes.mbp[2].join("px ") + "px";
       focusComponent.current.style.backgroundColor =
         page.currentComponent.attributes.bgColor;
       focusComponent.current.style.borderColor =
@@ -187,63 +184,26 @@ const Designer = () => {
         })
       );
 
-      let mt, mr, mb, ml, bt, br, bb, bl, pt, pr, pb, pl;
+      let margin = [
+        focusComponent.current.style.marginTop.slice(0, -2),
+        focusComponent.current.style.marginRight.slice(0, -2),
+        focusComponent.current.style.marginBottom.slice(0, -2),
+        focusComponent.current.style.marginLeft.slice(0, -2),
+      ];
 
-      if (page.currentComponent.attributes.unitTop === "px") {
-        console.log(page.currentComponent.attributes.unitTop, 111)
-        mt = focusComponent.current.style.marginTop.slice(0, -2);
-        bt = focusComponent.current.style.borderTopWidth.slice(0, -2);
-        pt = focusComponent.current.style.paddingTop.slice(0, -2);
-      }
-      if (page.currentComponent.attributes.unitTop === "rem") {
-        mt = focusComponent.current.style.marginTop.slice(0, -3);
-        bt = focusComponent.current.style.borderTopWidth.slice(0, -3);
-        pt = focusComponent.current.style.paddingTop.slice(0, -3);
-      }
-      if (page.currentComponent.attributes.unitRight === "px") {
-        mr = focusComponent.current.style.marginRight.slice(0, -2);
-        br = focusComponent.current.style.borderRightWidth.slice(0, -2);
-        pr = focusComponent.current.style.paddingRight.slice(0, -2);
-      }
-      if (page.currentComponent.attributes.unitRight === "rem") {
-        mr = focusComponent.current.style.marginRight.slice(0, -3);
-        br = focusComponent.current.style.borderRightWidth.slice(0, -3);
-        pr = focusComponent.current.style.paddingRight.slice(0, -3);
-      }
-      if (page.currentComponent.attributes.unitLeft === "px") {
-        ml = focusComponent.current.style.marginLeft.slice(0, -2);
-        bl = focusComponent.current.style.borderLeftWidth.slice(0, -2);
-        pl = focusComponent.current.style.paddingLeft.slice(0, -2);
-      }
-      if (page.currentComponent.attributes.unitLeft === "rem") {
-        ml = focusComponent.current.style.marginLeft.slice(0, -3);
-        bl = focusComponent.current.style.borderLeftWidth.slice(0, -3);
-        pl = focusComponent.current.style.paddingLeft.slice(0, -3);
-      }
-      if (page.currentComponent.attributes.unitBottom === "px") {
-        mb = focusComponent.current.style.marginBottom.slice(0, -2);
-        bb = focusComponent.current.style.borderBottomWidth.slice(0, -2);
-        pb = focusComponent.current.style.paddingBottom.slice(0, -2);
-      }
-      if (page.currentComponent.attributes.unitBottom === "rem") {
-        mb = focusComponent.current.style.marginBottom.slice(0, -3);
-        bb = focusComponent.current.style.borderBottomWidth.slice(0, -3);
-        pb = focusComponent.current.style.paddingBottom.slice(0, -3);
-      }
+      let borderWidth = [
+        focusComponent.current.style.borderTopWidth.slice(0, -2),
+        focusComponent.current.style.borderRightWidth.slice(0, -2),
+        focusComponent.current.style.borderBottomWidth.slice(0, -2),
+        focusComponent.current.style.borderLeftWidth.slice(0, -2),
+      ];
 
-      let margin = [mt, mr, mb, ml];
-      console.log(margin)
-
-      let borderWidth = [bt, br, bb, bl];
-
-      let padding = [pt, pr, pb, pl];
-
-      let ut = page.currentComponent.attributes.unitTop
-      let ur = page.currentComponent.attributes.unitRight
-      let ub = page.currentComponent.attributes.unitBottom
-      let ul = page.currentComponent.attributes.unitLeft
-
-
+      let padding = [
+        focusComponent.current.style.paddingTop.slice(0, -2),
+        focusComponent.current.style.paddingRight.slice(0, -2),
+        focusComponent.current.style.paddingBottom.slice(0, -2),
+        focusComponent.current.style.paddingLeft.slice(0, -2),
+      ];
       dispatch(
         updateCurrentComponentAttributes({
           attributes: {
@@ -252,10 +212,6 @@ const Designer = () => {
             left: focusComponent.current.style.left.slice(0, -2),
             width: focusComponent.current.style.width.slice(0, -2),
             height: focusComponent.current.style.height.slice(0, -2),
-            unitTop: ut,
-            unitRight: ur,
-            unitBottom: ub,
-            unitLeft: ul,
             mbp: [margin, borderWidth, padding],
             borderRadius: focusComponent.current.style.borderRadius.slice(
               0,
@@ -368,20 +324,23 @@ const Designer = () => {
     const designer = document.getElementById("designer");
     designer.innerHTML = page.saveData.html;
     PubSub.subscribe("save", (msg, data) => {
+      PubSub.publish("innerHTML", designer.innerHTML);
       // console.log(designer.innerHTML);
       // 调用截图函数,传入结点，并保存图片的url
       let faceImg = generateImage(designer);
 
       //获取promise对象成功调用后的
-      faceImg.then((src) => {
-        // 将图片编码格式进行更改并发给服务器得到url
-       const res= uploadfile(src);
-      //  console.log(res)
-      //  将得到的url传出去
-      PubSub.publish("shotPic", res);
-      }).catch((err)=>{
-        console.log("截图错误")
-      })
+      faceImg
+        .then((src) => {
+          // 将图片编码格式进行更改并发给服务器得到url
+          const res = uploadfile(src);
+          //  console.log(res)
+          //  将得到的url传出去
+          PubSub.publish("shotPic", res);
+        })
+        .catch((err) => {
+          console.log("截图错误");
+        });
     });
     return () => {
       PubSub.unsubscribe("save");

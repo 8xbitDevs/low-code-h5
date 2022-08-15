@@ -586,10 +586,14 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][0]}
                 onChange={(e) => setMBP(nowmbp, 0, e.target.value)}
               />
-              <select ref={unitTop} onChange={() => getSelectOption(unitTop)}>
+              px
+              {/* <select
+                ref={unitRight}
+                onChange={() => getSelectOption(unitRight)}
+              >
                 <option value="px">px</option>
                 <option value="rem">rem</option>
-              </select>
+              </select> */}
             </div>
           </div>
           <div className={style.left} style={{ display: `${check}` }}>
@@ -604,10 +608,14 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][3]}
                 onChange={(e) => setMBP(nowmbp, 3, e.target.value)}
               />
-              <select ref={unitLeft} onChange={() => getSelectOption(unitLeft)}>
+              px
+              {/* <select
+                ref={unitRight}
+                onChange={() => getSelectOption(unitRight)}
+              >
                 <option value="px">px</option>
                 <option value="rem">rem</option>
-              </select>
+              </select> */}
             </div>
           </div>
           <div
@@ -660,13 +668,14 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][1]}
                 onChange={(e) => setMBP(nowmbp, 1, e.target.value)}
               />
-              <select
+              px
+              {/* <select
                 ref={unitRight}
                 onChange={() => getSelectOption(unitRight)}
               >
                 <option value="px">px</option>
                 <option value="rem">rem</option>
-              </select>
+              </select> */}
             </div>
           </div>
           <div className={style.down} style={{ display: `${check}` }}>
@@ -681,13 +690,14 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][2]}
                 onChange={(e) => setMBP(nowmbp, 2, e.target.value)}
               />
-              <select
+              px
+              {/* <select
                 ref={unitBottom}
                 onChange={() => getSelectOption(unitBottom)}
               >
                 <option value="px">px</option>
                 <option value="rem">rem</option>
-              </select>
+              </select> */}
             </div>
           </div>
         </div>

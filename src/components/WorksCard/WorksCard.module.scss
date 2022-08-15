@@ -8,10 +8,17 @@
   border: 2px solid rgba(233, 233, 233, 0.765);
   overflow: hidden;
 
-  .img {
-    width: 10rem;
-    height: 16rem;
-    margin: 1rem auto;
+  .imgwrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .img {
+      width: 10rem;
+      height: 16rem;
+      margin: 1rem 0;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333);
+
+    }
   }
 
   .inf {

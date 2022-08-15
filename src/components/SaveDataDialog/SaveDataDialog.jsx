@@ -26,7 +26,7 @@ export default function SaveDataDialog() {
   const handleOk = () => {
     setIsModalVisible(false);
     console.log(page.saveData.id);
-    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在s数据则为修改文档，否则为初次保存
+    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在数据则为修改文档，否则为初次保存
       handleSubmit();
     } else {
       handleUpdate();
@@ -50,20 +50,7 @@ export default function SaveDataDialog() {
   };
 
 
-  //点击OK后 提取截图图片的url
-  useEffect(() => {
-    PubSub.subscribe("shotPic", (msg, data) => {
-      data.then((sPic) => {
-        // console.log(sPic.uri)
-        setUrl(sPic.uri)
-      }).catch((err)=>{
-        console.log("截图错误")
-      })
-    });
-    return ()=>{
-      PubSub.unsubscribe("shotPic");
-    }
-  },[])
+
 
   const handleUpdate = () => {
     const form = {
@@ -94,12 +81,22 @@ export default function SaveDataDialog() {
     PubSub.publish("save", 1);
   };
 
+
   useEffect(() => {
+    PubSub.subscribe("shotPic", (msg, data) => {
+      data.then((sPic) => {
+        console.log(sPic.uri)
+        setUrl(sPic.uri)
+      }).catch((err)=>{
+        console.log("截图错误")
+      })
+    });
     PubSub.subscribe("innerHTML", (msg, data) => {
       console.log(data)
       setSaveData(data);
     });
     return () => {
+      PubSub.unsubscribe("shotPic");
       PubSub.unsubscribe("innerHTML");
     };
   }, []);

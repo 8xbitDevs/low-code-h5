@@ -46,6 +46,7 @@ function MyWork() {
             workId={item.id}
             cardname={item.title}
             description={item.describe}
+            pic = {item.pic}
             date={item.createTime}
           ></WorksCard>
         </div>
