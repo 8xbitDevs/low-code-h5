@@ -15,7 +15,10 @@ export default function SaveDataDialog() {
   const [title, setTitle] = useState();
   const [describe, setDescribe] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const page = useSelector(selectPage);
+  const page = useSelector(selectPage); 
+  // 截图函数
+  const [url,setUrl] = useState("");
+
   const showModal = () => {
     save();
     setIsModalVisible(true);
@@ -23,7 +26,7 @@ export default function SaveDataDialog() {
   const handleOk = () => {
     setIsModalVisible(false);
     console.log(page.saveData.id);
-    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在数据则为修改文档，否则为初次保存
+    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在s数据则为修改文档，否则为初次保存
       handleSubmit();
     } else {
       handleUpdate();
@@ -35,34 +38,55 @@ export default function SaveDataDialog() {
   const saveTitle = (e) => {
     setTitle(e.target.value);
   };
+
   const saveDescribe = (e) => {
     setDescribe(e.target.value);
   };
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       handleOk();
     }
   };
 
+
+  //点击OK后 提取截图图片的url
+  useEffect(() => {
+    PubSub.subscribe("shotPic", (msg, data) => {
+      data.then((sPic) => {
+        // console.log(sPic.uri)
+        setUrl(sPic.uri)
+      }).catch((err)=>{
+        console.log("截图错误")
+      })
+    });
+    return ()=>{
+      PubSub.unsubscribe("shotPic");
+    }
+  },[])
+
   const handleUpdate = () => {
     const form = {
       id: page.saveData.id,
       title: title,
       describe: describe,
-      pic: "https://s1.ax1x.com/2022/08/11/v87sFs.jpg",
+      pic: url,
       html: saveData,
     };
+    
     http.post("/api/document/update", form);
   };
+
   const handleSubmit = () => {
     const form = {
       title: title,
       describe: describe,
-      pic: "https://s1.ax1x.com/2022/08/11/v87sFs.jpg",
+      pic: url,
       html: saveData,
     };
+
     //获取表单数据
-    console.log(form);
+    // console.log(form);
     http.post("/api/document/add", form);
   };
 
@@ -72,7 +96,7 @@ export default function SaveDataDialog() {
 
   useEffect(() => {
     PubSub.subscribe("innerHTML", (msg, data) => {
-      console.log(data);
+      console.log(data)
       setSaveData(data);
     });
     return () => {
