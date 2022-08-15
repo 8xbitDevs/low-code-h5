@@ -12,8 +12,8 @@ import {
 export default function SaveDataDialog() {
   const { TextArea } = Input;
   const [saveData, setSaveData] = useState("");
-  const [title, setTitle] = useState();
-  const [describe, setDescribe] = useState();
+  const [title, setTitle] = useState(sessionStorage.getItem('title'));
+  const [describe, setDescribe] = useState(sessionStorage.getItem('describe'));
   const [isModalVisible, setIsModalVisible] = useState(false);
   const page = useSelector(selectPage); 
   // 截图函数
@@ -85,14 +85,12 @@ export default function SaveDataDialog() {
   useEffect(() => {
     PubSub.subscribe("shotPic", (msg, data) => {
       data.then((sPic) => {
-        console.log(sPic.uri)
         setUrl(sPic.uri)
       }).catch((err)=>{
         console.log("截图错误")
       })
     });
     PubSub.subscribe("innerHTML", (msg, data) => {
-      console.log(data)
       setSaveData(data);
     });
     return () => {
@@ -117,6 +115,7 @@ export default function SaveDataDialog() {
           <Input
             showCount
             maxLength={20}
+            defaultValue={title}
             onChange={saveTitle}
             onKeyDown={handleKeyDown}
             name="title"
@@ -127,6 +126,7 @@ export default function SaveDataDialog() {
           <TextArea
             showCount
             maxLength={100}
+            defaultValue={describe}
             onChange={saveDescribe}
             onKeyDown={handleKeyDown}
             name="describe"

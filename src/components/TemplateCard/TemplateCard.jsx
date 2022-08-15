@@ -19,9 +19,9 @@ const TemplateCard = (props) => {
         <img className={style.img} src={`${getPicUrl}`} alt="" />
       </div>
       <div id={workId} className={style.inf}>
-        <p>名称：{cardname}</p>
-        <p>描述：{description}</p>
-        <p>时间：{date}</p>
+        <p className={style.p}>名称：{cardname}</p>
+        <p className={style.p}>描述：{description}</p>
+        <p className={style.p}>时间：{date}</p>
       </div>
       <div className={style.option}>
         <span title="编辑" className="iconfont icon-tianjia"></span>

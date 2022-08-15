@@ -31,7 +31,12 @@ const WorksCard = (props) => {
   // 获取文档
   async function update() {
     const res = await http.get("/api/document/get", { params: { id: workId } });
-    console.log(res);
+    sessionStorage.setItem("title", res.doc.title);
+    sessionStorage.setItem("describe", res.doc.describe);
+    console.log(
+      sessionStorage.getItem("title"),
+      sessionStorage.getItem("describe")
+    );
     dispatch(
       updatesaveData({
         id: res.doc.id,
@@ -91,9 +96,9 @@ const WorksCard = (props) => {
         <img className={style.img} src={`${getPicUrl}`} alt="" />
       </div>
       <div id={workId} className={style.inf}>
-        <p>名称：{cardname}</p>
-        <p>描述：{description}</p>
-        <p>时间：{date}</p>
+        <p className={style.p}>名称：{cardname}</p>
+        <p className={style.p}>描述：{description}</p>
+        <p className={style.p}>时间：{date}</p>
       </div>
       <div className={style.option}>
         <span

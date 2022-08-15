@@ -27,8 +27,7 @@ const Designer = () => {
     designer.setAttribute("style", "box-shadow: none");
     for (let i = 0; i < container.current.childNodes.length; i++) {
       let item = container.current.childNodes[i];
-      console.log(item.getAttribute('style'))
-      item.style.boxShadow = 'none'
+      item.style.boxShadow = "none";
       // item.setAttribute("style", "box-shadow: none");
     }
   };
@@ -67,6 +66,7 @@ const Designer = () => {
     };
     const imgSrc = html2canvas(designer, opts).then(function (canvas) {
       var context = canvas.getContext("2d");
+ 
       // 【重要】关闭抗锯齿，进一步优化清晰度
       context.mozImageSmoothingEnabled = false;
       context.webkitImageSmoothingEnabled = false;
