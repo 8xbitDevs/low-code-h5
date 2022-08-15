@@ -9,10 +9,15 @@ const TemplateCard = (props) => {
     description = "",
     date = "",
     workId = "",
+    pic = "",
   } = props || {};
+  const getPicUrl = "http://lowcode.wyy.ink/" + pic;
+
   return (
     <div className={style.container}>
-      <div className={style.img}></div>
+      <div className={style.imgwrapper}>
+        <img className={style.img} src={`${getPicUrl}`} alt="" />
+      </div>
       <div id={workId} className={style.inf}>
         <p>名称：{cardname}</p>
         <p>描述：{description}</p>

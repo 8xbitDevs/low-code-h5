@@ -90,11 +90,6 @@ const WorksCard = (props) => {
       <div className={style.imgwrapper}>
         <img className={style.img} src={`${getPicUrl}`} alt="" />
       </div>
-
-      {/* <div
-        className={style.img}
-        style={{ background: `url(${getPicUrl}) no-repeat` }}
-      ></div> */}
       <div id={workId} className={style.inf}>
         <p>名称：{cardname}</p>
         <p>描述：{description}</p>

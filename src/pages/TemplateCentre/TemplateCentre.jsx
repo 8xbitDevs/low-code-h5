@@ -24,6 +24,7 @@ function TemplateCentre() {
           <TemplateCard
             key={data.id}
             cardname={data.title}
+            pic = {data.pic}
             description={data.describe}
             date={data.createTime}
           ></TemplateCard>

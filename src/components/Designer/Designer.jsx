@@ -21,6 +21,18 @@ const Designer = () => {
   const focusComponent = useRef(null);
   const container = useRef(null);
 
+  // 删除样式
+  const deleteAttritube = () => {
+    let designer = document.getElementById("designer");
+    designer.setAttribute("style", "box-shadow: none");
+    for (let i = 0; i < container.current.childNodes.length; i++) {
+      let item = container.current.childNodes[i];
+      console.log(item.getAttribute('style'))
+      item.style.boxShadow = 'none'
+      // item.setAttribute("style", "box-shadow: none");
+    }
+  };
+
   // 放置组件
   const drop = (e) => {
     const type = e.dataTransfer.getData("type");
@@ -324,6 +336,7 @@ const Designer = () => {
     const designer = document.getElementById("designer");
     designer.innerHTML = page.saveData.html;
     PubSub.subscribe("save", (msg, data) => {
+      deleteAttritube();
       PubSub.publish("innerHTML", designer.innerHTML);
       // console.log(designer.innerHTML);
       // 调用截图函数,传入结点，并保存图片的url
