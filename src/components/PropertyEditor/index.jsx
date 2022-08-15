@@ -14,6 +14,10 @@ const PropertyEditor = () => {
   const bgColorRef = useRef();
   const borderColorRef = useRef();
   const textColorRef = useRef();
+  const unitTop = useRef();
+  const unitRight = useRef();
+  const unitBottom = useRef();
+  const unitLeft = useRef();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 
@@ -208,6 +212,56 @@ const PropertyEditor = () => {
       })
     );
     // setmbp(newset);
+  };
+
+  // 获取select标签value
+  const getSelectOption = (tar) => {
+    const index = tar.current.selectedIndex;
+    const value = tar.current.options[index].value;
+    if (tar == unitTop) {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            unitTop: value,
+          },
+          change: Date.now(),
+        })
+      );
+    }
+    if (tar == unitRight) {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            unitRight: value,
+          },
+          change: Date.now(),
+        })
+      );
+    }
+    if (tar == unitBottom) {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            unitBottom: value,
+          },
+          change: Date.now(),
+        })
+      );
+    }
+    if (tar == unitLeft) {
+      dispatch(
+        updateCurrentComponentAttributes({
+          attributes: {
+            ...page.currentComponent.attributes,
+            unitLeft: value,
+          },
+          change: Date.now(),
+        })
+      );
+    }
   };
 
   // 返回属性设置模块,type为组件种类，根据组件种类返回不同属性设置模块，目前只有文本
@@ -532,9 +586,8 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][0]}
                 onChange={(e) => setMBP(nowmbp, 0, e.target.value)}
               />
-              <select>
+              <select ref={unitTop} onChange={() => getSelectOption(unitTop)}>
                 <option value="px">px</option>
-                <option value="%">%</option>
                 <option value="rem">rem</option>
               </select>
             </div>
@@ -551,9 +604,8 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][3]}
                 onChange={(e) => setMBP(nowmbp, 3, e.target.value)}
               />
-              <select>
+              <select ref={unitLeft} onChange={() => getSelectOption(unitLeft)}>
                 <option value="px">px</option>
-                <option value="%">%</option>
                 <option value="rem">rem</option>
               </select>
             </div>
@@ -608,9 +660,11 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][1]}
                 onChange={(e) => setMBP(nowmbp, 1, e.target.value)}
               />
-              <select>
+              <select
+                ref={unitRight}
+                onChange={() => getSelectOption(unitRight)}
+              >
                 <option value="px">px</option>
-                <option value="%">%</option>
                 <option value="rem">rem</option>
               </select>
             </div>
@@ -627,9 +681,11 @@ const PropertyEditor = () => {
                 value={page.currentComponent.attributes.mbp[nowmbp][2]}
                 onChange={(e) => setMBP(nowmbp, 2, e.target.value)}
               />
-              <select>
+              <select
+                ref={unitBottom}
+                onChange={() => getSelectOption(unitBottom)}
+              >
                 <option value="px">px</option>
-                <option value="%">%</option>
                 <option value="rem">rem</option>
               </select>
             </div>

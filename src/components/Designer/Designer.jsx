@@ -102,12 +102,15 @@ const Designer = () => {
         page.currentComponent.attributes.height + "px";
       focusComponent.current.style.width =
         page.currentComponent.attributes.width + "px";
-      focusComponent.current.style.margin =
-        page.currentComponent.attributes.mbp[0].join("px ") + "px";
-      focusComponent.current.style.borderWidth =
-        page.currentComponent.attributes.mbp[1].join("px ") + "px";
-      focusComponent.current.style.padding =
-        page.currentComponent.attributes.mbp[2].join("px ") + "px";
+      focusComponent.current.style.margin = `${page.currentComponent.attributes.mbp[0][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[0][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[0][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[0][3]}${page.currentComponent.attributes.unitLeft}`;
+      focusComponent.current.style.borderWidth = `${page.currentComponent.attributes.mbp[1][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[1][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[1][2]}${page.currentComponent.attributes.unitButton} ${page.currentComponent.attributes.mbp[1][3]}${page.currentComponent.attributes.unitLeft}`;
+      console.log(
+        `${page.currentComponent.attributes.mbp[1][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[1][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[1][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[1][3]}${page.currentComponent.attributes.unitLeft}`
+      );
+      console.log(focusComponent.current.style.margin);
+      console.log(page.currentComponent.attributes.mbp);
+      console.log(page.currentComponent.attributes.unitTop, 222)
+      focusComponent.current.style.padding = `${page.currentComponent.attributes.mbp[2][0]}${page.currentComponent.attributes.unitTop} ${page.currentComponent.attributes.mbp[2][1]}${page.currentComponent.attributes.unitRight} ${page.currentComponent.attributes.mbp[2][2]}${page.currentComponent.attributes.unitBottom} ${page.currentComponent.attributes.mbp[2][3]}${page.currentComponent.attributes.unitLeft}`;
       focusComponent.current.style.backgroundColor =
         page.currentComponent.attributes.bgColor;
       focusComponent.current.style.borderColor =
@@ -159,26 +162,63 @@ const Designer = () => {
         })
       );
 
-      let margin = [
-        focusComponent.current.style.marginTop.slice(0, -2),
-        focusComponent.current.style.marginRight.slice(0, -2),
-        focusComponent.current.style.marginBottom.slice(0, -2),
-        focusComponent.current.style.marginLeft.slice(0, -2),
-      ];
+      let mt, mr, mb, ml, bt, br, bb, bl, pt, pr, pb, pl;
 
-      let borderWidth = [
-        focusComponent.current.style.borderTopWidth.slice(0, -2),
-        focusComponent.current.style.borderRightWidth.slice(0, -2),
-        focusComponent.current.style.borderBottomWidth.slice(0, -2),
-        focusComponent.current.style.borderLeftWidth.slice(0, -2),
-      ];
+      if (page.currentComponent.attributes.unitTop === "px") {
+        console.log(page.currentComponent.attributes.unitTop, 111)
+        mt = focusComponent.current.style.marginTop.slice(0, -2);
+        bt = focusComponent.current.style.borderTopWidth.slice(0, -2);
+        pt = focusComponent.current.style.paddingTop.slice(0, -2);
+      }
+      if (page.currentComponent.attributes.unitTop === "rem") {
+        mt = focusComponent.current.style.marginTop.slice(0, -3);
+        bt = focusComponent.current.style.borderTopWidth.slice(0, -3);
+        pt = focusComponent.current.style.paddingTop.slice(0, -3);
+      }
+      if (page.currentComponent.attributes.unitRight === "px") {
+        mr = focusComponent.current.style.marginRight.slice(0, -2);
+        br = focusComponent.current.style.borderRightWidth.slice(0, -2);
+        pr = focusComponent.current.style.paddingRight.slice(0, -2);
+      }
+      if (page.currentComponent.attributes.unitRight === "rem") {
+        mr = focusComponent.current.style.marginRight.slice(0, -3);
+        br = focusComponent.current.style.borderRightWidth.slice(0, -3);
+        pr = focusComponent.current.style.paddingRight.slice(0, -3);
+      }
+      if (page.currentComponent.attributes.unitLeft === "px") {
+        ml = focusComponent.current.style.marginLeft.slice(0, -2);
+        bl = focusComponent.current.style.borderLeftWidth.slice(0, -2);
+        pl = focusComponent.current.style.paddingLeft.slice(0, -2);
+      }
+      if (page.currentComponent.attributes.unitLeft === "rem") {
+        ml = focusComponent.current.style.marginLeft.slice(0, -3);
+        bl = focusComponent.current.style.borderLeftWidth.slice(0, -3);
+        pl = focusComponent.current.style.paddingLeft.slice(0, -3);
+      }
+      if (page.currentComponent.attributes.unitBottom === "px") {
+        mb = focusComponent.current.style.marginBottom.slice(0, -2);
+        bb = focusComponent.current.style.borderBottomWidth.slice(0, -2);
+        pb = focusComponent.current.style.paddingBottom.slice(0, -2);
+      }
+      if (page.currentComponent.attributes.unitBottom === "rem") {
+        mb = focusComponent.current.style.marginBottom.slice(0, -3);
+        bb = focusComponent.current.style.borderBottomWidth.slice(0, -3);
+        pb = focusComponent.current.style.paddingBottom.slice(0, -3);
+      }
 
-      let padding = [
-        focusComponent.current.style.paddingTop.slice(0, -2),
-        focusComponent.current.style.paddingRight.slice(0, -2),
-        focusComponent.current.style.paddingBottom.slice(0, -2),
-        focusComponent.current.style.paddingLeft.slice(0, -2),
-      ];
+      let margin = [mt, mr, mb, ml];
+      console.log(margin)
+
+      let borderWidth = [bt, br, bb, bl];
+
+      let padding = [pt, pr, pb, pl];
+
+      let ut = page.currentComponent.attributes.unitTop
+      let ur = page.currentComponent.attributes.unitRight
+      let ub = page.currentComponent.attributes.unitBottom
+      let ul = page.currentComponent.attributes.unitLeft
+
+
       dispatch(
         updateCurrentComponentAttributes({
           attributes: {
@@ -187,6 +227,10 @@ const Designer = () => {
             left: focusComponent.current.style.left.slice(0, -2),
             width: focusComponent.current.style.width.slice(0, -2),
             height: focusComponent.current.style.height.slice(0, -2),
+            unitTop: ut,
+            unitRight: ur,
+            unitBottom: ub,
+            unitLeft: ul,
             mbp: [margin, borderWidth, padding],
             borderRadius: focusComponent.current.style.borderRadius.slice(
               0,
@@ -255,7 +299,9 @@ const Designer = () => {
     };
     setTimeout(() => {
       for (let i = 0; i < container.current.childNodes.length; i++) {
-        const temp = document.getElementById(container.current.childNodes[i].id)
+        const temp = document.getElementById(
+          container.current.childNodes[i].id
+        );
         temp.onmousedown = (mouseDown) => {
           const mouseDownX = mouseDown.pageX;
           const mouseDownY = mouseDown.pageY;
