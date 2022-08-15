@@ -8,7 +8,7 @@ import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
 import { useDispatch, useSelector } from "react-redux";
 import { selectPage } from "../../store/page/pageSlice";
 import { http } from "../../utils/http";
-import { updatesaveData } from "../../store/page/pageSlice";
+import { updateSaveData } from "../../store/page/pageSlice";
 
 
 const EditorNav = () => {
@@ -51,16 +51,15 @@ const EditorNav = () => {
 
   // 预览文档
   async function preview() {
-    const id = page.saveData.id;
+    const id = sessionStorage.getItem('id');
     const res = await http.get("/api/document/get", { params: { id: id } });
+    PubSub.publish('preview', 1)
     // console.log(data);
     dispatch(
-      updatesaveData({
+      updateSaveData({
         id: res.doc.id,
-        html:res.doc.html
       })
     );
-    navigate("/preview");
     // console.log(res, "getWork");
   }
 
@@ -85,7 +84,7 @@ const EditorNav = () => {
         </button>
         <button className={style.button} onClick={preview}>预览</button>
         <SaveDataDialog />
-        <button className={style.button}>发布</button>
+        {/* <button className={style.button}>发布</button> */}
       </div>
     </header>
   )

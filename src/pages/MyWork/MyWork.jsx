@@ -9,7 +9,7 @@ import { http } from "../../utils/http";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPage,
-  updatesaveData,
+  updateSaveData,
   updateMyWork,
 } from "../../store/page/pageSlice";
 import { initializeConnect } from "react-redux/es/components/connect";
@@ -19,13 +19,17 @@ function MyWork() {
   const dispatch = useDispatch();
 
   const init = () => {
-    dispatch(updatesaveData({id:'',html:''}));
-}
+    sessionStorage.removeItem("title");
+    sessionStorage.removeItem("describe");
+    sessionStorage.removeItem("html");
+    sessionStorage.removeItem("designerHtml");
+    dispatch(updateSaveData({ id: "" }));
+  };
 
   useEffect(() => {
     async function fetchDatasSource() {
       const res = await http.get("/api/document/getList");
-        console.log(res.documents)
+      console.log(res.documents);
       dispatch(updateMyWork(res.documents));
     }
     fetchDatasSource();
@@ -33,7 +37,7 @@ function MyWork() {
   return (
     <div className={style.container}>
       <Link to={"/editor"}>
-        <div className={style.cardcontainer} onClick={()=>init()}>
+        <div className={style.cardcontainer} onClick={() => init()}>
           <img src="src\media\icon\tianjia.svg" />
           <div className={style.option}>
             <p>创建新作品</p>
@@ -46,7 +50,7 @@ function MyWork() {
             workId={item.id}
             cardname={item.title}
             description={item.describe}
-            pic = {item.pic}
+            pic={item.pic}
             date={item.createTime}
           ></WorksCard>
         </div>

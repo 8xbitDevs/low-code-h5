@@ -61,7 +61,7 @@ export const pageSlice = createSlice({
       state.currentComponent.attributes = action.payload.attributes;
       state.currentComponent.change = action.payload.change;
     },
-    updatesaveData: (state, action) => {
+    updateSaveData: (state, action) => {
       state.saveData = action.payload
     },
     updateMyWork: (state, action) => {
@@ -79,6 +79,6 @@ export const pageSlice = createSlice({
 
 export const selectPage = state => state.page;
 
-export const { updatePageData, updatePageInfo, updateCurrentComponentAttributes, updateCurrentComponentIdType, updatesaveData, updateMyWork } = pageSlice.actions;
+export const { updatePageData, updatePageInfo, updateCurrentComponentAttributes, updateCurrentComponentIdType, updateSaveData, updateMyWork } = pageSlice.actions;
 
 export default pageSlice.reducer;

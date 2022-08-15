@@ -14,6 +14,7 @@ import html2canvas from "html2canvas";
 import Canvas2Image from "./canvas2image.js";
 
 import { http } from "../../utils/http";
+import { publish } from "pubsub-js";
 
 const Designer = () => {
   const page = useSelector(selectPage);
@@ -66,7 +67,7 @@ const Designer = () => {
     };
     const imgSrc = html2canvas(designer, opts).then(function (canvas) {
       var context = canvas.getContext("2d");
- 
+
       // 【重要】关闭抗锯齿，进一步优化清晰度
       context.mozImageSmoothingEnabled = false;
       context.webkitImageSmoothingEnabled = false;
@@ -334,7 +335,7 @@ const Designer = () => {
 
   useEffect(() => {
     const designer = document.getElementById("designer");
-    designer.innerHTML = page.saveData.html;
+    designer.innerHTML = sessionStorage.getItem("designerHtml");
     PubSub.subscribe("save", (msg, data) => {
       deleteAttritube();
       PubSub.publish("innerHTML", designer.innerHTML);
@@ -355,8 +356,13 @@ const Designer = () => {
           console.log("截图错误");
         });
     });
+    PubSub.subscribe("preview", (msg, data) => {
+      sessionStorage.setItem("html", designer.innerHTML);
+      window.open("/preview");
+    });
     return () => {
       PubSub.unsubscribe("save");
+      PubSub.unsubscribe("preview");
     };
   }, []);
 

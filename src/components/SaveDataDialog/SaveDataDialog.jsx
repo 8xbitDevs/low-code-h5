@@ -26,7 +26,7 @@ export default function SaveDataDialog() {
   const handleOk = () => {
     setIsModalVisible(false);
     console.log(page.saveData.id);
-    if (page.saveData.id === "" && page.saveData.html === "") {    // 若savadata存在数据则为修改文档，否则为初次保存
+    if (page.saveData.id === "" ) {    // 若savadata存在数据则为修改文档，否则为初次保存
       handleSubmit();
     } else {
       handleUpdate();

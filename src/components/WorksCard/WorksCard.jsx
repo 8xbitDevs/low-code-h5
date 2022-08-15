@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPage,
-  updatesaveData,
+  updateSaveData,
   updateMyWork,
 } from "../../store/page/pageSlice";
 
@@ -31,16 +31,17 @@ const WorksCard = (props) => {
   // 获取文档
   async function update() {
     const res = await http.get("/api/document/get", { params: { id: workId } });
+    sessionStorage.setItem('id', workId)
     sessionStorage.setItem("title", res.doc.title);
     sessionStorage.setItem("describe", res.doc.describe);
+    sessionStorage.setItem("designerHtml", res.doc.html)
     console.log(
       sessionStorage.getItem("title"),
       sessionStorage.getItem("describe")
     );
     dispatch(
-      updatesaveData({
+      updateSaveData({
         id: res.doc.id,
-        html: res.doc.html,
       })
     );
 
@@ -51,14 +52,14 @@ const WorksCard = (props) => {
   // 预览文档
   async function preview() {
     const res = await http.get("/api/document/get", { params: { id: workId } });
+    sessionStorage.setItem('html', res.doc.html)
     // console.log(data);
     dispatch(
-      updatesaveData({
+      updateSaveData({
         id: res.doc.id,
-        html: res.doc.html,
       })
     );
-    navigate("/preview");
+    window.open('/preview')
     // console.log(res, "getWork");
   }
 

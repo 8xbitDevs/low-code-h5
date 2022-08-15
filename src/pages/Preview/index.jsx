@@ -11,7 +11,7 @@ const Preview = () => {
 
   useEffect(() => {
     const previewer = document.getElementById("previewer");
-    previewer.innerHTML = page.saveData.html;
+    previewer.innerHTML = sessionStorage.getItem('html');
     for (let i = 0; i < previewer.childNodes.length; i++) {
       let item = previewer.childNodes[i];
       if (item.getAttribute("contenteditable") == "true") {
@@ -22,7 +22,6 @@ const Preview = () => {
 
   return (
     <div>
-      <NavigationBar />
       <div className="Container">
         <div
           id="previewer"
