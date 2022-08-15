@@ -13,6 +13,8 @@ import "./TemplateStyle.css";
 import html2canvas from "html2canvas";
 import Canvas2Image from "./canvas2image.js";
 
+import {  http } from "../../utils/http";
+
 const Designer = () => {
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const Designer = () => {
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
     var height = designer.offsetHeight; // 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
-    var scale = 1; //定义放大倍数，可以支持小数
+    var scale = 0.8; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
 
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
@@ -67,24 +69,47 @@ const Designer = () => {
       ); //将绘制好的画布转换为img标签,默认图片格式为PNG.
 
       // 此处代码是为了下载到本地
-      //  document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
+          // document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
 
       // 生成一个a超链接元素
-      // var a = document.createElement('a');
+        //  var a = document.createElement('a');
       // 创建一个单击事件
-      // var event = new MouseEvent('click');
+        //  var event = new MouseEvent('click');
 
       // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
       // a.download = name || '下载图片名称';
-      // a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
+        //  a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
 
       // 触发a的单击事件
-      // a.dispatchEvent(event);
+      //  a.dispatchEvent(event);
 
-      // 将图片的url传递出去
+      // 将图片的64位编码传递出去
       return img.src;
     });
     return imgSrc;
+  }
+
+  // 更改图片格式并向后端发送信息
+  const uploadfile = async (file) => {
+    //这里对base64串进行操作，去掉url头，并转换为byte
+    var bytes = window.atob(file.split(',')[1]);
+
+    //处理异常，将ASCII码小于0的转换为大于0
+    var ab = new ArrayBuffer(bytes.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < bytes.length; i++) {
+      ia[i] = bytes.charCodeAt(i); //这里有点疑惑，ia是怎么改变ab的
+    }
+    //先转化为Blob对象
+    var blob = new Blob([ab], { type: 'image'}); //type为图片的格式
+    //FormData对象接受三个参数，第三个参数为文件名，通常只传前两个参数，第三个参数不传则使用默认文件名，这里使用的Blob对象，所以需要一个文件名，用时间戳代替。
+    // 转化为formData格式
+    let formData = new FormData();
+    formData.append('file',blob,Date.now() + '.jpg');
+
+    // 向服务器存储数据
+     const res = await http.post("/api/upload", formData); 
+     return res
   }
 
   const dragOver = (e) => {
@@ -343,11 +368,20 @@ const Designer = () => {
     const designer = document.getElementById("designer");
     designer.innerHTML = page.saveData.html;
     PubSub.subscribe("save", (msg, data) => {
-      PubSub.publish("innerHTML", designer.innerHTML);
       // console.log(designer.innerHTML);
       // 调用截图函数,传入结点，并保存图片的url
       let faceImg = generateImage(designer);
-      console.log(faceImg);
+
+      //获取promise对象成功调用后的
+      faceImg.then((src) => {
+        // 将图片编码格式进行更改并发给服务器得到url
+       const res= uploadfile(src);
+      //  console.log(res)
+      //  将得到的url传出去
+      PubSub.publish("shotPic", res);
+      }).catch((err)=>{
+        console.log("截图错误")
+      })
     });
     return () => {
       PubSub.unsubscribe("save");

@@ -25,7 +25,7 @@ function MyWork() {
   useEffect(() => {
     async function fetchDatasSource() {
       const res = await http.get("/api/document/getList");
-      console.log(res.documents)
+        console.log(res.documents)
       dispatch(updateMyWork(res.documents));
     }
     fetchDatasSource();
