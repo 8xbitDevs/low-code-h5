@@ -38,7 +38,7 @@ function MyWork() {
     <div className={style.container}>
       <Link to={"/editor"}>
         <div className={style.cardcontainer} onClick={() => init()}>
-          <img src="src\media\icon\tianjia.svg" />
+          <img src="/assets/tianjia.svg" />
           <div className={style.option}>
             <p>创建新作品</p>
           </div>

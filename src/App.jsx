@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.scss";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Editor from "./pages/editor/Editor";
@@ -44,11 +43,8 @@ function App() {
             </AuthRoute>
           }
         />
-        <Route path="/login" element={<Login domain="lowcode.wyy.ink" />} />
-        <Route
-          path="/register"
-          element={<Register domain="lowcode.wyy.ink" />}
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
