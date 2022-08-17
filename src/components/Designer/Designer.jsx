@@ -135,14 +135,15 @@ const Designer = () => {
     });
  
       // 视频结点进行添加
-    for(var i=0;i<videoNode.length;i++){
+    for(var i=videoNode.length-1;i>=0;i--){
      videoNode[i].style.display = 'block'
        designer.appendChild(videoNode[i])
      }
 
-    //  对画布结点进行删除
+    //  对画布结点从后面往前删除
     const canvasNodes = designer.getElementsByClassName('template_canvas')
-    for(var i=0;i<canvasNodes.length;i++){
+    console.log(canvasNodes.length)
+    for(var i=canvasNodes.length-1;i>=0;i--){
       designer.removeChild(canvasNodes[i])
     }
     return imgSrc;
