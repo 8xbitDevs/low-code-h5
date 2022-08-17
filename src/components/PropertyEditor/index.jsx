@@ -147,7 +147,10 @@ const PropertyEditor = () => {
     action: "http://lowcode.wyy.ink/api/upload",
     Headers: {
       token: getToken(),
+       'X-Requested-With':null
+      
     },
+  // 跨域请求changeOrigin: true,
     maxCount: 1,
     customRequest: onVideoFilesChange,
   };

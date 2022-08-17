@@ -41,17 +41,72 @@ const Designer = () => {
         top: e.clientY - container.current.offsetTop,
         left: e.clientX - container.current.offsetLeft,
       })
-    );
+    ); 
+      
   };
+
+  // 创建canves并绘制
+  function creatCanvas(designer,temp){
+      // temp.src = redirectUrl('x.')
+      temp.crossOrigin='Anonymous'
+      var canvas = document.createElement("canvas")
+     canvas.className = 'template_canvas'
+
+      // 根据视频结点设置样式
+      canvas.style.width = temp.style.width
+      canvas.style.height =temp.style.height
+      canvas.style.left = temp.style.left
+      canvas.style.top = temp.style.top
+    
+      
+      canvas.style.position ='absolute'
+      // 将canvas结点放在视频结点上面
+       canvas.style.zIndex = 10
+       canvas.style.backgroundColor ='white'
+    
+      //添加到幕布的孩子结点上
+      designer.appendChild(canvas)
+
+      // 绘制画布
+      var ctx = canvas.getContext("2d")
+      // 去掉单位
+      var width = parseInt( parseInt(canvas.style.width))
+      var height = parseInt( parseInt(canvas.style.height))
+ 
+
+      // 提高分辨率
+      const ratio = window.devicePixelRatio || 1;
+      ctx.scale(ratio, ratio);
+
+        // 由于存在进度条，可能会造成视频失真 
+      ctx.drawImage(temp,0,0,width,height*0.7)     
+
+  }
+
+    
+
 
   // 截图函数
   function generateImage(designer) {
+    // 对于视频截图需要进一步优化
+    //  获得视频截图的结点
+     const l= designer.getElementsByClassName('template_video')
+    // 根据视频的多少生成多少个画布组件
+    for(var i=0;i<l.length;i++){
+      // 创建
+       creatCanvas(designer,l[i])
+      //  并且隐藏视频标签
+      l[i].style.display = 'none'
+    }
+  
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
     var height = designer.offsetHeight; // 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
     var scale = 1; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
 
+    
+    
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
     canvas.height = height * scale; //定义canvas高度 * 倍数，默认高度为150px
     canvas.getContext("2d").scale(scale, scale); //创建canvas的context对象，设置scale，相当于画布的“画笔”拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
@@ -65,6 +120,7 @@ const Designer = () => {
       height: height,
       useCORS: true, //开启html2canvas的useCORS配置，跨域配置，以解决图片跨域的问题
     };
+    console.log(designer)
     const imgSrc = html2canvas(designer, opts).then(function (canvas) {
       var context = canvas.getContext("2d");
 
@@ -79,26 +135,11 @@ const Designer = () => {
         canvas.width,
         canvas.height,
         imgType
-      ); //将绘制好的画布转换为img标签,默认图片格式为PNG.
-
-      // 此处代码是为了下载到本地
-      // document.body.appendChild(img); //在body元素后追加的图片元素至页面，也可以不追加，直接做处理
-
-      // 生成一个a超链接元素
-      //  var a = document.createElement('a');
-      // 创建一个单击事件
-      //  var event = new MouseEvent('click');
-
-      // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
-      // a.download = name || '下载图片名称';
-      //  a.href = img.src;//将img的src值设置为a.href属性，img.src为base64编码值
-
-      // 触发a的单击事件
-      //  a.dispatchEvent(event);
-
+      ); 
       // 将图片的64位编码传递出去
       return img.src;
     });
+     
     return imgSrc;
   }
 
@@ -339,7 +380,6 @@ const Designer = () => {
     PubSub.subscribe("save", (msg, data) => {
       deleteAttritube();
       PubSub.publish("innerHTML", designer.innerHTML);
-      // console.log(designer.innerHTML);
       // 调用截图函数,传入结点，并保存图片的url
       let faceImg = generateImage(designer);
 
@@ -353,7 +393,7 @@ const Designer = () => {
           PubSub.publish("shotPic", res);
         })
         .catch((err) => {
-          console.log("截图错误");
+          console.log("截图错误"+err);
         });
     });
     PubSub.subscribe("preview", (msg, data) => {

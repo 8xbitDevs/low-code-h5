@@ -97,7 +97,9 @@ const createImgAttributes = (el, top, left) => {
 const createVideoAttributes = (el, top, left) => {
   el.className = 'template_video';
   el.dataset.type = 'video';
-  el.src = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm";
+  // 跨域
+  el.crossOrigin='Anonymous'
+  el.src = "http://lowcode.wyy.ink/api/files/20220816/b1a9a3273903415bbe4405df5324e530f5bb50207745470a807d058a0923601a.mp4";
   el.loop = true;
   el.controls = true;
   el.style.width = '320px';
@@ -105,3 +107,5 @@ const createVideoAttributes = (el, top, left) => {
   el.style.left = left - 160 + 'px';
   el.style.top = top - 120 + 'px';
 }
+
+

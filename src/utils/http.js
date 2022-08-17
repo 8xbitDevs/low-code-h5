@@ -15,8 +15,9 @@ export function getToken() {
   
 const http = axios.create({
   baseURL: 'http://lowcode.wyy.ink',
-  timeout: 600000
+  timeout: 600000,
 })
+
 // 添加请求拦截器
 http.interceptors.request.use((config) => {
   const token = getToken()

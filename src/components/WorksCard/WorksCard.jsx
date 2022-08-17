@@ -65,6 +65,8 @@ const WorksCard = (props) => {
     dispatch(updateMyWork(newList));
   }
 
+
+
   return (
     <div className={style.container}>
       <div className={style.imgwrapper}>
