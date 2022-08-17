@@ -21,24 +21,7 @@ const PropertyEditor = () => {
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 
-  // 通用
   const [nowmbp, setnowmbp] = useState(0); // 当前选中的是margin,border,padding中的哪一个
-  const [borderRadius, setborderRadius] = useState(0); // 圆角
-  const [bgColor, setbgColor] = useState("rgba(0, 0, 0, 1)"); // 背景颜色
-  const [borderColor, setBorderColor] = useState("rgba(0, 0, 0, 1)"); // 边框颜色
-  const [textColor, setTextColor] = useState("rgba(0, 0, 0, 1)"); // 文字颜色
-  // button
-  const [buttonText, setButtonText] = useState("按钮"); // 按钮文字
-  const [fontsize, setFontsize] = useState(0); // 字号
-  const [lineheight, setLineheight] = useState(0); // 行高
-  const [align, setAlign] = useState("center"); // 设置对齐方式
-  // a
-  const [src, setSrc] = useState(""); // 链接地址
-  // img
-  const [imgsrc, setImg] = useState("");
-  // video
-  const [video, setVideo] = useState("");
-  // 其他
   const [check, setcheck] = useState("none"); // 盒子checkbox显示状态
   const [boxset, setboxset] = useState(["none", "none", "none", "none"]); // 盒子设置框显示状态
   const [boxstyle, setboxstyle] = useState([

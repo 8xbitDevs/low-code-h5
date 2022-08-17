@@ -1,9 +1,22 @@
 import React, { useRef, useState } from "react";
-import styles from "./AttributesPanel.module.css";
+import styles from "./AttributesPanel.module.scss";
 import PropertyEditor from "../PropertyEditor/index";
+import ActionEditor from "../ActionEditor";
 
 const AttributesPanel = () => {
   const [width, setWidth] = useState(345);
+  const [navsel, setnavsel] = useState(0);
+
+  const sel = (pos) => {
+    if (pos === "left") {
+      setnavsel(0)
+    }
+    if (pos === "right") {
+      setnavsel(1)
+    }
+    console.log(pos,11)
+    console.log(navsel)
+  }
 
   const handleResize = (mouseDownEvent) => {
     const initialWidth = width;
@@ -23,7 +36,16 @@ const AttributesPanel = () => {
   return (
     <div style={{ width: width }} className={styles.Container}>
       <div className={styles.OverflowHidden}>
-        <PropertyEditor type="span" />
+        <div className={styles.nav}>
+          <div className={navsel ? styles.barLeft : `${styles.barLeft} ${styles.barLeft_act}`} onClick={()=>sel("left")}>样式</div>
+          <div className={!navsel ? styles.barRight : `${styles.barRight} ${styles.barRight_act}`} onClick={()=>sel("right")}>动作</div>
+        </div>
+        <div style={{ display: navsel ? "none" : "block" }}>
+          <PropertyEditor type="span" />
+        </div>
+        <div style={{ display: !navsel ? "none" : "block" }}>
+          <ActionEditor />
+        </div>
       </div>
       <button className={styles.ColResize} onMouseDown={handleResize}>
         |

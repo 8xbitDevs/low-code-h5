@@ -8,7 +8,7 @@ import TemplateCentre from "./pages/TemplateCentre/TemplateCentre";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EssentialData from "./pages/EssentialData/EssentialData";
-import { AuthRoute } from "./components/AuthRoute";
+import { AuthRoute } from "./utils/AuthRoute";
 import Preview from "./pages/Preview";
 
 function App() {
