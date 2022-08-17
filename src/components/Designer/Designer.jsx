@@ -57,7 +57,6 @@ const Designer = () => {
       canvas.style.height =temp.style.height
       canvas.style.left = temp.style.left
       canvas.style.top = temp.style.top
-    
       
       canvas.style.position ='absolute'
       // 将canvas结点放在视频结点上面
@@ -72,7 +71,6 @@ const Designer = () => {
       // 去掉单位
       var width = parseInt( parseInt(canvas.style.width))
       var height = parseInt( parseInt(canvas.style.height))
- 
 
       // 提高分辨率
       const ratio = window.devicePixelRatio || 1;
@@ -83,20 +81,18 @@ const Designer = () => {
 
   }
 
-    
-
-
   // 截图函数
   function generateImage(designer) {
     // 对于视频截图需要进一步优化
     //  获得视频截图的结点
-     const l= designer.getElementsByClassName('template_video')
+     const  videoNode= designer.getElementsByClassName('template_video')
+  
     // 根据视频的多少生成多少个画布组件
-    for(var i=0;i<l.length;i++){
+    for(var i=0;i<videoNode.length;i++){
       // 创建
-       creatCanvas(designer,l[i])
+        creatCanvas(designer,videoNode[i])
       //  并且隐藏视频标签
-      l[i].style.display = 'none'
+        videoNode[i].style.display = 'none'
     }
   
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
@@ -104,8 +100,6 @@ const Designer = () => {
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
     var scale = 1; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
-
-    
     
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
     canvas.height = height * scale; //定义canvas高度 * 倍数，默认高度为150px
@@ -120,7 +114,7 @@ const Designer = () => {
       height: height,
       useCORS: true, //开启html2canvas的useCORS配置，跨域配置，以解决图片跨域的问题
     };
-    // console.log(designer)
+
     const imgSrc = html2canvas(designer, opts).then(function (canvas) {
       var context = canvas.getContext("2d");
 
@@ -139,7 +133,18 @@ const Designer = () => {
       // 将图片的64位编码传递出去
       return img.src;
     });
-     
+ 
+      // 视频结点进行添加
+    for(var i=0;i<videoNode.length;i++){
+     videoNode[i].style.display = 'block'
+       designer.appendChild(videoNode[i])
+     }
+
+    //  对画布结点进行删除
+    const canvasNodes = designer.getElementsByClassName('template_canvas')
+    for(var i=0;i<canvasNodes.length;i++){
+      designer.removeChild(canvasNodes[i])
+    }
     return imgSrc;
   }
 
