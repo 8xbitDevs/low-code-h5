@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./WorksCard.module.scss";
 import "../../media/icon/iconfont.css";
-import { getKeyThenIncreaseKey } from "antd/lib/message";
 import { http } from "../../utils/http";
-import PubSub, { publish } from "pubsub-js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,7 +19,6 @@ const WorksCard = (props) => {
     workId = "",
     pic = "",
   } = props || {};
-  const [picUrl, setUrl] = useState("");
   const navigate = useNavigate();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -44,9 +41,7 @@ const WorksCard = (props) => {
         id: res.doc.id,
       })
     );
-
     navigate("/editor");
-    // console.log(res, "getWork");
   }
 
   // 预览文档
@@ -69,27 +64,6 @@ const WorksCard = (props) => {
     const newList = page.myWork.filter((item) => item.id != workId);
     dispatch(updateMyWork(newList));
   }
-
-  // // 得到对应id的url
-  // async function getUrl(workId) {
-  //   const res = await http.get("/api/document/getList");
-  //   // 找到更新项目的id
-  //   // console.log(workId)
-  //   const List = res.documents;
-
-  //   // 根据更新项目的id找到对应的位置
-  //   for (var i = 0; i < List.length; i++) {
-  //     if (List[i].id === workId) {
-  //       setUrl(List[i].pic);
-  //       break;
-  //     }
-  //   }
-  // }
-
-  // getUrl(workId);
-  // // console.log(picUrl)
-  // // 处理图片地址
-  // console.log(picUrl);
 
   return (
     <div className={style.container}>

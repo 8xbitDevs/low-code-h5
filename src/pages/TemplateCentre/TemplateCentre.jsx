@@ -3,17 +3,22 @@ import { useEffect, useState } from "react";
 import TemplateCard from "../../components/TemplateCard/TemplateCard";
 import style from "./TemplateCentre.module.scss";
 import axios from "axios";
-import { http } from "../../utils/http";
-
 
 function TemplateCentre() {
   const [data, setData] = useState({});
 
   useEffect(() => {
     async function fetchDatasSource() {
-      const res = await http.get('/api/document/getList')
-      console.log(res, "tem");
-      setData(res);
+      const res = await axios({
+        method: "get",
+        url: "http://lowcode.wyy.ink/api/document/getList",
+        headers: {
+          'token':
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzA2YTkwMGFlZWQ0OTVlYTExZDc3NGE5OGM4MmU5OSIsImV4cCI6MTY5MjI0MDkxNn0.xlV9Zhm5SuylfeUtWwO8IPneV6XQTWjW3yw1YtmnucM",
+        },
+      });
+      console.log(res.data, "tem");
+      setData(res.data);
     }
     fetchDatasSource();
   }, []);
@@ -22,9 +27,9 @@ function TemplateCentre() {
       {data?.documents?.map((data, index) => (
         <div className={style.card} key={index}>
           <TemplateCard
-            key={data.id}
+            workId={data.id}
             cardname={data.title}
-            pic = {data.pic}
+            pic={data.pic}
             description={data.describe}
             date={data.createTime}
           ></TemplateCard>
