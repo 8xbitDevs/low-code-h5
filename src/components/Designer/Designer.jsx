@@ -59,8 +59,8 @@ const Designer = () => {
       canvas.style.top = temp.style.top
       
       canvas.style.position ='absolute'
-      // 将canvas结点放在视频结点上面
-       canvas.style.zIndex = 10
+      // 将canvas结点放在视频结点下面
+       canvas.style.zIndex = -888
        canvas.style.backgroundColor ='white'
     
       //添加到幕布的孩子结点上
