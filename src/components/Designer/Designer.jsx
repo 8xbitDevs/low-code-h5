@@ -120,7 +120,7 @@ const Designer = () => {
       height: height,
       useCORS: true, //开启html2canvas的useCORS配置，跨域配置，以解决图片跨域的问题
     };
-    console.log(designer)
+    // console.log(designer)
     const imgSrc = html2canvas(designer, opts).then(function (canvas) {
       var context = canvas.getContext("2d");
 
