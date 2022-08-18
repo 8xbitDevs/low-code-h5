@@ -41,43 +41,43 @@ const Designer = () => {
         top: e.clientY - container.current.offsetTop,
         left: e.clientX - container.current.offsetLeft,
       })
-    ); 
-      
+    );
+
   };
 
   // 创建canves并绘制
-  function creatCanvas(designer,temp){
-      // temp.src = redirectUrl('x.')
-      temp.crossOrigin='Anonymous'
-      var canvas = document.createElement("canvas")
-     canvas.className = 'template_canvas'
+  function creatCanvas(designer, temp) {
+    // temp.src = redirectUrl('x.')
+    temp.crossOrigin = 'Anonymous'
+    var canvas = document.createElement("canvas")
+    canvas.className = 'template_canvas'
 
-      // 根据视频结点设置样式
-      canvas.style.width = temp.style.width
-      canvas.style.height =temp.style.height
-      canvas.style.left = temp.style.left
-      canvas.style.top = temp.style.top
-      
-      canvas.style.position ='absolute'
-      // 将canvas结点放在视频结点下面
-       canvas.style.zIndex = -888
-       canvas.style.backgroundColor ='white'
-    
-      //添加到幕布的孩子结点上
-      designer.appendChild(canvas)
+    // 根据视频结点设置样式
+    canvas.style.width = temp.style.width
+    canvas.style.height = temp.style.height
+    canvas.style.left = temp.style.left
+    canvas.style.top = temp.style.top
 
-      // 绘制画布
-      var ctx = canvas.getContext("2d")
-      // 去掉单位
-      var width = parseInt( parseInt(canvas.style.width))
-      var height = parseInt( parseInt(canvas.style.height))
+    canvas.style.position = 'absolute'
+    // 将canvas结点放在视频结点下面
+    canvas.style.zIndex = -888
+    canvas.style.backgroundColor = 'white'
 
-      // 提高分辨率
-      const ratio = window.devicePixelRatio || 1;
-      ctx.scale(ratio, ratio);
+    //添加到幕布的孩子结点上
+    designer.appendChild(canvas)
 
-        // 由于存在进度条，可能会造成视频失真 
-      ctx.drawImage(temp,0,0,width,height*0.7)     
+    // 绘制画布
+    var ctx = canvas.getContext("2d")
+    // 去掉单位
+    var width = parseInt(parseInt(canvas.style.width))
+    var height = parseInt(parseInt(canvas.style.height))
+
+    // 提高分辨率
+    const ratio = window.devicePixelRatio || 1;
+    ctx.scale(ratio, ratio);
+
+    // 由于存在进度条，可能会造成视频失真 
+    ctx.drawImage(temp, 0, 0, width, height * 0.7)
 
   }
 
@@ -85,22 +85,22 @@ const Designer = () => {
   function generateImage(designer) {
     // 对于视频截图需要进一步优化
     //  获得视频截图的结点
-     const  videoNode= designer.getElementsByClassName('template_video')
-  
+    const videoNode = designer.getElementsByClassName('template_video')
+
     // 根据视频的多少生成多少个画布组件
-    for(var i=0;i<videoNode.length;i++){
+    for (var i = 0; i < videoNode.length; i++) {
       // 创建
-        creatCanvas(designer,videoNode[i])
+      creatCanvas(designer, videoNode[i])
       //  并且隐藏视频标签
-        videoNode[i].style.display = 'none'
+      videoNode[i].style.display = 'none'
     }
-  
+
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
     var height = designer.offsetHeight; // 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
     var scale = 1; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
-    
+
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
     canvas.height = height * scale; //定义canvas高度 * 倍数，默认高度为150px
     canvas.getContext("2d").scale(scale, scale); //创建canvas的context对象，设置scale，相当于画布的“画笔”拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
@@ -129,27 +129,27 @@ const Designer = () => {
         canvas.width,
         canvas.height,
         imgType
-      ); 
+      );
       // 将图片的64位编码传递出去
       return img.src;
     });
- 
-      // 视频结点进行添加
-    for(var i=videoNode.length-1;i>=0;i--){
-     videoNode[i].style.display = 'block'
-       designer.appendChild(videoNode[i])
-     }
+
+    // 视频结点进行添加
+    for (var i = videoNode.length - 1; i >= 0; i--) {
+      videoNode[i].style.display = 'block'
+      designer.appendChild(videoNode[i])
+    }
 
     //  对画布结点从后面往前删除
     const canvasNodes = designer.getElementsByClassName('template_canvas')
-    console.log(canvasNodes.length)
-    for(var i=canvasNodes.length-1;i>=0;i--){
+    // console.log(canvasNodes.length)
+    for (var i = canvasNodes.length - 1; i >= 0; i--) {
       designer.removeChild(canvasNodes[i])
     }
     return imgSrc;
   }
 
-  // 更改图片格式并向后端发送信息
+  // 更改截图格式并向后端发送信息
   const uploadfile = async (file) => {
     //这里对base64串进行操作，去掉url头，并转换为byte
     var bytes = window.atob(file.split(",")[1]);
@@ -298,38 +298,45 @@ const Designer = () => {
         })
       );
     }
-    const dragComponent = () => {
-      // 拖动处理
-      if (elementId != "designer" && elementId != "") {
-        const element = document.getElementById(elementId);
-        element.onmousedown = (mouseDown) => {
-          const mouseDownX = mouseDown.pageX;
-          const mouseDownY = mouseDown.pageY;
-          const currentTarget = mouseDown.target;
-          const currentLeft = Number(currentTarget.style.left.slice(0, -2));
-          const currentTop = Number(currentTarget.style.top.slice(0, -2));
 
-          // 按下超过100ms判定要拖动
-          let cursorTask = setTimeout(() => {
-            element.style.cursor = "move";
-          }, 100);
+    // const dragComponent = () => {
+    //   // 拖动处理
+    //   if (elementId != "designer" && elementId != "") {
+    //     const element = document.getElementById(elementId);
+    //     element.onmousedown = (mouseDown) => {
+    //       const mouseDownX = mouseDown.pageX;
+    //       const mouseDownY = mouseDown.pageY;
+    //       const currentTarget = mouseDown.target;
+    //       const currentLeft = Number(currentTarget.style.left.slice(0, -2));
+    //       const currentTop = Number(currentTarget.style.top.slice(0, -2));
 
-          function onMouseMove(mouseMove) {
-            currentTarget.style.left =
-              currentLeft - mouseDownX + mouseMove.pageX + "px";
-            currentTarget.style.top =
-              currentTop - mouseDownY + mouseMove.pageY + "px";
-          }
-          function onMouseUp() {
-            element.style.cursor = "";
-            clearTimeout(cursorTask);
-            document.body.removeEventListener("mousemove", onMouseMove);
-          }
-          document.body.addEventListener("mousemove", onMouseMove);
-          document.body.addEventListener("mouseup", onMouseUp, { once: true });
-        };
-      }
-    };
+    //       // 按下超过100ms判定要拖动
+    //       let cursorTask = setTimeout(() => {
+    //         element.style.cursor = "move";
+    //       }, 100);
+
+    //       function onMouseMove(mouseMove) {
+    //         currentTarget.style.left =
+    //           currentLeft - mouseDownX + mouseMove.pageX + "px";
+    //         currentTarget.style.top =
+    //           currentTop - mouseDownY + mouseMove.pageY + "px";
+    //       }
+    //       function onMouseUp() {
+    //         element.style.cursor = "";
+    //         clearTimeout(cursorTask);
+    //         document.body.removeEventListener("mousemove", onMouseMove);
+    //       }
+    //       document.body.addEventListener("mousemove", onMouseMove);
+    //       document.body.addEventListener("mouseup", onMouseUp, { once: true });
+    //     };
+    //   }
+    // };
+
+    // 组件缩放功能
+
+    // 
+
+    // 缩放函数
 
     // 组件删除功能
     const deleteComponent = (e) => {
@@ -338,11 +345,77 @@ const Designer = () => {
         container.current.removeChild(target);
       }
     };
+
+
+
+
+    // 退出后仍然实现拖拽与缩放
     setTimeout(() => {
       for (let i = 0; i < container.current.childNodes.length; i++) {
         const temp = document.getElementById(
           container.current.childNodes[i].id
         );
+
+        // 初始化鼠标参数
+        let mouseStuate = -1
+        // 监控鼠标状态一段时间
+
+        temp.onmousemove = (mouseMove) => {
+          const mouseMoveX = mouseMove.pageX;
+          const mouseMoveY = mouseMove.pageY;
+
+          const currentTarget = mouseMove.target;
+          const currentLeft = Number(currentTarget.style.left.slice(0, -2));
+          const currentTop = Number(currentTarget.style.top.slice(0, -2));
+
+          // 获取鼠标相对于盒子的坐标
+          const x = mouseMoveX - (currentLeft + currentTarget.parentNode.offsetLeft)
+          const y = mouseMoveY - (currentTop + currentTarget.parentNode.offsetTop)
+
+          // 获取盒子大小
+          const currentTargetHeight = parseInt(currentTarget.style.height)
+          const currentTargetWidth = parseInt(currentTarget.style.width)
+
+          // 根据相对位置确定鼠标的状态
+          // 存在一定活动误差
+          if ((-4 <= x && x <= 4) && (-4 <= y && y <= 4)) {
+            mouseStuate = 0
+            temp.style.cursor = 'nwse-resize'
+          }
+          else if ((4 < x && x < currentTargetWidth - 4) && (-4 <= y && y <= 4)) {
+            mouseStuate = 1
+            temp.style.cursor = 'ns-resize'
+          }
+          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (-4 <= y && y <= 4)) {
+            mouseStuate = 2
+            temp.style.cursor = 'nesw-resize'
+          }
+          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (4 < y && y < currentTargetHeight - 4)) {
+            mouseStuate = 3
+            temp.style.cursor = 'ew-resize'
+          }
+          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+            mouseStuate = 4
+            temp.style.cursor = 'nwse-resize'
+          }
+          else if ((4 < x && x < currentTargetWidth - 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+            mouseStuate = 5
+            temp.style.cursor = 'ns-resize'
+          }
+          else if ((-4 <= x && x <= 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+            mouseStuate = 6
+            temp.style.cursor = 'nesw-resize'
+          }
+          else if ((-4 <= x && x <= 4) && (4 < y && y < currentTargetHeight - 4)) {
+            mouseStuate = 7
+            temp.style.cursor = 'ew-resize'
+          }
+          else {
+            mouseStuate = -1
+            temp.style.cursor = ''
+          }
+        }
+
         temp.onmousedown = (mouseDown) => {
           const mouseDownX = mouseDown.pageX;
           const mouseDownY = mouseDown.pageY;
@@ -350,16 +423,89 @@ const Designer = () => {
           const currentLeft = Number(currentTarget.style.left.slice(0, -2));
           const currentTop = Number(currentTarget.style.top.slice(0, -2));
 
+          // 获取盒子大小
+          const currentTargetHeight = parseInt(currentTarget.style.height)
+          const currentTargetWidth = parseInt(currentTarget.style.width)
+
           // 按下超过100ms判定要拖动
           let cursorTask = setTimeout(() => {
-            temp.style.cursor = "move";
+            // 判断是否需要进行缩放
+            if (mouseStuate == -1) {
+              temp.style.cursor = 'move';
+            }
           }, 100);
 
           function onMouseMove(mouseMove) {
-            currentTarget.style.left =
-              currentLeft - mouseDownX + mouseMove.pageX + "px";
-            currentTarget.style.top =
-              currentTop - mouseDownY + mouseMove.pageY + "px";
+            const mouseMoveX = mouseMove.pageX;
+            const mouseMoveY = mouseMove.pageY;
+            // 若为拖拽
+            if (mouseStuate === -1) {
+              currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
+              currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
+            }
+            // 若为缩放,实现图像缩放功能
+            else {
+
+              // 获取鼠标相对于盒子的坐标
+              const x = mouseMoveX - (currentLeft + currentTarget.parentNode.offsetLeft)
+              const y = mouseMoveY - (currentTop + currentTarget.parentNode.offsetTop)
+
+              // 左上一角改动，需要更改top和left
+              if (mouseStuate === 0) {
+                // 顶点移动的位置 
+                currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
+                currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
+                // 改变图片大小
+                currentTarget.style.width = -x + currentTargetWidth + 'px'
+                currentTarget.style.height = -y + currentTargetHeight + 'px'
+              }
+              // 右上一角改动，只需要改变top
+              else if (mouseStuate === 2) {
+                // 改变
+                currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
+                // 改变图片大小
+                currentTarget.style.width = x + 'px'
+                currentTarget.style.height = -y + currentTargetHeight + 'px'
+              }
+
+              // 右下，仅需要改变图片大小即可
+              else if (mouseStuate === 4) {
+                // 改变图片大小
+                currentTarget.style.width = x + 'px'
+                currentTarget.style.height = y + 'px'
+              }
+              // 左下一角改动，只需要改变left
+              else if (mouseStuate === 6) {
+                // 改变
+                currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
+                // 改变图片大小
+                currentTarget.style.width = -x + currentTargetWidth + 'px'
+                currentTarget.style.height = y + 'px'
+              }
+
+              // 上方中间，改变top，只改变图片的高度
+              else if (mouseStuate === 1) {
+                currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
+                currentTarget.style.height = -y + currentTargetHeight + 'px'
+              }
+
+              // 右方中间，只改变图像的宽度
+              else if (mouseStuate === 3) {
+                currentTarget.style.width = x + 'px'
+              }
+
+              // 下方中间，只改变图像的高度
+              else if (mouseStuate === 5) {
+                currentTarget.style.height = y + 'px'
+              }
+
+              // 左方中间，改变图像的left和宽度
+              else if (mouseStuate === 7) {
+                // 改变
+                currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
+                currentTarget.style.width = -x + currentTargetWidth + 'px'
+              }
+            }
           }
           function onMouseUp() {
             temp.style.cursor = "";
@@ -399,7 +545,7 @@ const Designer = () => {
           PubSub.publish("shotPic", res);
         })
         .catch((err) => {
-          console.log("截图错误"+err);
+          console.log("截图错误" + err);
         });
     });
     PubSub.subscribe("preview", (msg, data) => {
