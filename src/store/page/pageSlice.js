@@ -31,26 +31,19 @@ export const pageSlice = createSlice({
         }
         
       },
+      script: {
+        switch: "false",
+        cli: 'single',
+        act: 'jump',
+        jumpTo: ''
+      },
       change: 0
     },
     myWork: [],
     saveData: {
       id: '',
-      html:''
+      html: '',
     },
-    pageData: {
-      projectID: '0',
-      name: '空项目',
-      data: {
-        id: 'app',
-        type: 'div',
-        top: '0px',
-        left: '0px',
-        width: '340px',
-        height: '600px',
-        children: []
-      }
-    }
   },
   reducers: {
     updateCurrentComponentIdType: (state, action) => {
@@ -67,18 +60,15 @@ export const pageSlice = createSlice({
     updateMyWork: (state, action) => {
       state.myWork = action.payload
     },
-    updatePageData: (state, action) => {
-      state.pageData.data = action.payload
+    updateCurrentComponentScript: (state, action) => {
+      state.currentComponent.script = action.payload.script
+      state.currentComponent.change = action.payload.change;
     },
-    updatePageInfo: (state, action) => {
-      state.pageData.projectID = action.payload.projectID;
-      state.pageData.name = action.payload.name;
-    }
   }
 });
 
 export const selectPage = state => state.page;
 
-export const { updatePageData, updatePageInfo, updateCurrentComponentAttributes, updateCurrentComponentIdType, updateSaveData, updateMyWork } = pageSlice.actions;
+export const {updateCurrentComponentAttributes, updateCurrentComponentIdType, updateCurrentComponentScript, updateMyWork, updateSaveData } = pageSlice.actions;
 
 export default pageSlice.reducer;

@@ -14,8 +14,6 @@ const AttributesPanel = () => {
     if (pos === "right") {
       setnavsel(1)
     }
-    console.log(pos,11)
-    console.log(navsel)
   }
 
   const handleResize = (mouseDownEvent) => {

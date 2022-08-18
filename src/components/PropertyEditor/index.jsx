@@ -14,10 +14,6 @@ const PropertyEditor = () => {
   const bgColorRef = useRef();
   const borderColorRef = useRef();
   const textColorRef = useRef();
-  const unitTop = useRef();
-  const unitRight = useRef();
-  const unitBottom = useRef();
-  const unitLeft = useRef();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 
@@ -199,56 +195,6 @@ const PropertyEditor = () => {
     );
     // setmbp(newset);
   };
-
-  // // 获取select标签value
-  // const getSelectOption = (tar) => {
-  //   const index = tar.current.selectedIndex;
-  //   const value = tar.current.options[index].value;
-  //   if (tar == unitTop) {
-  //     dispatch(
-  //       updateCurrentComponentAttributes({
-  //         attributes: {
-  //           ...page.currentComponent.attributes,
-  //           unitTop: value,
-  //         },
-  //         change: Date.now(),
-  //       })
-  //     );
-  //   }
-  //   if (tar == unitRight) {
-  //     dispatch(
-  //       updateCurrentComponentAttributes({
-  //         attributes: {
-  //           ...page.currentComponent.attributes,
-  //           unitRight: value,
-  //         },
-  //         change: Date.now(),
-  //       })
-  //     );
-  //   }
-  //   if (tar == unitBottom) {
-  //     dispatch(
-  //       updateCurrentComponentAttributes({
-  //         attributes: {
-  //           ...page.currentComponent.attributes,
-  //           unitBottom: value,
-  //         },
-  //         change: Date.now(),
-  //       })
-  //     );
-  //   }
-  //   if (tar == unitLeft) {
-  //     dispatch(
-  //       updateCurrentComponentAttributes({
-  //         attributes: {
-  //           ...page.currentComponent.attributes,
-  //           unitLeft: value,
-  //         },
-  //         change: Date.now(),
-  //       })
-  //     );
-  //   }
-  // };
 
   // 返回属性设置模块,type为组件种类，根据组件种类返回不同属性设置模块，目前只有文本
   const propertyset = (type) => {

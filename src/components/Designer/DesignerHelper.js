@@ -57,8 +57,12 @@ const createButtonAttributes = (el, top, left) => {
   el.style.height = '24px';
   el.style.left = left - 24 + 'px';
   el.style.top = top - 12 + 'px';
-  el.style.borderRadius = '0px',
-  el.style.fontSize = '12px'
+  el.style.borderRadius = '0px';
+  el.style.fontSize = '12px';
+  el.dataset.switch = "false"
+  el.dataset.cli = "single"
+  el.dataset.act = "jump"
+  el.dataset.jumpTo = ""
 }
 const createSpanAttributes = (el, top, left) => {
   el.style.borderRadius = '0px',

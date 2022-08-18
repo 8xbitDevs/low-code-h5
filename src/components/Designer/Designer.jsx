@@ -5,16 +5,13 @@ import {
   selectPage,
   updateCurrentComponentAttributes,
   updateCurrentComponentIdType,
+  updateCurrentComponentScript,
 } from "../../store/page/pageSlice";
 import styles from "./Designer.module.css";
 import "./TemplateStyle.css";
-
-// 引入
 import html2canvas from "html2canvas";
 import Canvas2Image from "./canvas2image.js";
-
 import { http } from "../../utils/http";
-import { publish } from "pubsub-js";
 
 const Designer = () => {
   const page = useSelector(selectPage);
@@ -41,66 +38,64 @@ const Designer = () => {
         top: e.clientY - container.current.offsetTop,
         left: e.clientX - container.current.offsetLeft,
       })
-    ); 
-      
+    );
   };
 
   // 创建canves并绘制
-  function creatCanvas(designer,temp){
-      // temp.src = redirectUrl('x.')
-      temp.crossOrigin='Anonymous'
-      var canvas = document.createElement("canvas")
-     canvas.className = 'template_canvas'
+  function creatCanvas(designer, temp) {
+    // temp.src = redirectUrl('x.')
+    temp.crossOrigin = "Anonymous";
+    var canvas = document.createElement("canvas");
+    canvas.className = "template_canvas";
 
-      // 根据视频结点设置样式
-      canvas.style.width = temp.style.width
-      canvas.style.height =temp.style.height
-      canvas.style.left = temp.style.left
-      canvas.style.top = temp.style.top
-      
-      canvas.style.position ='absolute'
-      // 将canvas结点放在视频结点下面
-       canvas.style.zIndex = -888
-       canvas.style.backgroundColor ='white'
-    
-      //添加到幕布的孩子结点上
-      designer.appendChild(canvas)
+    // 根据视频结点设置样式
+    canvas.style.width = temp.style.width;
+    canvas.style.height = temp.style.height;
+    canvas.style.left = temp.style.left;
+    canvas.style.top = temp.style.top;
 
-      // 绘制画布
-      var ctx = canvas.getContext("2d")
-      // 去掉单位
-      var width = parseInt( parseInt(canvas.style.width))
-      var height = parseInt( parseInt(canvas.style.height))
+    canvas.style.position = "absolute";
+    // 将canvas结点放在视频结点下面
+    canvas.style.zIndex = -888;
+    canvas.style.backgroundColor = "white";
 
-      // 提高分辨率
-      const ratio = window.devicePixelRatio || 1;
-      ctx.scale(ratio, ratio);
+    //添加到幕布的孩子结点上
+    designer.appendChild(canvas);
 
-        // 由于存在进度条，可能会造成视频失真 
-      ctx.drawImage(temp,0,0,width,height*0.7)     
+    // 绘制画布
+    var ctx = canvas.getContext("2d");
+    // 去掉单位
+    var width = parseInt(parseInt(canvas.style.width));
+    var height = parseInt(parseInt(canvas.style.height));
 
+    // 提高分辨率
+    const ratio = window.devicePixelRatio || 1;
+    ctx.scale(ratio, ratio);
+
+    // 由于存在进度条，可能会造成视频失真
+    ctx.drawImage(temp, 0, 0, width, height * 0.7);
   }
 
   // 截图函数
   function generateImage(designer) {
     // 对于视频截图需要进一步优化
     //  获得视频截图的结点
-     const  videoNode= designer.getElementsByClassName('template_video')
-  
+    const videoNode = designer.getElementsByClassName("template_video");
+
     // 根据视频的多少生成多少个画布组件
-    for(var i=0;i<videoNode.length;i++){
+    for (var i = 0; i < videoNode.length; i++) {
       // 创建
-        creatCanvas(designer,videoNode[i])
+      creatCanvas(designer, videoNode[i]);
       //  并且隐藏视频标签
-        videoNode[i].style.display = 'none'
+      videoNode[i].style.display = "none";
     }
-  
+
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
     var height = designer.offsetHeight; // 获取dom高度（包括元素高度、内边距和边框，不包括外边距）
     var canvas = document.createElement("canvas"); //创建一个canvas标签元素
     var scale = 1; //定义放大倍数，可以支持小数
     var imgType = "image/jpg"; //设置默认下载的图片格式
-    
+
     canvas.width = width * scale; //定义canvas宽度 * 倍数（图片的清晰度优化），默认宽度为300px
     canvas.height = height * scale; //定义canvas高度 * 倍数，默认高度为150px
     canvas.getContext("2d").scale(scale, scale); //创建canvas的context对象，设置scale，相当于画布的“画笔”拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法
@@ -129,22 +124,22 @@ const Designer = () => {
         canvas.width,
         canvas.height,
         imgType
-      ); 
+      );
       // 将图片的64位编码传递出去
       return img.src;
     });
- 
-      // 视频结点进行添加
-    for(var i=videoNode.length-1;i>=0;i--){
-     videoNode[i].style.display = 'block'
-       designer.appendChild(videoNode[i])
-     }
+
+    // 视频结点进行添加
+    for (var i = videoNode.length - 1; i >= 0; i--) {
+      videoNode[i].style.display = "block";
+      designer.appendChild(videoNode[i]);
+    }
 
     //  对画布结点从后面往前删除
-    const canvasNodes = designer.getElementsByClassName('template_canvas')
-    console.log(canvasNodes.length)
-    for(var i=canvasNodes.length-1;i>=0;i--){
-      designer.removeChild(canvasNodes[i])
+    const canvasNodes = designer.getElementsByClassName("template_canvas");
+    console.log(canvasNodes.length);
+    for (var i = canvasNodes.length - 1; i >= 0; i--) {
+      designer.removeChild(canvasNodes[i]);
     }
     return imgSrc;
   }
@@ -210,6 +205,12 @@ const Designer = () => {
           page.currentComponent.attributes.borderRadius + "px";
         focusComponent.current.style.fontSize =
           page.currentComponent.attributes.fontSize + "px";
+        focusComponent.current.dataset.switch =
+          page.currentComponent.script.switch;
+        focusComponent.current.dataset.cli = page.currentComponent.script.cli;
+        focusComponent.current.dataset.act = page.currentComponent.script.act;
+        focusComponent.current.dataset.jumpTo =
+          page.currentComponent.script.jumpTo;
       }
       if (focusComponent.current.dataset.type === "a") {
         focusComponent.current.href = page.currentComponent.attributes.a.href;
@@ -294,42 +295,67 @@ const Designer = () => {
               src: focusComponent.current.src,
             },
           },
+          ...page.currentComponent.script,
           change: page.currentComponent.change,
         })
       );
-    }
-    const dragComponent = () => {
-      // 拖动处理
-      if (elementId != "designer" && elementId != "") {
-        const element = document.getElementById(elementId);
-        element.onmousedown = (mouseDown) => {
-          const mouseDownX = mouseDown.pageX;
-          const mouseDownY = mouseDown.pageY;
-          const currentTarget = mouseDown.target;
-          const currentLeft = Number(currentTarget.style.left.slice(0, -2));
-          const currentTop = Number(currentTarget.style.top.slice(0, -2));
-
-          // 按下超过100ms判定要拖动
-          let cursorTask = setTimeout(() => {
-            element.style.cursor = "move";
-          }, 100);
-
-          function onMouseMove(mouseMove) {
-            currentTarget.style.left =
-              currentLeft - mouseDownX + mouseMove.pageX + "px";
-            currentTarget.style.top =
-              currentTop - mouseDownY + mouseMove.pageY + "px";
-          }
-          function onMouseUp() {
-            element.style.cursor = "";
-            clearTimeout(cursorTask);
-            document.body.removeEventListener("mousemove", onMouseMove);
-          }
-          document.body.addEventListener("mousemove", onMouseMove);
-          document.body.addEventListener("mouseup", onMouseUp, { once: true });
-        };
+      if (focusComponent.current.dataset.type === "button") {
+        if (focusComponent.current.dataset.switch === "false") {
+          var tarCli = "single";
+          var tarAct = "jump";
+          var tarJumpTo = "";
+        }
+        if (focusComponent.current.dataset.switch === "true") {
+          tarCli = focusComponent.current.dataset.cli;
+          tarAct = focusComponent.current.dataset.act;
+          console.log(focusComponent.current.dataset.cli)
+          tarJumpTo = focusComponent.current.dataset.jumpTo;
+        }
+        dispatch(
+          updateCurrentComponentScript({
+            script: {
+              switch: focusComponent.current.dataset.switch,
+              cli: tarCli,
+              act: tarAct,
+              jumpTo: tarJumpTo,
+            },
+            change: page.currentComponent.change,
+          })
+        );
       }
-    };
+    }
+    // const dragComponent = () => {
+    //   // 拖动处理
+    //   if (elementId != "designer" && elementId != "") {
+    //     const element = document.getElementById(elementId);
+    //     element.onmousedown = (mouseDown) => {
+    //       const mouseDownX = mouseDown.pageX;
+    //       const mouseDownY = mouseDown.pageY;
+    //       const currentTarget = mouseDown.target;
+    //       const currentLeft = Number(currentTarget.style.left.slice(0, -2));
+    //       const currentTop = Number(currentTarget.style.top.slice(0, -2));
+
+    //       // 按下超过100ms判定要拖动
+    //       let cursorTask = setTimeout(() => {
+    //         element.style.cursor = "move";
+    //       }, 100);
+
+    //       function onMouseMove(mouseMove) {
+    //         currentTarget.style.left =
+    //           currentLeft - mouseDownX + mouseMove.pageX + "px";
+    //         currentTarget.style.top =
+    //           currentTop - mouseDownY + mouseMove.pageY + "px";
+    //       }
+    //       function onMouseUp() {
+    //         element.style.cursor = "";
+    //         clearTimeout(cursorTask);
+    //         document.body.removeEventListener("mousemove", onMouseMove);
+    //       }
+    //       document.body.addEventListener("mousemove", onMouseMove);
+    //       document.body.addEventListener("mouseup", onMouseUp, { once: true });
+    //     };
+    //   }
+    // };
 
     // 组件删除功能
     const deleteComponent = (e) => {
@@ -399,13 +425,15 @@ const Designer = () => {
           PubSub.publish("shotPic", res);
         })
         .catch((err) => {
-          console.log("截图错误"+err);
+          console.log("截图错误" + err);
         });
     });
     PubSub.subscribe("preview", (msg, data) => {
       deleteAttritube();
       sessionStorage.setItem("html", designer.innerHTML);
-      window.open("/preview");
+      setTimeout(() => {
+        window.open("/preview");
+      }, 100);
     });
     return () => {
       PubSub.unsubscribe("save");

@@ -7,9 +7,6 @@ import { useNavigate } from "react-router-dom";
 import SaveDataDialog from '../SaveDataDialog/SaveDataDialog'
 import { useDispatch, useSelector } from "react-redux";
 import { selectPage } from "../../store/page/pageSlice";
-import { http } from "../../utils/http";
-import { updateSaveData } from "../../store/page/pageSlice";
-
 
 const EditorNav = () => {
   const navigate = useNavigate()
@@ -52,15 +49,7 @@ const EditorNav = () => {
   // 预览文档
   async function preview() {
     const id = sessionStorage.getItem('id');
-    const res = await http.get("/api/document/get", { params: { id: id } });
     PubSub.publish('preview', 1)
-    // console.log(data);
-    dispatch(
-      updateSaveData({
-        id: res.doc.id,
-      })
-    );
-    // console.log(res, "getWork");
   }
 
   return (
