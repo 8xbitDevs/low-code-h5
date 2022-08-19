@@ -42,35 +42,36 @@ export const createElement = (type, { top, left }) => {
 
     // 根据相对位置确定鼠标的状态
     // 存在一定活动误差
-    if ((-4 <= x && x <= 4) && (-4 <= y && y <= 4)) {
+    const range = 2
+    if ((-range <= x && x <= range) && (-range <= y && y <= range)) {
       mouseStuate = 0
       element.style.cursor = 'nwse-resize'
     }
-    else if ((4 < x && x < currentTargetWidth - 4) && (-4 <= y && y <= 4)) {
+    else if ((range < x && x < currentTargetWidth - range) && (-range <= y && y <= range)) {
       mouseStuate = 1
       element.style.cursor = 'ns-resize'
     }
-    else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (-4 <= y && y <= 4)) {
+    else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (-range <= y && y <= range)) {
       mouseStuate = 2
       element.style.cursor = 'nesw-resize'
     }
-    else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (4 < y && y < currentTargetHeight - 4)) {
+    else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (range < y && y < currentTargetHeight - range)) {
       mouseStuate = 3
       element.style.cursor = 'ew-resize'
     }
-    else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+    else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
       mouseStuate = 4
       element.style.cursor = 'nwse-resize'
     }
-    else if ((4 < x && x < currentTargetWidth - 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+    else if ((range < x && x < currentTargetWidth - range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
       mouseStuate = 5
       element.style.cursor = 'ns-resize'
     }
-    else if ((-4 <= x && x <= 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+    else if ((-range <= x && x <= range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
       mouseStuate = 6
       element.style.cursor = 'nesw-resize'
     }
-    else if ((-4 <= x && x <= 4) && (4 < y && y < currentTargetHeight - 4)) {
+    else if ((-range <= x && x <= range) && (range < y && y < currentTargetHeight - range)) {
       mouseStuate = 7
       element.style.cursor = 'ew-resize'
     }

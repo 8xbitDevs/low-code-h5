@@ -126,11 +126,11 @@ const ActionEditor = (props) => {
         >
           <option value="jump">跳转</option>
           <option value="mail">发邮件</option>
-          <option value="share">分享</option>
+          {/* <option value="share">分享</option> */}
         </select>
       </div>
       <div>
-        跳转地址：
+        跳转(邮件)地址：
         <input type="text" className={style.textinput} value={page.currentComponent.script.jumpTo} onChange={(e) => {
                   dispatch(
                     updateCurrentComponentScript({

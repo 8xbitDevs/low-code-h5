@@ -8,17 +8,6 @@ import "./index.scss";
 const Preview = () => {
   const page = useSelector(selectPage);
   let count = 0;
-  function myClick() {
-    count++;
-    setTimeout(() => {
-      if (count === 1) {
-        console.log("鼠标单击");
-      } else if (count === 2) {
-        console.log("鼠标双击");
-      }
-      count = 0;
-    }, 300);
-  }
 
   const bindE = (cli, act, jumpTo) => {
     let c = 1
@@ -31,12 +20,11 @@ const Preview = () => {
         count++;
         setTimeout(() => {
           if (count === c) {
-            console.log("鼠标单击");
             if (act === "jump") {
               window.open(`https://${jumpTo}`);
             }
             if (act === "mail") {
-              window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here";          
+              window.location.href = `mailto:${jumpTo}?subject=Subject&body=message%20goes%20here`;          
             }
           }
           count = 0;

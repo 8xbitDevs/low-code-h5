@@ -327,45 +327,6 @@ const Designer = () => {
         );
       }
     }
-    
-    // const dragComponent = () => {
-    //   // 拖动处理
-    //   if (elementId != "designer" && elementId != "") {
-    //     const element = document.getElementById(elementId);
-    //     element.onmousedown = (mouseDown) => {
-    //       const mouseDownX = mouseDown.pageX;
-    //       const mouseDownY = mouseDown.pageY;
-    //       const currentTarget = mouseDown.target;
-    //       const currentLeft = Number(currentTarget.style.left.slice(0, -2));
-    //       const currentTop = Number(currentTarget.style.top.slice(0, -2));
-
-    //       // 按下超过100ms判定要拖动
-    //       let cursorTask = setTimeout(() => {
-    //         element.style.cursor = "move";
-    //       }, 100);
-
-    //       function onMouseMove(mouseMove) {
-    //         currentTarget.style.left =
-    //           currentLeft - mouseDownX + mouseMove.pageX + "px";
-    //         currentTarget.style.top =
-    //           currentTop - mouseDownY + mouseMove.pageY + "px";
-    //       }
-    //       function onMouseUp() {
-    //         element.style.cursor = "";
-    //         clearTimeout(cursorTask);
-    //         document.body.removeEventListener("mousemove", onMouseMove);
-    //       }
-    //       document.body.addEventListener("mousemove", onMouseMove);
-    //       document.body.addEventListener("mouseup", onMouseUp, { once: true });
-    //     };
-    //   }
-    // };
-
-    // 组件缩放功能
-
-    // 
-
-    // 缩放函数
 
     // 组件删除功能
     const deleteComponent = (e) => {
@@ -374,9 +335,6 @@ const Designer = () => {
         container.current.removeChild(target);
       }
     };
-
-
-
 
     // 退出后仍然实现拖拽与缩放
     setTimeout(() => {
@@ -407,35 +365,36 @@ const Designer = () => {
 
           // 根据相对位置确定鼠标的状态
           // 存在一定活动误差
-          if ((-4 <= x && x <= 4) && (-4 <= y && y <= 4)) {
+          const range = 2
+          if ((-range <= x && x <= range) && (-range <= y && y <= range)) {
             mouseStuate = 0
             temp.style.cursor = 'nwse-resize'
           }
-          else if ((4 < x && x < currentTargetWidth - 4) && (-4 <= y && y <= 4)) {
+          else if ((range < x && x < currentTargetWidth - range) && (-range <= y && y <= range)) {
             mouseStuate = 1
             temp.style.cursor = 'ns-resize'
           }
-          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (-4 <= y && y <= 4)) {
+          else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (-range <= y && y <= range)) {
             mouseStuate = 2
             temp.style.cursor = 'nesw-resize'
           }
-          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (4 < y && y < currentTargetHeight - 4)) {
+          else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (range < y && y < currentTargetHeight - range)) {
             mouseStuate = 3
             temp.style.cursor = 'ew-resize'
           }
-          else if ((currentTargetWidth - 4 <= x && x <= currentTargetWidth + 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+          else if ((currentTargetWidth - range <= x && x <= currentTargetWidth + range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
             mouseStuate = 4
             temp.style.cursor = 'nwse-resize'
           }
-          else if ((4 < x && x < currentTargetWidth - 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+          else if ((range < x && x < currentTargetWidth - range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
             mouseStuate = 5
             temp.style.cursor = 'ns-resize'
           }
-          else if ((-4 <= x && x <= 4) && (currentTargetHeight - 4 <= y && y <= currentTargetHeight + 4)) {
+          else if ((-range <= x && x <= range) && (currentTargetHeight - range <= y && y <= currentTargetHeight + range)) {
             mouseStuate = 6
             temp.style.cursor = 'nesw-resize'
           }
-          else if ((-4 <= x && x <= 4) && (4 < y && y < currentTargetHeight - 4)) {
+          else if ((-range <= x && x <= range) && (range < y && y < currentTargetHeight - range)) {
             mouseStuate = 7
             temp.style.cursor = 'ew-resize'
           }

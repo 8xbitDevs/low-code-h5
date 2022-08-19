@@ -1,7 +1,7 @@
 .Container {
   position: relative;
-  width: 340px;
-  height: 600px;
+  width: 360px;
+  height: 640px;
   border: 1px solid #e5e5e5;
   background-color: white;
   background-image: url('/assets/grid.png');
