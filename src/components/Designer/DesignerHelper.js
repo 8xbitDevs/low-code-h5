@@ -234,7 +234,7 @@ const createImgAttributes = (el, top, left) => {
   el.className = 'template_image';
   el.dataset.type = 'img';
   el.draggable = false;
-  el.src = "http://lowcode.wyy.ink/api/files/20220815/171f7028c6efcc4d73925829418854bd91.png";
+  el.src = "http://lowcode.wyy.ink/api/files/20220819/f306a900aeed495ea11d774a98c82e9926071c3abd784af8b8e28e7441e87bb8.png";
   el.style.width = '128px';
   el.style.height = '128px';
   el.style.left = left - 64 + 'px';
