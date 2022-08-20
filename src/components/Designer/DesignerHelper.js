@@ -20,10 +20,15 @@ export const createElement = (type, { top, left }) => {
     case 'img': createImgAttributes(element, top, left); break;
     case 'video': createVideoAttributes(element, top, left);
   }
+  dragElemnt(element)
+  return element;
+}
 
+// 拖拽还是缩放
+export const dragElemnt = (element) => {
   // 初始化鼠标参数
   let mouseStuate = -1
-  // 监控鼠标状态一段时间
+  // 鼠标移动时坐标变换
   element.onmousemove = (mouseMove) => {
     const mouseMoveX = mouseMove.pageX;
     const mouseMoveY = mouseMove.pageY;
@@ -40,8 +45,6 @@ export const createElement = (type, { top, left }) => {
     const currentTargetHeight = parseInt(currentTarget.style.height)
     const currentTargetWidth = parseInt(currentTarget.style.width)
 
-    // 根据相对位置确定鼠标的状态
-    // 存在一定活动误差
     const range = 2
     if ((-range <= x && x <= range) && (-range <= y && y <= range)) {
       mouseStuate = 0
@@ -82,7 +85,6 @@ export const createElement = (type, { top, left }) => {
   }
 
 
-
   // 判断为拖拽还是缩放
   element.onmousedown = (mouseDown) => {
     const mouseDownX = mouseDown.pageX;
@@ -98,6 +100,9 @@ export const createElement = (type, { top, left }) => {
     const currentTargetHeight = parseInt(currentTarget.style.height)
     const currentTargetWidth = parseInt(currentTarget.style.width)
 
+    //存放按下鼠标的一瞬间的状态
+    let mouseDownStuate = mouseStuate
+    // console.log(mouseDownStuate)
     // 按下超过100ms判定要拖动
     let cursorTask = setTimeout(() => {
       // 判断是否需要进行缩放
@@ -109,75 +114,91 @@ export const createElement = (type, { top, left }) => {
     function onMouseMove(mouseMove) {
       const mouseMoveX = mouseMove.pageX;
       const mouseMoveY = mouseMove.pageY;
+
+      // 当物体处于一定小的状态，图片大小和位置无法更改
+      const w = parseInt(currentTarget.style.width)
+      const h = parseInt(currentTarget.style.height)
+
+      // 获取鼠标相对于盒子的坐标
+      const x = mouseMoveX - (currentLeft + currentTarget.parentNode.offsetLeft)
+      const y = mouseMoveY - (currentTop + currentTarget.parentNode.offsetTop)
+
       // 若为拖拽
-      if (mouseStuate === -1) {
+      if (mouseDownStuate === -1) {
         currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
         currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
       }
+
       // 若为缩放,实现图像缩放功能
-      else {
-
-        // 获取鼠标相对于盒子的坐标
-        const x = mouseMoveX - (currentLeft + currentTarget.parentNode.offsetLeft)
-        const y = mouseMoveY - (currentTop + currentTarget.parentNode.offsetTop)
-
+      else if ((-1 < mouseDownStuate) && (w >= 5 && h >= 5)) {
         // 左上一角改动，需要更改top和left
-        if (mouseStuate === 0) {
+        if (mouseDownStuate === 0) {
           // 顶点移动的位置 
+          // 正常大小时,既能收缩也能放大
           currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
           currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
+
           // 改变图片大小
           currentTarget.style.width = -x + currentTargetWidth + 'px'
           currentTarget.style.height = -y + currentTargetHeight + 'px'
         }
         // 右上一角改动，只需要改变top
-        else if (mouseStuate === 2) {
+        else if (mouseDownStuate === 2) {
           // 改变
           currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
           // 改变图片大小
           currentTarget.style.width = x + 'px'
           currentTarget.style.height = -y + currentTargetHeight + 'px'
         }
-
         // 右下，仅需要改变图片大小即可
-        else if (mouseStuate === 4) {
+        else if (mouseDownStuate === 4) {
           // 改变图片大小
           currentTarget.style.width = x + 'px'
           currentTarget.style.height = y + 'px'
         }
         // 左下一角改动，只需要改变left
-        else if (mouseStuate === 6) {
+        else if (mouseDownStuate === 6) {
           // 改变
           currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
           // 改变图片大小
           currentTarget.style.width = -x + currentTargetWidth + 'px'
           currentTarget.style.height = y + 'px'
         }
-
         // 上方中间，改变top，只改变图片的高度
-        else if (mouseStuate === 1) {
+        else if (mouseDownStuate === 1) {
           currentTarget.style.top = currentTop - mouseDownY + mouseMoveY + 'px';
           currentTarget.style.height = -y + currentTargetHeight + 'px'
         }
 
         // 右方中间，只改变图像的宽度
-        else if (mouseStuate === 3) {
+        else if (mouseDownStuate === 3) {
           currentTarget.style.width = x + 'px'
         }
 
         // 下方中间，只改变图像的高度
-        else if (mouseStuate === 5) {
+        else if (mouseDownStuate === 5) {
           currentTarget.style.height = y + 'px'
         }
 
         // 左方中间，改变图像的left和宽度
-        else if (mouseStuate === 7) {
+        else if (mouseDownStuate === 7) {
           // 改变
           currentTarget.style.left = currentLeft - mouseDownX + mouseMoveX + 'px';
           currentTarget.style.width = -x + currentTargetWidth + 'px'
         }
       }
+      // 否则图像只能进行放大,需要重新按下鼠标
+      else {
+        mouseDownStuate = -999
+        if (w < 5) {
+          currentTarget.style.width = '5px'
+        }
+        if (h < 5) {
+          currentTarget.style.height = '5px'
+        }
+      }
     }
+
     function onMouseUp() {
       element.style.cursor = '';
       clearTimeout(cursorTask);
@@ -188,8 +209,6 @@ export const createElement = (type, { top, left }) => {
     document.body.addEventListener("mouseup", onMouseUp, { once: true });
 
   };
-
-  return element;
 }
 
 const createButtonAttributes = (el, top, left) => {
