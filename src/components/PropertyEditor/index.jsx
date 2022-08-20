@@ -209,6 +209,30 @@ const PropertyEditor = () => {
               getColor={page.currentComponent.attributes.bgColor}
             />
             <div className={style.form1}>
+              <p className={style.p}>字号(px)：</p>
+              <input
+                type="number"
+                className={style.numberinput}
+                value={page.currentComponent.attributes.fontSize}
+                onChange={(e) => {
+                  dispatch(
+                    updateCurrentComponentAttributes({
+                      attributes: {
+                        ...page.currentComponent.attributes,
+                        fontSize: e.target.value,
+                      },
+                      change: Date.now(),
+                    })
+                  );
+                }}
+              />
+            </div>
+            <ColorPicker
+              text="文字颜色："
+              ref={textColorRef}
+              getColor={page.currentComponent.attributes.textColor}
+            />
+            <div className={style.form1}>
               <p className={style.p}>圆角(px)：</p>
               <input
                 type="number"

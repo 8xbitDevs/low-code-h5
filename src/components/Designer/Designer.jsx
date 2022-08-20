@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createElement,dragElemnt } from "./DesignerHelper";
+import { createElement, dragElemnt } from "./DesignerHelper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectPage,
@@ -44,37 +44,36 @@ const Designer = () => {
   // 创建canves并绘制
   function creatCanvas(designer, temp) {
     // temp.src = redirectUrl('x.')
-    temp.crossOrigin = 'Anonymous'
-    var canvas = document.createElement("canvas")
-    canvas.className = 'template_canvas'
+    temp.crossOrigin = "Anonymous";
+    var canvas = document.createElement("canvas");
+    canvas.className = "template_canvas";
 
     // 根据视频结点设置样式
-    canvas.style.width = temp.style.width
-    canvas.style.height = temp.style.height
-    canvas.style.left = temp.style.left
-    canvas.style.top = temp.style.top
+    canvas.style.width = temp.style.width;
+    canvas.style.height = temp.style.height;
+    canvas.style.left = temp.style.left;
+    canvas.style.top = temp.style.top;
 
-    canvas.style.position = 'absolute'
+    canvas.style.position = "absolute";
     // 将canvas结点放在视频结点下面
-    canvas.style.zIndex = -888
-    canvas.style.backgroundColor = 'white'
+    canvas.style.zIndex = -888;
+    canvas.style.backgroundColor = "white";
 
     //添加到幕布的孩子结点上
-    designer.appendChild(canvas)
+    designer.appendChild(canvas);
 
     // 绘制画布
-    var ctx = canvas.getContext("2d")
+    var ctx = canvas.getContext("2d");
     // 去掉单位
-    var width = parseInt(parseInt(canvas.style.width))
-    var height = parseInt(parseInt(canvas.style.height))
+    var width = parseInt(parseInt(canvas.style.width));
+    var height = parseInt(parseInt(canvas.style.height));
 
     // 提高分辨率
     const ratio = window.devicePixelRatio || 1;
     ctx.scale(ratio, ratio);
 
-    // 由于存在进度条，可能会造成视频失真 
-    ctx.drawImage(temp, 0, 0, width, height * 0.7)
-
+    // 由于存在进度条，可能会造成视频失真
+    ctx.drawImage(temp, 0, 0, width, height * 0.7);
   }
 
   // 截图函数
@@ -83,14 +82,12 @@ const Designer = () => {
     //  获得视频截图的结点
     const videoNode = designer.getElementsByClassName("template_video");
 
-
     // 根据视频的多少生成多少个画布组件
     for (var i = 0; i < videoNode.length; i++) {
       // 创建
       creatCanvas(designer, videoNode[i]);
       //  并且隐藏视频标签
       videoNode[i].style.display = "none";
-
     }
 
     var width = designer.offsetWidth; //获取dom宽度（包括元素宽度、内边距和边框，不包括外边距）
@@ -200,6 +197,8 @@ const Designer = () => {
       if (focusComponent.current.dataset.type === "span") {
         focusComponent.current.style.borderRadius =
           page.currentComponent.attributes.borderRadius + "px";
+        focusComponent.current.style.fontSize =
+          page.currentComponent.attributes.fontSize + "px";
       }
       if (focusComponent.current.dataset.type === "button") {
         focusComponent.current.innerHTML =
@@ -311,7 +310,7 @@ const Designer = () => {
         if (focusComponent.current.dataset.switch === "true") {
           tarCli = focusComponent.current.dataset.cli;
           tarAct = focusComponent.current.dataset.act;
-          console.log(focusComponent.current.dataset.cli)
+          console.log(focusComponent.current.dataset.cli);
           tarJumpTo = focusComponent.current.dataset.jumpTo;
         }
         dispatch(
@@ -343,7 +342,7 @@ const Designer = () => {
           container.current.childNodes[i].id
         );
         // 对函数进行操作
-        dragElemnt(temp)
+        dragElemnt(temp);
       }
     }, 400);
 

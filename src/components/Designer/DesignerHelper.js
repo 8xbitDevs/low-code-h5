@@ -45,7 +45,7 @@ export const dragElemnt = (element) => {
     const currentTargetHeight = parseInt(currentTarget.style.height)
     const currentTargetWidth = parseInt(currentTarget.style.width)
 
-    const range = 2
+    const range = 3
     if ((-range <= x && x <= range) && (-range <= y && y <= range)) {
       mouseStuate = 0
       element.style.cursor = 'nwse-resize'
@@ -231,6 +231,7 @@ const createSpanAttributes = (el, top, left) => {
     el.className = 'template_text';
   el.dataset.type = 'span';
   el.innerHTML = '文本';
+  el.style.fontSize = '12px';
   el.contentEditable = true;
   el.style.display = 'inline-block';
   el.style.width = '72px';
