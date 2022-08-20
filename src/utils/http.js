@@ -14,7 +14,7 @@ export function getToken() {
 }  
   
 const http = axios.create({
-  baseURL: 'http://lowcode.wyy.ink',
+  baseURL: 'https://lowcode.wyy.ink',
   timeout: 600000,
 })
 

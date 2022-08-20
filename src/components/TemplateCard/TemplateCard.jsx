@@ -20,7 +20,7 @@ const TemplateCard = (props) => {
     workId = "",
     pic = "",
   } = props || {};
-  const getPicUrl = "http://lowcode.wyy.ink/" + pic;
+  const getPicUrl = "https://lowcode.wyy.ink/" + pic;
   const navigate = useNavigate();
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const TemplateCard = (props) => {
   async function update() {
     let res = await axios({
       method: "get",
-      url: "http://lowcode.wyy.ink/api/document/get",
+      url: "https://lowcode.wyy.ink/api/document/get",
       headers: {
         'token':
           "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzA2YTkwMGFlZWQ0OTVlYTExZDc3NGE5OGM4MmU5OSIsImV4cCI6MTY5MjI0MDkxNn0.xlV9Zhm5SuylfeUtWwO8IPneV6XQTWjW3yw1YtmnucM",
@@ -57,7 +57,7 @@ const TemplateCard = (props) => {
   async function preview() {
     let res = await axios({
       method: "get",
-      url: "http://lowcode.wyy.ink/api/document/get",
+      url: "https://lowcode.wyy.ink/api/document/get",
       headers: {
         'token':
           "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzA2YTkwMGFlZWQ0OTVlYTExZDc3NGE5OGM4MmU5OSIsImV4cCI6MTY5MjI0MDkxNn0.xlV9Zhm5SuylfeUtWwO8IPneV6XQTWjW3yw1YtmnucM",

@@ -64,7 +64,7 @@ function EssentialData() {
       const res = await axios(
         {
           method: 'get',
-          url: 'http://lowcode.wyy.ink/api/document/getList',
+          url: 'https://lowcode.wyy.ink/api/document/getList',
           headers: {
             token: JSON.parse(localStorage.getItem('token')).value,
           },

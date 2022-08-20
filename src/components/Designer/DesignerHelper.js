@@ -89,6 +89,7 @@ export const createElement = (type, { top, left }) => {
     const mouseDownY = mouseDown.pageY;
 
     const currentTarget = mouseDown.target;
+    console.log(currentTarget)
 
     const currentLeft = Number(currentTarget.style.left.slice(0, -2));
     const currentTop = Number(currentTarget.style.top.slice(0, -2));
@@ -234,7 +235,7 @@ const createImgAttributes = (el, top, left) => {
   el.className = 'template_image';
   el.dataset.type = 'img';
   el.draggable = false;
-  el.src = "http://lowcode.wyy.ink/api/files/20220819/f306a900aeed495ea11d774a98c82e9926071c3abd784af8b8e28e7441e87bb8.png";
+  el.src = "https://lowcode.wyy.ink/api/files/20220819/f306a900aeed495ea11d774a98c82e9926071c3abd784af8b8e28e7441e87bb8.png";
   el.style.width = '128px';
   el.style.height = '128px';
   el.style.left = left - 64 + 'px';
@@ -245,7 +246,7 @@ const createVideoAttributes = (el, top, left) => {
   el.dataset.type = 'video';
   // 跨域
   el.crossOrigin = 'Anonymous'
-  el.src = "http://lowcode.wyy.ink/api/files/20220816/b1a9a3273903415bbe4405df5324e530f5bb50207745470a807d058a0923601a.mp4";
+  el.src = "https://lowcode.wyy.ink/api/files/20220816/b1a9a3273903415bbe4405df5324e530f5bb50207745470a807d058a0923601a.mp4";
   el.loop = true;
   el.controls = true;
   el.style.width = '320px';

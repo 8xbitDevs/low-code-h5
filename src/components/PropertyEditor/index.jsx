@@ -89,7 +89,7 @@ const PropertyEditor = () => {
           attributes: {
             ...page.currentComponent.attributes,
             video: {
-              src: "http://lowcode.wyy.ink" + res.uri,
+              src: "https://lowcode.wyy.ink" + res.uri,
             },
           },
           change: Date.now(),
@@ -103,7 +103,7 @@ const PropertyEditor = () => {
           attributes: {
             ...page.currentComponent.attributes,
             img: {
-              src: "http://lowcode.wyy.ink" + res.uri,
+              src: "https://lowcode.wyy.ink" + res.uri,
             },
           },
           change: Date.now(),
@@ -114,7 +114,7 @@ const PropertyEditor = () => {
 
   // antd image上传
   const imageProps = {
-    action: "http://lowcode.wyy.ink/api/upload",
+    action: "https://lowcode.wyy.ink/api/upload",
     Headers: {
       token: getToken(),
     },
@@ -123,7 +123,7 @@ const PropertyEditor = () => {
   };
   // antd video上传
   const videoProps = {
-    action: "http://lowcode.wyy.ink/api/upload",
+    action: "https://lowcode.wyy.ink/api/upload",
     Headers: {
       token: getToken(),
        'X-Requested-With':null

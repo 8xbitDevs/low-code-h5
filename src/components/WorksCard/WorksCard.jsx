@@ -23,7 +23,7 @@ const WorksCard = (props) => {
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
 
-  const getPicUrl = "http://lowcode.wyy.ink/" + pic;
+  const getPicUrl = "https://lowcode.wyy.ink/" + pic;
 
   // 获取文档
   async function update() {
