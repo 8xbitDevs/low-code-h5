@@ -1,45 +1,53 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import Editor from "./pages/editor/Editor";
+import WorkManager from "./pages/workmanager/WorkManager.jsx";
+import MyWork from "./pages/MyWork/MyWork";
+import TemplateCentre from "./pages/TemplateCentre/TemplateCentre";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import EssentialData from "./pages/EssentialData/EssentialData";
+import { AuthRoute } from "./utils/AuthRoute";
+import Preview from "./pages/Preview";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <AuthRoute>
+              <WorkManager />
+            </AuthRoute>
+          }
+        >
+          <Route index element={<MyWork />}></Route>
+          <Route path="/essentialdata1" element={<EssentialData />}></Route>
+          <Route path="/template" element={<TemplateCentre />}></Route>
+        </Route>
+        <Route
+          path="/editor"
+          element={
+            <AuthRoute>
+              <Editor />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/preview"
+          element={
+            <AuthRoute>
+              <Preview />
+            </AuthRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,19 @@
+.Container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(86, 112, 136, 0.5), rgba(255, 205, 205, 0.5));;
+}
+
+#previewer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 340px;
+    height: 600px;
+    margin-left: -170px;
+    margin-top: -270px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+}
