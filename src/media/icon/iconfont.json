@@ -1,0 +1,58 @@
+{
+  "id": "3554310",
+  "name": "8xbitsDevs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1546581",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "1727469",
+      "name": "232编辑、输入-线性",
+      "font_class": "bianjishuru-xianxing",
+      "unicode": "e8cc",
+      "unicode_decimal": 59596
+    },
+    {
+      "icon_id": "11613944",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "19657888",
+      "name": "预览",
+      "font_class": "preview",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "1727380",
+      "name": "34模板、框架-线性",
+      "font_class": "mobankuangjia-xianxing",
+      "unicode": "e8a5",
+      "unicode_decimal": 59557
+    },
+    {
+      "icon_id": "2076312",
+      "name": " 我的",
+      "font_class": "wode",
+      "unicode": "e8a0",
+      "unicode_decimal": 59552
+    },
+    {
+      "icon_id": "3868281",
+      "name": "数据看板",
+      "font_class": "shujukanban",
+      "unicode": "eb66",
+      "unicode_decimal": 60262
+    }
+  ]
+}

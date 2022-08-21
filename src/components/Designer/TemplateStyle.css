@@ -1,0 +1,33 @@
+.template_button {
+  position: absolute;
+  width: 48px;
+  height: 24px;
+}
+
+.template_text {
+  position: absolute;
+  outline: none;
+}
+
+.template_image {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+}
+
+.template_video {
+  position: absolute;
+  height: 240px;
+  width: 320px;
+}
+
+.template_canves {
+  position: absolute;
+  height: 240px;
+  width: 320px;
+}
+
+
+.template_link {
+  position: absolute;
+}

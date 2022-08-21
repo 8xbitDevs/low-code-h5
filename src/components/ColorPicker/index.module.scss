@@ -1,0 +1,32 @@
+.container {
+  height: 3.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .showcolor {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1px solid #dadada;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
+  }
+  .colorpicker {
+    transform: translateY(-60%);
+    position: absolute;
+    margin: 0.5rem;
+    z-index: 999;
+  }
+}
+
+.p {
+  margin: 0;
+  font-size: 14px;
+  color: #595959;
+}

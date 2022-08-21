@@ -1,0 +1,70 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f2f5;
+  position: relative;
+}
+
+.label {
+  width: 80px;
+  display: inline-block;
+  height: 30px;
+  text-align: center;
+}
+
+#registerBox {
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 380px;
+  margin-left: -200px;
+  margin-top: -190px;
+  position: absolute;
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.333);
+}
+
+#registerTitle {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: large;
+}
+
+#username,
+#password,
+#repassword {
+  text-align: center;
+  height: 50px;
+  margin: 20px 0;
+}
+
+#submitBtn {
+  display: block;
+  height: 40px;
+  width: 120px;
+  border-radius: 1rem;
+  background-color: #1890ff;
+  margin: auto;
+  cursor: pointer;
+}
+
+.typeBox {
+  width: 220px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 15px;
+}
+
+#tologin {
+  text-align: center;
+  margin: auto;
+  display: block;
+  font-size: small;
+}
+
+.errorType {
+  color: red;
+  font-weight: bolder;
+}
