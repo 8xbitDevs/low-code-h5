@@ -124,7 +124,6 @@ function Register(props) {
       // TODO
       // 弹窗提示
       openDialog("注册成功，点击确定跳转回首页", () => {
-        console.log("回调");
         localStorage.setItem(
           "token",
           JSON.stringify({

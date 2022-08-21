@@ -71,7 +71,6 @@ function EssentialData() {
         },
         { params }
       )
-      console.log(res.data.documents)
       setDatasSource(res.data)
     }
     fetchDatasSource()

@@ -40,7 +40,6 @@ const PropertyEditor = () => {
   ]);
   // 覆盖antd默认的上传行为，可以自定义自己的上传实现
   const onImgFilesChange = async (data) => {
-    console.log("image");
     const file = data.file;
     const isJPG = file.type === "image/jpeg";
     const isJPEG = file.type === "image/jpeg";
@@ -58,7 +57,6 @@ const PropertyEditor = () => {
     uploadfile(file, "img");
   };
   const onVideoFilesChange = async (data) => {
-    console.log("video");
     const file = data.file;
     const isAVI = file.type === "video/avi";
     const isMP4 = file.type === "video/mp4";
@@ -80,9 +78,7 @@ const PropertyEditor = () => {
     //转化为formData格式
     let formData = new FormData();
     formData.append("file", file);
-    console.log(formData);
     const res = await http.post("/api/upload", formData); //发请求
-    console.log(res);
     if (type === "video") {
       dispatch(
         updateCurrentComponentAttributes({
@@ -97,7 +93,6 @@ const PropertyEditor = () => {
       );
     }
     if (type === "img") {
-      console.log(res.uri);
       dispatch(
         updateCurrentComponentAttributes({
           attributes: {
@@ -272,7 +267,6 @@ const PropertyEditor = () => {
                 className={style.textinput}
                 value={page.currentComponent.attributes.button.innerHTML}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   dispatch(
                     updateCurrentComponentAttributes({
                       attributes: {

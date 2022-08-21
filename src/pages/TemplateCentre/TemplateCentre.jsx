@@ -17,7 +17,6 @@ function TemplateCentre() {
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzA2YTkwMGFlZWQ0OTVlYTExZDc3NGE5OGM4MmU5OSIsImV4cCI6MTY5MjI0MDkxNn0.xlV9Zhm5SuylfeUtWwO8IPneV6XQTWjW3yw1YtmnucM",
         },
       });
-      console.log(res.data, "tem");
       setData(res.data);
     }
     fetchDatasSource();

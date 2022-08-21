@@ -138,7 +138,6 @@ const Designer = () => {
 
     //  对画布结点从后面往前删除
     const canvasNodes = designer.getElementsByClassName("template_canvas");
-    console.log(canvasNodes.length);
     for (var i = canvasNodes.length - 1; i >= 0; i--) {
       designer.removeChild(canvasNodes[i]);
     }
@@ -311,7 +310,6 @@ const Designer = () => {
         if (focusComponent.current.dataset.switch === "true") {
           tarCli = focusComponent.current.dataset.cli;
           tarAct = focusComponent.current.dataset.act;
-          console.log(focusComponent.current.dataset.cli);
           tarJumpTo = focusComponent.current.dataset.jumpTo;
         }
         dispatch(
