@@ -91,7 +91,6 @@ export const dragElemnt = (element) => {
     const mouseDownY = mouseDown.pageY;
 
     const currentTarget = mouseDown.target;
-    console.log(currentTarget)
 
     const currentLeft = Number(currentTarget.style.left.slice(0, -2));
     const currentTop = Number(currentTarget.style.top.slice(0, -2));

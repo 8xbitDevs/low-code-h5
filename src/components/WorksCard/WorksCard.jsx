@@ -32,10 +32,6 @@ const WorksCard = (props) => {
     sessionStorage.setItem("title", res.doc.title);
     sessionStorage.setItem("describe", res.doc.describe);
     sessionStorage.setItem("designerHtml", res.doc.html)
-    console.log(
-      sessionStorage.getItem("title"),
-      sessionStorage.getItem("describe")
-    );
     dispatch(
       updateSaveData({
         id: res.doc.id,

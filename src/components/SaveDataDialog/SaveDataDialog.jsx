@@ -1,63 +1,63 @@
-import { Modal, Input, Button, message } from 'antd'
-import React, { useEffect, useState } from 'react'
-import style from './SaveDataDialog.module.scss'
-import 'antd/dist/antd.css'
-import { http } from '../../utils/http'
-import PubSub from 'pubsub-js'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectPage } from '../../store/page/pageSlice'
+import { Modal, Input, message } from "antd";
+import React, { useEffect, useState } from "react";
+import style from "./SaveDataDialog.module.scss";
+import "antd/dist/antd.css";
+import { http } from "../../utils/http";
+import PubSub from "pubsub-js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPage } from "../../store/page/pageSlice";
 
 export default function SaveDataDialog() {
-  const { TextArea } = Input
-  const [saveData, setSaveData] = useState('')
-  const [title, setTitle] = useState(sessionStorage.getItem('title'))
-  const [describe, setDescribe] = useState(sessionStorage.getItem('describe'))
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const page = useSelector(selectPage)
+  const { TextArea } = Input;
+  const [saveData, setSaveData] = useState("");
+  const [title, setTitle] = useState(sessionStorage.getItem("title"));
+  const [describe, setDescribe] = useState(sessionStorage.getItem("describe"));
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const page = useSelector(selectPage);
   // 截图函数
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState("");
 
   const showModal = () => {
-    save()
-    setIsModalVisible(true)
-  }
+    save();
+    setIsModalVisible(true);
+  };
   const success = () => {
-    message.success('保存成功')
-  }
+    message.success("保存成功");
+  };
   const warning = () => {
-    message.warning('输入不能为空')
-  }
+    message.warning("输入不能为空");
+  };
   const handleOk = () => {
-    if (title.trim() == '' || describe.trim() == '') {
-      warning()
+    if (title.trim() == "" || describe.trim() == "") {
+      warning();
     } else {
-      success()
-      setIsModalVisible(false)
+      success();
+      setIsModalVisible(false);
       //  console.log(page.saveData.id);
-      if (page.saveData.id === '') {
+      if (page.saveData.id === "") {
         // 若savadata存在数据则为修改文档，否则为初次保存
-        handleSubmit()
+        handleSubmit();
       } else {
-        handleUpdate()
+        handleUpdate();
       }
     }
-  }
+  };
   const handleCancel = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
   const saveTitle = (e) => {
-    setTitle(e.target.value)
-  }
+    setTitle(e.target.value);
+  };
 
   const saveDescribe = (e) => {
-    setDescribe(e.target.value)
-  }
+    setDescribe(e.target.value);
+  };
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      handleOk()
+      handleOk();
     }
-  }
+  };
 
   const handleUpdate = () => {
     const form = {
@@ -66,10 +66,10 @@ export default function SaveDataDialog() {
       describe: describe,
       pic: url,
       html: saveData,
-    }
+    };
 
-    http.post('/api/document/update', form)
-  }
+    http.post("/api/document/update", form);
+  };
 
   const handleSubmit = () => {
     const form = {
@@ -77,35 +77,35 @@ export default function SaveDataDialog() {
       describe: describe,
       pic: url,
       html: saveData,
-    }
+    };
 
     //获取表单数据
     // console.log(form);
-    http.post('/api/document/add', form)
-  }
+    http.post("/api/document/add", form);
+  };
 
   const save = () => {
-    PubSub.publish('save', 1)
-  }
+    PubSub.publish("save", 1);
+  };
 
   useEffect(() => {
-    PubSub.subscribe('shotPic', (msg, data) => {
+    PubSub.subscribe("shotPic", (msg, data) => {
       data
         .then((sPic) => {
-          setUrl(sPic.uri)
+          setUrl(sPic.uri);
         })
         .catch((err) => {
-          console.log('截图错误')
-        })
-    })
-    PubSub.subscribe('innerHTML', (msg, data) => {
-      setSaveData(data)
-    })
+          console.log("截图错误");
+        });
+    });
+    PubSub.subscribe("innerHTML", (msg, data) => {
+      setSaveData(data);
+    });
     return () => {
-      PubSub.unsubscribe('shotPic')
-      PubSub.unsubscribe('innerHTML')
-    }
-  }, [])
+      PubSub.unsubscribe("shotPic");
+      PubSub.unsubscribe("innerHTML");
+    };
+  }, []);
 
   return (
     <>
@@ -116,7 +116,8 @@ export default function SaveDataDialog() {
         title="保存作品"
         visible={isModalVisible}
         onOk={handleOk}
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+      >
         <>
           <label htmlFor="">标题：</label>
           <Input
@@ -141,5 +142,5 @@ export default function SaveDataDialog() {
         </>
       </Modal>
     </>
-  )
+  );
 }

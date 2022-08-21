@@ -19,8 +19,8 @@ function MyWork() {
   const dispatch = useDispatch();
 
   const init = () => {
-    sessionStorage.removeItem("title");
-    sessionStorage.removeItem("describe");
+    sessionStorage.setItem("title", "");
+    sessionStorage.setItem("describe", "");
     sessionStorage.removeItem("html");
     sessionStorage.removeItem("designerHtml");
     dispatch(updateSaveData({ id: "" }));
@@ -29,7 +29,6 @@ function MyWork() {
   useEffect(() => {
     async function fetchDatasSource() {
       const res = await http.get("/api/document/getList");
-      console.log(res.documents);
       dispatch(updateMyWork(res.documents));
     }
     fetchDatasSource();
