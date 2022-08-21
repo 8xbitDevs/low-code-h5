@@ -1,35 +1,45 @@
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import style from "./SaveDataDialog.module.scss";
 import "antd/dist/antd.css";
 import { http } from "../../utils/http";
 import PubSub from "pubsub-js";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectPage,
-} from "../../store/page/pageSlice";
+import { selectPage } from "../../store/page/pageSlice";
 
 export default function SaveDataDialog() {
   const { TextArea } = Input;
   const [saveData, setSaveData] = useState("");
-  const [title, setTitle] = useState(sessionStorage.getItem('title'));
-  const [describe, setDescribe] = useState(sessionStorage.getItem('describe'));
+  const [title, setTitle] = useState(sessionStorage.getItem("title"));
+  const [describe, setDescribe] = useState(sessionStorage.getItem("describe"));
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const page = useSelector(selectPage); 
+  const page = useSelector(selectPage);
   // 截图函数
-  const [url,setUrl] = useState("");
+  const [url, setUrl] = useState("");
 
   const showModal = () => {
     save();
     setIsModalVisible(true);
   };
+  const success = () => {
+    message.success("保存成功");
+  };
+  const warning = () => {
+    message.warning("输入不能为空");
+  };
   const handleOk = () => {
-    setIsModalVisible(false);
-    console.log(page.saveData.id);
-    if (page.saveData.id === "" ) {    // 若savadata存在数据则为修改文档，否则为初次保存
-      handleSubmit();
+    if (title.trim() == "" || describe.trim() == "") {
+      warning();
     } else {
-      handleUpdate();
+      success();
+      setIsModalVisible(false);
+      //  console.log(page.saveData.id);
+      if (page.saveData.id === "") {
+        // 若savadata存在数据则为修改文档，否则为初次保存
+        handleSubmit();
+      } else {
+        handleUpdate();
+      }
     }
   };
   const handleCancel = () => {
@@ -49,9 +59,6 @@ export default function SaveDataDialog() {
     }
   };
 
-
-
-
   const handleUpdate = () => {
     const form = {
       id: page.saveData.id,
@@ -60,7 +67,7 @@ export default function SaveDataDialog() {
       pic: url,
       html: saveData,
     };
-    
+
     http.post("/api/document/update", form);
   };
 
@@ -81,14 +88,15 @@ export default function SaveDataDialog() {
     PubSub.publish("save", 1);
   };
 
-
   useEffect(() => {
     PubSub.subscribe("shotPic", (msg, data) => {
-      data.then((sPic) => {
-        setUrl(sPic.uri)
-      }).catch((err)=>{
-        console.log("截图错误")
-      })
+      data
+        .then((sPic) => {
+          setUrl(sPic.uri);
+        })
+        .catch((err) => {
+          console.log("截图错误");
+        });
     });
     PubSub.subscribe("innerHTML", (msg, data) => {
       setSaveData(data);
