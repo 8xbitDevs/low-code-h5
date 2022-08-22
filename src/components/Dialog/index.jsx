@@ -29,7 +29,6 @@ function useDialog() {
 
         const handleCancel = () => {
             setIsModalVisible(false);
-            callback.func();
         };
 
         return (

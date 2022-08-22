@@ -242,7 +242,6 @@ const createAAttributes = (el, top, left) => {
   el.className = 'template_link';
   el.dataset.type = 'a';
   el.innerHTML = '链接';
-  // el.onClick = 'return false'
   el.contentEditable = true;
   el.style.width = '48px';
   el.style.height = '24px';
